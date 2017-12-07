@@ -62,12 +62,15 @@ ruby ruby_novice
     
 で新しいターミナルを開いて，ruby_noviceのあるフォルダで
 
+```ruby
     $ emacs question.rb answer.rb
+```
 
 と打つと上下分割されたものがでてくるので上のquestin.rbに書かれた内容をanswer.rbにtypingする
 
-    $ C-x C-c
-    
+```ruby
+    $ C-x C-c   (Control + x Control + c)
+```
 で保存するとそれまでにかかった時間が表示される．
 これが実行から終了までの一連の流れになります．
 
