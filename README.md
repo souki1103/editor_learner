@@ -47,8 +47,8 @@ Everyone interacting in the RubyNovice project’s codebases, issue trackers, ch
 # 動かし方
 libの中にruby_novice.rbがあるので:
 
-    $ ruby ruby_novice
-    
+    '$ ruby ruby_novice'
+    
 で実行可能．
 
 # 実行してから
