@@ -45,7 +45,7 @@ Everyone interacting in the RubyNovice project’s codebases, issue trackers, ch
 まずはforkしてcloneして自分のフォルダに入れてください．
 
 # 動かし方
-libの中にruby_novice.rbがあるので,
+libの中にruby_novice.rbがあるので:
 
     $ ruby ruby_novice
     
@@ -53,15 +53,15 @@ libの中にruby_novice.rbがあるので,
 
 # 実行してから
 実行すると1〜4のランダムな数字が出力されます．これはどのファイルの問題が出されたかの数字なので特に気にする必要はありません．
-実行したら
+実行したら:
 
     $ Command + n
     
-で新しいターミナルを開いて，ruby_noviceのあるフォルダで
+で新しいターミナルを開いて，ruby_noviceのあるフォルダで:
 
     $ emacs question.rb answer.rb
 
-と打つと上下分割されたものがでてくるので上のquestin.rbに書かれた内容をanswer.rbにtypingする．
+と打つと上下分割されたものがでてくるので上のquestin.rbに書かれた内容をanswer.rbにtypingする:
 
     $ C-x C-c
     
