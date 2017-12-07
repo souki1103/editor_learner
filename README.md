@@ -41,27 +41,27 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the RubyNovice project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/ruby_novice/blob/master/CODE_OF_CONDUCT.md).
-# editer_learner
+## editer_learner
 まずはforkしてcloneして自分のフォルダに入れてください．
 
-# 動かし方
-libの中にruby_novice.rbがあるので:
+## 動かし方
+libの中にruby_novice.rbがあるので
 
-    '$ ruby ruby_novice'
+    $ ruby ruby_novice
     
 で実行可能．
 
-# 実行してから
+## 実行してから
 実行すると1〜4のランダムな数字が出力されます．これはどのファイルの問題が出されたかの数字なので特に気にする必要はありません．
-実行したら:
+実行したら
 
     $ Command + n
     
-で新しいターミナルを開いて，ruby_noviceのあるフォルダで:
+で新しいターミナルを開いて，ruby_noviceのあるフォルダで
 
     $ emacs question.rb answer.rb
 
-と打つと上下分割されたものがでてくるので上のquestin.rbに書かれた内容をanswer.rbにtypingする:
+と打つと上下分割されたものがでてくるので上のquestin.rbに書かれた内容をanswer.rbにtypingする
 
     $ C-x C-c
     
