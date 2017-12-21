@@ -1,0 +1,9 @@
+require 'diff/lcs'
+
+x = "A lot of money"
+y = "A lot of time"
+
+diffs = Diff::LCS.sdiff(x, y) {|context_change| context_change.old_element unless context_change.unchanged? }
+diffs.each_with_index do |diff,i| 
+  printf("%4d %1s %1s\n", i, x[i], diff)
+end

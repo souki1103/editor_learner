@@ -6,10 +6,10 @@ require "ruby_novice/version"
 Gem::Specification.new do |spec|
   spec.name          = "ruby_novice"
   spec.version       = RubyNovice::VERSION
-  spec.authors       = ["TODO: Write your name"]
-  spec.email         = ["TODO: Write your email address"]
+  spec.authors       = ["Souki Wada"]
+  spec.email         = [""]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
+  spec.summary       = %q{This is ruby learning system}
   spec.description   = %q{TODO: Write a longer description or delete this line.}
   spec.homepage      = "TODO: Put your gem's website or public repo URL here."
   spec.license       = "MIT"
