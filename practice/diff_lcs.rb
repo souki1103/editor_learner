@@ -25,11 +25,12 @@ loop do
       if FileUtils.compare_file("que.rb", "an.rb") == true
         break
       end
-      else
+        else if FileUtils.compare_file("que.rb", "an.rb") !=false
         diffs = Diff::LCS.diff(s,s1)
         diffs.each do |diff|
           p diff
       end
+     end
     end
 end
 end_time = Time.now

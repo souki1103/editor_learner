@@ -25,6 +25,7 @@ module RubyNovice
     FileUtils.cp("/Users/souki/editor_learner/lib/mondai/#{s}", "question.rb")
     p random
     open
+    system("emacs question.rb answer.rb")
     
     start_time = Time.now
     loop do

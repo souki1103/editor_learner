@@ -22,14 +22,12 @@ start_time = Time.now
 loop do
     sleep(1)
     if File.exist?("que.rb") && File.exist?("an.rb")
-      if FileUtils.compare_file("que.rb", "an.rb") == true
-        break
-      end
-        else if File Utils.compare_file("que.rb", "an.rb") !=false
+      if File Utils.compare_file("que.rb", "an.rb") !=false
         diffs = Diff::LCS.diff(s,s1)
         diffs.each do |diff|
           p diff
       end
+      else if 
      end
     end
 end
