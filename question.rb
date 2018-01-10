@@ -1,1 +1,1 @@
-require
+def initialize
