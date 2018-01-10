@@ -6,14 +6,18 @@ module RubyNovice
   class CLI < Thor
 
   desc 'check', 'check your typing skill.'
-  def check(*argv)    
+  def check(*argv)
     random = rand(1..4)
     s = %(#{random}.rb)
-    
-    FileUtils.cp("/Users/souki/editor_learner/lib/mondai/#{s}", "question.rb")
+
+    #    FileUtils.cp("/Users/souki/editor_learner/lib/mondai/#{s}", "question.rb")
+    p src_dir = File.expand_path('../..', __FILE__) # "Users/souki/editor_learner"
+
+#    FileUtils.cp("/Users/souki/editor_learner/lib/mondai/#{s}", "question.rb")
+    FileUtils.cp(File.join(src_dir, "lib/mondai/#{s}"), "question.rb")
     p random
     open
-    
+
     start_time = Time.now
     loop do
       sleep(1)
