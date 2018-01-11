@@ -1,1 +1,1 @@
-def initialize
+I am hero

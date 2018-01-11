@@ -1,7 +1,0 @@
-require 'benchmark'
-
-result = Benchmark.realtime do
-
-
-end
- puts " 足し算 #{result}s"

@@ -20,7 +20,7 @@ module RubyNovice
     def check(*argv)
       random = rand(4..8)
       p random
-      s = (#{random}.rb)
+      s = %(#{random}.rb)
 
       src_dir = File.expand_path('../..', __FILE__) # "Users/souki/editor_learner"
       
