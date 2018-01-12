@@ -14,19 +14,22 @@ module RubyNovice
         FileUtils.touch("#{@prac_dir}/answer.rb")
       end
     end
-         
 
-    desc 'check', 'check your typing skill.'
-    def check(*argv)
+    desc 'random_check', 'ramdom check your typing skill.'
+#        def sequntial_check(*argv)
+    def random_check(*argv)
       random = rand(4..8)
       p random
-      s = %(#{random}.rb)
+      s = "#{random}.rb"
+      puts "check starting ..."
+      puts "type following commands on the terminal"
+      puts "> emacs question.rb answer.rb"
 
       src_dir = File.expand_path('../..', __FILE__) # "Users/souki/editor_learner"
-      
-      FileUtils.cp(File.join(src_dir, "lib/mondai/#{s}"), "#{@prac_dir}/question.rb")
-      open
-      
+
+      FileUtils.cp(File.join(src_dir, "lib/question/ruby-1/#{s}"), "#{@prac_dir}/question.rb")
+      open_terminal
+
       start_time = Time.now
       loop do
         sleep(1)
@@ -38,11 +41,12 @@ module RubyNovice
       end
       end_time = Time.now
       time = end_time - start_time - 1
-      
+
       puts "#{time} sec"
     end
+
     no_commands do
-      def open
+      def open_terminal
         pwd = Dir.pwd
         system "osascript -e 'tell application \"Terminal\" to do script \"cd #{@prac_dir} \" '"
       end

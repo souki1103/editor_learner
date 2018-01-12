@@ -27,7 +27,7 @@ module RubyNovice
 
       src_dir = File.expand_path('../..', __FILE__) # "Users/souki/editor_learner"
 
-      FileUtils.cp(File.join(src_dir, "lib/mondai/#{s}"), "#{@prac_dir}/question.rb")
+      FileUtils.cp(File.join(src_dir, "lib/question/ruby_1/#{s}"), "#{@prac_dir}/question.rb")
       open_terminal
 
       start_time = Time.now
