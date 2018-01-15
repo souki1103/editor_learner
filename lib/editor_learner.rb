@@ -1,9 +1,10 @@
 require 'fileutils'
 require 'colorize'
 require 'thor'
+require "editor_learner/version"
 
-module RubyNovice
-  class CLI < Thor
+module EditorLearner
+	class CLI < Thor
 
     def initialize(*args)
       super

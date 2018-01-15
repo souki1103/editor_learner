@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby_novice (0.1.0)
+    editor_learner (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -30,10 +30,10 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.16)
   colorize
+  editor_learner!
   rake (~> 10.0)
   rspec (~> 3.0)
-  ruby_novice!
   thor
 
 BUNDLED WITH
-   1.16.1
+   1.16.0
