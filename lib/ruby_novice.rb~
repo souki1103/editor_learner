@@ -15,7 +15,7 @@ module RubyNovice
       end
     end
 
-    desc 'random_check', 'ramdom check your typing skill.'
+    desc 'random_check', 'ramdom check your typing and edit skill.'
 #        def sequntial_check(*argv)
     def random_check(*argv)
       random = rand(4..8)
