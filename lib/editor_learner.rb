@@ -19,7 +19,7 @@ module EditorLearner
     desc 'random_check', 'ramdom check your typing and edit skill.'
 #        def sequntial_check(*argv)
     def random_check(*argv)
-      random = rand(4..8)
+      random = rand(1..4)
       p random
       s = "#{random}.rb"
       puts "check starting ..."
