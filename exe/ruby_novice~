@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-
-require "ruby_novice"
-
-RubyNovice::CLI.start(ARGV)

@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require "editor_learner"
+EditorLearner::CLI.start(ARGV)
