@@ -1,9 +1,10 @@
 require 'fileutils'
 require 'colorize'
 require 'thor'
+require "editor_learner/version"
 
-module RubyNovice
-  class CLI < Thor
+module EditorLearner
+	class CLI < Thor
 
     def initialize(*args)
       super
@@ -15,10 +16,10 @@ module RubyNovice
       end
     end
 
-    desc 'random_check', 'ramdom check your typing skill.'
+    desc 'random_check', 'ramdom check your typing and edit skill.'
 #        def sequntial_check(*argv)
     def random_check(*argv)
-      random = rand(4..8)
+      random = rand(1..4)
       p random
       s = "#{random}.rb"
       puts "check starting ..."
@@ -27,7 +28,7 @@ module RubyNovice
 
       src_dir = File.expand_path('../..', __FILE__) # "Users/souki/editor_learner"
 
-      FileUtils.cp(File.join(src_dir, "lib/mondai/#{s}"), "#{@prac_dir}/question.rb")
+      FileUtils.cp(File.join(src_dir, "lib/question/ruby_1/#{s}"), "#{@prac_dir}/question.rb")
       open_terminal
 
       start_time = Time.now
