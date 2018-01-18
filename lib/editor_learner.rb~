@@ -18,12 +18,12 @@ module EditorLearner
 
     desc 'sequential_check', 'sequential check your typing and edit skill'
 
-    def sequential_check(*argv)
-      random_sequential = rand(1..4)
-      s = "#{random}.rb"
-      puts "check starting ..."
-      puts "typing following commands on the terminal"
-      puts "> emacs question.rb answer.rb"
+#    def sequential_check(*argv)
+#      random_sequential = rand(1..4)
+#      s = "#{random}.rb"
+#      puts "check starting ..."
+#      puts "typing following commands on the terminal"
+#      puts "> emacs question.rb answer.rb"
 
 
     desc 'random_check', 'ramdom check your typing and edit skill.'

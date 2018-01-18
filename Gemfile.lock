@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    editor_learner (0.1.0)
+    editor_learner (0.1.1)
 
 GEM
   remote: https://rubygems.org/
@@ -36,4 +36,4 @@ DEPENDENCIES
   thor
 
 BUNDLED WITH
-   1.16.0
+   1.16.1
