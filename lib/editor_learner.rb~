@@ -54,7 +54,6 @@ class CLI < Thor
         loop do
           sleep(1)
           if File.exist?("#{@prac_dir}/ruby_#{n}/#{m}.rb") && File.exist?("{@prac_dir}/ruby_#{n}/q.rb") then
-            sleep(1)
             if FileUtils.compare_file("#{prac_dir}/ruby_#{n}/#{m}.rb", "#{prac_dir}/ruby_#{n}/q.rb") == true then
               puts "ruby_#{n}/#{m}.rb is don!"
               break
