@@ -32,8 +32,9 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.16)
+  diff-lcs
   editor_learner!
-  minitest (~> 5.10.1)
+  minitest (~> 5.10.3)
   rake (~> 10.0)
   rspec (~> 3.0)
 

@@ -2,6 +2,7 @@ require 'fileutils'
 require 'colorize'
 require 'thor'
 require "editor_learner/version"
+require 'diff-lcs'
 
 module EditorLearner
 class CLI < Thor
@@ -27,12 +28,15 @@ class CLI < Thor
       }
     end
 
-    desc 'delete [number]', 'delete the ruby_file choose number to delete file'
+    desc 'delete [number~number]', 'delete the ruby_file choose number to delete file'
 
-    def delete(n)
-      if File.exist?("#{@prac_dir}/ruby_#{n}") == true then
-        system "rm -rf #{@prac_dir}/ruby_#{n}"
+    def delete(n, m)
+      range = n..m
+      range.each{|num|
+      if File.exist?("#{@prac_dir}/ruby_#{num}") == true then
+        system "rm -rf #{@prac_dir}/ruby_#{num}"
       end
+      }
     end
 
     desc 'sequential_check [lessen_number] [1~3number] ', 'sequential check your typing skill and edit skill choose number'
@@ -40,29 +44,41 @@ class CLI < Thor
     def sequential_check(*argv, n, m)
       l = m.to_i - 1
       @seq_dir = "lib/sequential_check_question"
+      @seqnm_dir = "lib/sequential_check_question/ruby_#{n}/#{m}.rb"
+      @pracnm_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/#{m}.rb"
+      @seqnq_dir = "lib/sequential_check_question/ruby_#{n}/q.rb"
+      @pracnq_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/q.rb"      
+      @seqnl_dir = "lib/sequential_check_question/ruby_#{n}/#{l}.rb"
+      @pracnl_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/#{l}.rb"      
       puts "check starting ..."
       puts "type following commands on the terminal"
       src_dir = File.expand_path('../..', __FILE__)
-      FileUtils.cp(File.join(src_dir, "#{@seq_dir}/ruby_#{n}/#{m}.rb"),  "#{@prac_dir}/ruby_#{n}/q.rb")
-      if l != 0 && FileUtils.compare_file("#{@prac_dir}/ruby_#{n}/#{m}.rb", "#{@prac_dir}/ruby_#{n}/q.rb") != true
-        FileUtils.compare_file("#{@prac_dir}/ruby_#{n}/#{l}.rb", (File.join(src_dir, "#{@seq_dir}/ruby_#{n}/#{l}.rb"))) == true
-        FileUtils.cp("#{@prac_dir}/ruby_#{n}/#{l}.rb", "#{@prac_dir}/ruby_#{n}/#{m}.rb")
+      FileUtils.cp(File.join(src_dir, "#{@seqnm_dir}"),  "#{@pracnq_dir}")
+      if l != 0 && FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") != true
+        FileUtils.compare_file("#{@pracnl_dir}", (File.join(src_dir, "#{@seqnl_dir}"))) == true
+        FileUtils.cp("#{@pracnl_dir}", "#{@pracnm_dir}")
       end
-
-      if FileUtils.compare_file("#{@prac_dir}/ruby_#{n}/#{m}.rb", "#{@prac_dir}/ruby_#{n}/q.rb") != true then
-        open_terminal
+      
+      if FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") != true then
+        system "osascript -e 'tell application \"Terminal\" to do script \"cd #{@prac_dir}/ruby_#{n} \" '"
         loop do
-          sleep(1)
-          if File.exist?("#{@prac_dir}/ruby_#{n}/#{m}.rb") && File.exist?("{@prac_dir}/ruby_#{n}/q.rb") then
-            sleep(1)
-            if FileUtils.compare_file("#{prac_dir}/ruby_#{n}/#{m}.rb", "#{prac_dir}/ruby_#{n}/q.rb") == true then
-              puts "ruby_#{n}/#{m}.rb is don!"
-              break
+          a = STDIN.gets.chomp
+          if a == "check" && FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") == true then
+            puts "ruby_#{n}/#{m}.rb is done!"
+            break
+          elsif FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") != true then
+            p "hello"
+            @inputdata = File.open("#{@pracnm_dir}").readlines
+            @checkdata = File.open("#{@pracnq_dir}").readlines
+            diffs = Diff::LCS.diff("#{@inputdata}", "#{@checkdata}")
+            diffs.each do |diff|
+              p diff
             end
           end
         end
+       else
+        p "ruby_#{n}/#{m}.rb is done"
       end
-      puts "ruby_#{n}/#{m}.rb is done!"
     end
 
     desc 'random_check', 'ramdom check your typing and edit skill.'
