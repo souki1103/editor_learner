@@ -1,8 +1,11 @@
+# coding: utf-8
 require 'fileutils'
 require 'colorize'
 require 'thor'
 require "editor_learner/version"
 require 'diff-lcs'
+require "open3"
+
 
 module EditorLearner
 class CLI < Thor
@@ -10,30 +13,42 @@ class CLI < Thor
     def initialize(*args)
       super
       @prac_dir="#{ENV['HOME']}/editor_learner/workshop"
+      @lib_location = Open3.capture3("gem environment gemdir")
+      @versions = Open3.capture3("gem list editor_learner")
+      @latest_version = @versions[0].chomp.gsub(' (', '-').gsub(')','')
+      @inject = File.join(@lib_location[0].chomp, "/gems/#{@latest_version}/lib")
       if File.exist?(@prac_dir) != true then
         FileUtils.mkdir_p(@prac_dir)
         FileUtils.touch("#{@prac_dir}/question.rb")
         FileUtils.touch("#{@prac_dir}/answer.rb")
         FileUtils.touch("#{@prac_dir}/random_h.rb")
-        FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/random_h.rb", "#{@prac_dir}/random_h.rb")
+        if File.exist?("#{@inject}/random_h.rb") == true then
+          FileUtils.cp("#{@inject}/random_h.rb", "#{@prac_dir}/random_h.rb")
+        elsif  
+          FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/random_h.rb", "#{@prac_dir}/random_h.rb")
+        end
       end
       range = 1..6
       range_ruby = 1..3
-      range.each{|num|
-      if File.exist?("#{@prac_dir}/ruby_#{num}") != true then
+      range.each do|num|
+        if File.exist?("#{@prac_dir}/ruby_#{num}") != true then
           FileUtils.mkdir("#{@prac_dir}/ruby_#{num}")
           FileUtils.touch("#{@prac_dir}/ruby_#{num}/q.rb")
           FileUtils.touch("#{@prac_dir}/ruby_#{num}/sequential_h.rb")
-          FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
-          range_ruby.each{|n|
+          if File.exist?("#{@inject}/sequential_h.rb") == true then
+            FileUtils.cp("#{@inject}/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
+          else
+            FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
+          end
+          range_ruby.each do|n|
             FileUtils.touch("#{@prac_dir}/ruby_#{num}/#{n}.rb")
-          }
+          end
         end
-      }
+      end
     end
-
+    
     desc 'delete [number~number]', 'delete the ruby_file choose number to delete file'
-
+    
     def delete(n, m)
       range = n..m
       range.each{|num|
@@ -46,6 +61,7 @@ class CLI < Thor
     desc 'sequential_check [lessen_number] [1~3number] ','sequential check your typing skill and edit skill choose number'
     def sequential_check(*argv, n, m)
       l = m.to_i - 1
+     
       @seq_dir = "lib/sequential_check_question"
       q_rb = "ruby_#{n}/#{m}.rb"
       @seqnm_dir = File.join(@seq_dir,q_rb)
@@ -57,7 +73,11 @@ class CLI < Thor
       puts "check starting ..."
       puts "type following commands on the terminal"
       src_dir = File.expand_path('../..', __FILE__)
-      FileUtils.cp(File.join(src_dir, "#{@seqnm_dir}"),  "#{@pracnq_dir}")
+      if File.exist?("#{@inject}/sequential_check_question/ruby_#{n}/#{m}.rb") == true then
+        FileUtils.cp("#{@inject}/sequential_check_question/ruby_#{n}/#{m}.rb", "#{@pracnq_dir}")
+      elsif
+        FileUtils.cp(File.join(src_dir, "#{@seqnm_dir}"),  "#{@pracnq_dir}")
+      end
       if l != 0 && FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") != true
         FileUtils.compare_file("#{@pracnl_dir}", (File.join(src_dir, "#{@seqnl_dir}"))) == true
         FileUtils.cp("#{@pracnl_dir}", "#{@pracnm_dir}")
