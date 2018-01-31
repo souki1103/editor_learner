@@ -16,7 +16,7 @@ class CLI < Thor
       @lib_location = Open3.capture3("gem environment gemdir")
       @versions = Open3.capture3("gem list editor_learner")
       @latest_version = @versions[0].chomp.gsub(' (', '-').gsub(')','')
-      @inject = File.join(@lib_location[0].chomp, "/gems/#{@latest_version}/lib")
+      p @inject = File.join(@lib_location[0].chomp, "/gems/#{@latest_version}/lib")
       if File.exist?(@prac_dir) != true then
         FileUtils.mkdir_p(@prac_dir)
         FileUtils.touch("#{@prac_dir}/question.rb")
@@ -35,11 +35,11 @@ class CLI < Thor
           FileUtils.mkdir("#{@prac_dir}/ruby_#{num}")
           FileUtils.touch("#{@prac_dir}/ruby_#{num}/q.rb")
           FileUtils.touch("#{@prac_dir}/ruby_#{num}/sequential_h.rb")
-          if File.exist?("#{@inject}/sequential_h.rb") == true then
+          #if File.exist?("#{@inject}/sequential_h.rb") == true then
             FileUtils.cp("#{@inject}/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
-          else
-            FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
-          end
+          #else
+           # FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
+          #end
           range_ruby.each do|n|
             FileUtils.touch("#{@prac_dir}/ruby_#{num}/#{n}.rb")
           end
