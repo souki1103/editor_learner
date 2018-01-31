@@ -1,8 +1,10 @@
 PATH
   remote: .
   specs:
-    editor_learner (0.1.2)
+    editor_learner (1.0.0)
       colorize
+      diff-lcs
+      minitest (~> 5.10.3)
       thor
 
 GEM
@@ -32,9 +34,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.16)
-  diff-lcs
   editor_learner!
-  minitest (~> 5.10.3)
   rake (~> 10.0)
   rspec (~> 3.0)
 

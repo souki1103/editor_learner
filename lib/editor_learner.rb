@@ -14,6 +14,8 @@ class CLI < Thor
         FileUtils.mkdir_p(@prac_dir)
         FileUtils.touch("#{@prac_dir}/question.rb")
         FileUtils.touch("#{@prac_dir}/answer.rb")
+        FileUtils.touch("#{@prac_dir}/random_h.rb")
+        FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/random_h.rb", "#{@prac_dir}/random_h.rb")
       end
       range = 1..6
       range_ruby = 1..3
@@ -21,6 +23,8 @@ class CLI < Thor
       if File.exist?("#{@prac_dir}/ruby_#{num}") != true then
           FileUtils.mkdir("#{@prac_dir}/ruby_#{num}")
           FileUtils.touch("#{@prac_dir}/ruby_#{num}/q.rb")
+          FileUtils.touch("#{@prac_dir}/ruby_#{num}/sequential_h.rb")
+          FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
           range_ruby.each{|n|
             FileUtils.touch("#{@prac_dir}/ruby_#{num}/#{n}.rb")
           }
@@ -39,12 +43,12 @@ class CLI < Thor
       }
     end
 
-    desc 'sequential_check [lessen_number] [1~3number] ', 'sequential check your typing skill and edit skill choose number'
-
+    desc 'sequential_check [lessen_number] [1~3number] ','sequential check your typing skill and edit skill choose number'
     def sequential_check(*argv, n, m)
       l = m.to_i - 1
       @seq_dir = "lib/sequential_check_question"
-      @seqnm_dir = "lib/sequential_check_question/ruby_#{n}/#{m}.rb"
+      q_rb = "ruby_#{n}/#{m}.rb"
+      @seqnm_dir = File.join(@seq_dir,q_rb)
       @pracnm_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/#{m}.rb"
       @seqnq_dir = "lib/sequential_check_question/ruby_#{n}/q.rb"
       @pracnq_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/q.rb"      
@@ -59,7 +63,7 @@ class CLI < Thor
         FileUtils.cp("#{@pracnl_dir}", "#{@pracnm_dir}")
       end
       
-      if FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") != true then
+      if FileUtils.compare_file(@pracnm_dir, @pracnq_dir) != true then
         system "osascript -e 'tell application \"Terminal\" to do script \"cd #{@prac_dir}/ruby_#{n} \" '"
         loop do
           a = STDIN.gets.chomp
@@ -67,7 +71,6 @@ class CLI < Thor
             puts "ruby_#{n}/#{m}.rb is done!"
             break
           elsif FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") != true then
-            p "hello"
             @inputdata = File.open("#{@pracnm_dir}").readlines
             @checkdata = File.open("#{@pracnq_dir}").readlines
             diffs = Diff::LCS.diff("#{@inputdata}", "#{@checkdata}")
@@ -77,12 +80,11 @@ class CLI < Thor
           end
         end
        else
-        p "ruby_#{n}/#{m}.rb is done"
+        p "ruby_#{n}/#{m}.rb is finished!"
       end
     end
 
     desc 'random_check', 'ramdom check your typing and edit skill.'
-
     def random_check(*argv)
       random = rand(1..4)
       p random
@@ -93,7 +95,7 @@ class CLI < Thor
 
       src_dir = File.expand_path('../..', __FILE__) # "Users/souki/editor_learner"
 
-      FileUtils.cp(File.join(src_dir, "lib/question/test/#{s}"), "#{@prac_dir}/question.rb")
+      FileUtils.cp(File.join(src_dir, "lib/random_check_question//#{s}"), "#{@prac_dir}/question.rb")
       open_terminal
 
       start_time = Time.now
