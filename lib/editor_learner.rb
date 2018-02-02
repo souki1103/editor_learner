@@ -106,7 +106,7 @@ class CLI < Thor
 
     desc 'random_check', 'ramdom check your typing and edit skill.'
     def random_check(*argv)
-      random = rand(1..4)
+      random = rand(1..15)
       p random
       s = "#{random}.rb"
       puts "check starting ..."
@@ -114,25 +114,34 @@ class CLI < Thor
       puts "> emacs question.rb answer.rb"
 
       src_dir = File.expand_path('../..', __FILE__) # "Users/souki/editor_learner"
-
-      FileUtils.cp(File.join(src_dir, "lib/random_check_question//#{s}"), "#{@prac_dir}/question.rb")
+      if File.exist?("#{@inject}/random_check_question/#{s}") == true then
+        FileUtils.cp("#{@inject}/random_check_question/#{s}", "#{@prac_dir}/question.rb")
+      elsif
+        FileUtils.cp(File.join(src_dir, "lib/random_check_question/#{s}"),  "#{@prac_dir}/question.rb")
+      end
       open_terminal
-
+      
       start_time = Time.now
       loop do
-        sleep(1)
-        if File.exist?("#{@prac_dir}/question.rb") && File.exist?("#{@prac_dir}/answer.rb") then
-          if FileUtils.compare_file("#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") == true then
-            break
+        a = STDIN.gets.chomp
+        if a == "check" && FileUtils.compare_file("#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") == true then
+          puts "It have been finished!"
+          break
+        elsif FileUtils.compare_file("#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") != true then
+          @inputdata = File.open("#{@prac_dir}/answer.rb").readlines
+          @checkdata = File.open("#{@prac_dir}/question.rb").readlines
+          diffs = Diff::LCS.diff("#{@inputdata}", "#{@checkdata}")
+          diffs.each do |diff|
+            p diff
           end
         end
       end
       end_time = Time.now
       time = end_time - start_time - 1
-
+      
       puts "#{time} sec"
     end
-
+    
     no_commands do
       def open_terminal
         pwd = Dir.pwd

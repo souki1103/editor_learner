@@ -18,5 +18,6 @@ def full_name(user)
 end
 
 user.each do |user|
-  puts"氏名: #{full_name(user)}, 年齢: #{user.age}"
+  puts "氏名: #{full_name(user)}, 年齢: #{user.age}"
 end
+
