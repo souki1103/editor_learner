@@ -11,3 +11,5 @@
 # c-d: delete character
 # c-x c-s: save file
 # c-x c-c: quit edit
+# c-k: kill the line
+# c-y: paste of killed line

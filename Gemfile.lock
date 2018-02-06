@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    editor_learner (1.1.0)
+    editor_learner (1.1.2)
       colorize
       diff-lcs
       minitest (~> 5.10.3)
