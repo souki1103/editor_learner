@@ -58,7 +58,7 @@ class CLI < Thor
       }
     end
 
-    desc 'sequential_check [lessen_number] [1~3number] ','sequential check your typing skill and edit skill choose number'
+    desc 'sequential_check [lesson_number] [1~3number] ','sequential check your typing skill and edit skill choose number'
     def sequential_check(*argv, n, m)
       l = m.to_i - 1
      

@@ -1,24 +1,6 @@
-# coding: utf-8
-class User
-  attr_reader :first_name, :last_name, :age
+numbers = [1, 2, 3, 4, 5, 6]
+even_numbers = numbers.select { |n| n.even? }
+even_numbers
 
-  def initialize(first_name, last_name, age)
-    @first_name = first_name
-    @last_name = last_name
-    @age = age
-  end
-end
-
-users = []
-users << User.new('Alice', 'Ruby', 20)
-users << User.new('Bob', 'Python', 30)
-
-def full_name(user)
-  "#{user.first_name} #{user.last_name}"
-end
-
-user.each do |user|
-  puts "氏名: #{full_name(user)}, 年齢: #{user.age}"
-end
-
-
+non_multiple_of_three = numbers.reject{ |n| n % 3 == 0 }
+non_multiple_of_three
