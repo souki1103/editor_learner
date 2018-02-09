@@ -1,3 +1,4 @@
+# coding: utf-8
 person = {
   name: 'Alice'
   age: 20,

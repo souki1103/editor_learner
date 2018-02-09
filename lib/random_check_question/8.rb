@@ -1,3 +1,4 @@
+# coding: utf-8
 numbers = [1, 2, 3, 4, 5, 6]
 even_numbers = numbers.select { |n| n.even? }
 even_numbers

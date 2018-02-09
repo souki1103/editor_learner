@@ -1,3 +1,4 @@
+# coding: utf-8
 def liquid?(temperature)
   0 <= temperature && temperature < 100
 end

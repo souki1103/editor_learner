@@ -1,3 +1,4 @@
+# coding: utf-8
 def charge(age)
   case age
   when 0..5

@@ -1,0 +1,172 @@
+\chapter{謝辞}\label{ux8b1dux8f9e}
+
+本研究を行うにあたり，終始多大なるご指導，御鞭撻をいただいた西谷滋人教授に対し，深く御礼申し上げます．また，本研究の進行に伴い，様々な助力，知識の供給をいただきました西谷研究室の同輩，先輩方に心から感謝の意を示します．本当にありがとうございました．
+
+    \section{付録A
+プログラムのソースコード}\label{ux4ed8ux9332a-ux30d7ux30edux30b0ux30e9ux30e0ux306eux30bdux30fcux30b9ux30b3ux30fcux30c9}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# coding: utf-8}
+\NormalTok{require }\StringTok{'fileutils'}
+\NormalTok{require }\StringTok{'colorize'}
+\NormalTok{require }\StringTok{'thor'}
+\NormalTok{require }\StringTok{"editor_learner/version"}
+\NormalTok{require }\StringTok{'diff-lcs'}
+\NormalTok{require }\StringTok{"open3"}
+
+
+\KeywordTok{module} \DataTypeTok{EditorLearner}
+\KeywordTok{class} \DataTypeTok{CLI}\NormalTok{ < }\DataTypeTok{Thor}
+
+    \KeywordTok{def}\NormalTok{ initialize(*args)}
+      \DecValTok{super}
+      \OtherTok{@prac_dir}\NormalTok{=}\StringTok{"}\OtherTok{#\{}\DataTypeTok{ENV}\NormalTok{[}\StringTok{'HOME'}\NormalTok{]}\OtherTok{\}}\StringTok{/editor_learner/workshop"}
+      \OtherTok{@lib_location}\NormalTok{ = }\DataTypeTok{Open3}\NormalTok{.capture3(}\StringTok{"gem environment gemdir"}\NormalTok{)}
+      \OtherTok{@versions}\NormalTok{ = }\DataTypeTok{Open3}\NormalTok{.capture3(}\StringTok{"gem list editor_learner"}\NormalTok{)}
+\NormalTok{      p }\OtherTok{@latest_version}\NormalTok{ = }\OtherTok{@versions}\NormalTok{[}\DecValTok{0}\NormalTok{].chomp.gsub(}\StringTok{' ('}\NormalTok{, }\CharTok{'-'}\NormalTok{).gsub(}\CharTok{')'}\NormalTok{,}\StringTok{''}\NormalTok{)}
+      \OtherTok{@inject}\NormalTok{ = }\DataTypeTok{File}\NormalTok{.join(}\OtherTok{@lib_location}\NormalTok{[}\DecValTok{0}\NormalTok{].chomp, }\StringTok{"/gems/}\OtherTok{#\{@latest_version\}}\StringTok{/lib"}\NormalTok{)}
+      \KeywordTok{if} \DataTypeTok{File}\NormalTok{.exist?(}\OtherTok{@prac_dir}\NormalTok{) != }\DecValTok{true} \KeywordTok{then}
+        \DataTypeTok{FileUtils}\NormalTok{.mkdir_p(}\OtherTok{@prac_dir}\NormalTok{)}
+        \DataTypeTok{FileUtils}\NormalTok{.touch(}\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/question.rb"}\NormalTok{)}
+        \DataTypeTok{FileUtils}\NormalTok{.touch(}\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/answer.rb"}\NormalTok{)}
+        \DataTypeTok{FileUtils}\NormalTok{.touch(}\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/random_h.rb"}\NormalTok{)}
+        \KeywordTok{if} \DataTypeTok{File}\NormalTok{.exist?(}\StringTok{"}\OtherTok{#\{@inject\}}\StringTok{/random_h.rb"}\NormalTok{) == }\DecValTok{true} \KeywordTok{then}
+          \DataTypeTok{FileUtils}\NormalTok{.cp(}\StringTok{"}\OtherTok{#\{@inject\}}\StringTok{/random_h.rb"}\NormalTok{, }\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/random_h.rb"}\NormalTok{)}
+        \KeywordTok{elsif}  
+          \DataTypeTok{FileUtils}\NormalTok{.cp(}\StringTok{"}\OtherTok{#\{}\DataTypeTok{ENV}\NormalTok{[}\StringTok{'HOME'}\NormalTok{]}\OtherTok{\}}\StringTok{/editor_learner/lib/random_h.rb"}\NormalTok{, }\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/random_h.rb"}\NormalTok{)}
+        \KeywordTok{end}
+      \KeywordTok{end}
+\NormalTok{      range = }\DecValTok{1}\NormalTok{..}\DecValTok{6}
+\NormalTok{      range_ruby = }\DecValTok{1}\NormalTok{..}\DecValTok{3}
+\NormalTok{      range.each }\KeywordTok{do}\NormalTok{|num|}
+        \KeywordTok{if} \DataTypeTok{File}\NormalTok{.exist?(}\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/ruby_}\OtherTok{#\{}\NormalTok{num}\OtherTok{\}}\StringTok{"}\NormalTok{) != }\DecValTok{true} \KeywordTok{then}
+          \DataTypeTok{FileUtils}\NormalTok{.mkdir(}\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/ruby_}\OtherTok{#\{}\NormalTok{num}\OtherTok{\}}\StringTok{"}\NormalTok{)}
+          \DataTypeTok{FileUtils}\NormalTok{.touch(}\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/ruby_}\OtherTok{#\{}\NormalTok{num}\OtherTok{\}}\StringTok{/q.rb"}\NormalTok{)}
+          \DataTypeTok{FileUtils}\NormalTok{.touch(}\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/ruby_}\OtherTok{#\{}\NormalTok{num}\OtherTok{\}}\StringTok{/sequential_h.rb"}\NormalTok{)}
+          \KeywordTok{if} \DataTypeTok{File}\NormalTok{.exist?(}\StringTok{"}\OtherTok{#\{@inject\}}\StringTok{/sequential_h.rb"}\NormalTok{) == }\DecValTok{true} \KeywordTok{then}
+            \DataTypeTok{FileUtils}\NormalTok{.cp(}\StringTok{"}\OtherTok{#\{@inject\}}\StringTok{/sequential_h.rb"}\NormalTok{, }\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/ruby_}\OtherTok{#\{}\NormalTok{num}\OtherTok{\}}\StringTok{/sequential_h.rb"}\NormalTok{)}
+          \KeywordTok{else}
+            \DataTypeTok{FileUtils}\NormalTok{.cp(}\StringTok{"}\OtherTok{#\{}\DataTypeTok{ENV}\NormalTok{[}\StringTok{'HOME'}\NormalTok{]}\OtherTok{\}}\StringTok{/editor_learner/lib/sequential_h.rb"}\NormalTok{, }\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/ruby_}\OtherTok{#\{}\NormalTok{num}\OtherTok{\}}\StringTok{/sequential_h.rb"}\NormalTok{)}
+          \KeywordTok{end}
+\NormalTok{          range_ruby.each }\KeywordTok{do}\NormalTok{|n|}
+            \DataTypeTok{FileUtils}\NormalTok{.touch(}\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/ruby_}\OtherTok{#\{}\NormalTok{num}\OtherTok{\}}\StringTok{/}\OtherTok{#\{}\NormalTok{n}\OtherTok{\}}\StringTok{.rb"}\NormalTok{)}
+          \KeywordTok{end}
+        \KeywordTok{end}
+      \KeywordTok{end}
+    \KeywordTok{end}
+    
+\NormalTok{    desc }\StringTok{'delete [number~number]'}\NormalTok{, }\StringTok{'delete the ruby_file choose number to delete file'}
+    
+    \KeywordTok{def}\NormalTok{ delete(n, m)}
+\NormalTok{      range = n..m}
+\NormalTok{      range.each\{|num|}
+      \KeywordTok{if} \DataTypeTok{File}\NormalTok{.exist?(}\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/ruby_}\OtherTok{#\{}\NormalTok{num}\OtherTok{\}}\StringTok{"}\NormalTok{) == }\DecValTok{true} \KeywordTok{then}
+\NormalTok{        system }\StringTok{"rm -rf }\OtherTok{#\{@prac_dir\}}\StringTok{/ruby_}\OtherTok{#\{}\NormalTok{num}\OtherTok{\}}\StringTok{"}
+      \KeywordTok{end}
+\NormalTok{      \}}
+    \KeywordTok{end}
+
+\NormalTok{    desc }\StringTok{'sequential_check [lesson_number] [1~3number] '}\NormalTok{,}\StringTok{'sequential check your typing skill and edit skill choose number'}
+    \KeywordTok{def}\NormalTok{ sequential_check(*argv, n, m)}
+\NormalTok{      l = m.to_i - }\DecValTok{1}
+     
+      \OtherTok{@seq_dir}\NormalTok{ = }\StringTok{"lib/sequential_check_question"}
+\NormalTok{      q_rb = }\StringTok{"ruby_}\OtherTok{#\{}\NormalTok{n}\OtherTok{\}}\StringTok{/}\OtherTok{#\{}\NormalTok{m}\OtherTok{\}}\StringTok{.rb"}
+      \OtherTok{@seqnm_dir}\NormalTok{ = }\DataTypeTok{File}\NormalTok{.join(}\OtherTok{@seq_dir}\NormalTok{,q_rb)}
+      \OtherTok{@pracnm_dir}\NormalTok{ = }\StringTok{"}\OtherTok{#\{}\DataTypeTok{ENV}\NormalTok{[}\StringTok{'HOME'}\NormalTok{]}\OtherTok{\}}\StringTok{/editor_learner/workshop/ruby_}\OtherTok{#\{}\NormalTok{n}\OtherTok{\}}\StringTok{/}\OtherTok{#\{}\NormalTok{m}\OtherTok{\}}\StringTok{.rb"}
+      \OtherTok{@seqnq_dir}\NormalTok{ = }\StringTok{"lib/sequential_check_question/ruby_}\OtherTok{#\{}\NormalTok{n}\OtherTok{\}}\StringTok{/q.rb"}
+      \OtherTok{@pracnq_dir}\NormalTok{ = }\StringTok{"}\OtherTok{#\{}\DataTypeTok{ENV}\NormalTok{[}\StringTok{'HOME'}\NormalTok{]}\OtherTok{\}}\StringTok{/editor_learner/workshop/ruby_}\OtherTok{#\{}\NormalTok{n}\OtherTok{\}}\StringTok{/q.rb"}      
+      \OtherTok{@seqnl_dir}\NormalTok{ = }\StringTok{"lib/sequential_check_question/ruby_}\OtherTok{#\{}\NormalTok{n}\OtherTok{\}}\StringTok{/}\OtherTok{#\{}\NormalTok{l}\OtherTok{\}}\StringTok{.rb"}
+      \OtherTok{@pracnl_dir}\NormalTok{ = }\StringTok{"}\OtherTok{#\{}\DataTypeTok{ENV}\NormalTok{[}\StringTok{'HOME'}\NormalTok{]}\OtherTok{\}}\StringTok{/editor_learner/workshop/ruby_}\OtherTok{#\{}\NormalTok{n}\OtherTok{\}}\StringTok{/}\OtherTok{#\{}\NormalTok{l}\OtherTok{\}}\StringTok{.rb"}      
+\NormalTok{      puts }\StringTok{"check starting ..."}
+\NormalTok{      puts }\StringTok{"type following commands on the terminal"}
+\NormalTok{      src_dir = }\DataTypeTok{File}\NormalTok{.expand_path(}\StringTok{'../..'}\NormalTok{, }\DecValTok{__FILE__}\NormalTok{)}
+      \KeywordTok{if} \DataTypeTok{File}\NormalTok{.exist?(}\StringTok{"}\OtherTok{#\{@inject\}}\StringTok{/sequential_check_question/ruby_}\OtherTok{#\{}\NormalTok{n}\OtherTok{\}}\StringTok{/}\OtherTok{#\{}\NormalTok{m}\OtherTok{\}}\StringTok{.rb"}\NormalTok{) == }\DecValTok{true} \KeywordTok{then}
+        \DataTypeTok{FileUtils}\NormalTok{.cp(}\StringTok{"}\OtherTok{#\{@inject\}}\StringTok{/sequential_check_question/ruby_}\OtherTok{#\{}\NormalTok{n}\OtherTok{\}}\StringTok{/}\OtherTok{#\{}\NormalTok{m}\OtherTok{\}}\StringTok{.rb"}\NormalTok{, }\StringTok{"}\OtherTok{#\{@pracnq_dir\}}\StringTok{"}\NormalTok{)}
+      \KeywordTok{elsif}
+        \DataTypeTok{FileUtils}\NormalTok{.cp(}\DataTypeTok{File}\NormalTok{.join(src_dir, }\StringTok{"}\OtherTok{#\{@seqnm_dir\}}\StringTok{"}\NormalTok{),  }\StringTok{"}\OtherTok{#\{@pracnq_dir\}}\StringTok{"}\NormalTok{)}
+      \KeywordTok{end}
+      \KeywordTok{if}\NormalTok{ l != }\DecValTok{0}\NormalTok{ && }\DataTypeTok{FileUtils}\NormalTok{.compare_file(}\StringTok{"}\OtherTok{#\{@pracnm_dir\}}\StringTok{"}\NormalTok{, }\StringTok{"}\OtherTok{#\{@pracnq_dir\}}\StringTok{"}\NormalTok{) != }\DecValTok{true}
+        \DataTypeTok{FileUtils}\NormalTok{.compare_file(}\StringTok{"}\OtherTok{#\{@pracnl_dir\}}\StringTok{"}\NormalTok{, (}\DataTypeTok{File}\NormalTok{.join(src_dir, }\StringTok{"}\OtherTok{#\{@seqnl_dir\}}\StringTok{"}\NormalTok{))) == }\DecValTok{true}
+        \DataTypeTok{FileUtils}\NormalTok{.cp(}\StringTok{"}\OtherTok{#\{@pracnl_dir\}}\StringTok{"}\NormalTok{, }\StringTok{"}\OtherTok{#\{@pracnm_dir\}}\StringTok{"}\NormalTok{)}
+      \KeywordTok{end}
+      
+      \KeywordTok{if} \DataTypeTok{FileUtils}\NormalTok{.compare_file(}\OtherTok{@pracnm_dir}\NormalTok{, }\OtherTok{@pracnq_dir}\NormalTok{) != }\DecValTok{true} \KeywordTok{then}
+\NormalTok{        system }\StringTok{"osascript -e 'tell application \textbackslash{}"Terminal\textbackslash{}" to do script \textbackslash{}"cd }\OtherTok{#\{@prac_dir\}}\StringTok{/ruby_}\OtherTok{#\{}\NormalTok{n}\OtherTok{\}}\StringTok{ \textbackslash{}" '"}
+\NormalTok{        loop }\KeywordTok{do}
+\NormalTok{          a = }\DataTypeTok{STDIN}\NormalTok{.gets.chomp}
+          \KeywordTok{if}\NormalTok{ a == }\StringTok{"check"}\NormalTok{ && }\DataTypeTok{FileUtils}\NormalTok{.compare_file(}\StringTok{"}\OtherTok{#\{@pracnm_dir\}}\StringTok{"}\NormalTok{, }\StringTok{"}\OtherTok{#\{@pracnq_dir\}}\StringTok{"}\NormalTok{) == }\DecValTok{true} \KeywordTok{then}
+\NormalTok{            puts }\StringTok{"ruby_}\OtherTok{#\{}\NormalTok{n}\OtherTok{\}}\StringTok{/}\OtherTok{#\{}\NormalTok{m}\OtherTok{\}}\StringTok{.rb is done!"}
+            \KeywordTok{break}
+          \KeywordTok{elsif} \DataTypeTok{FileUtils}\NormalTok{.compare_file(}\StringTok{"}\OtherTok{#\{@pracnm_dir\}}\StringTok{"}\NormalTok{, }\StringTok{"}\OtherTok{#\{@pracnq_dir\}}\StringTok{"}\NormalTok{) != }\DecValTok{true} \KeywordTok{then}
+            \OtherTok{@inputdata}\NormalTok{ = }\DataTypeTok{File}\NormalTok{.open(}\StringTok{"}\OtherTok{#\{@pracnm_dir\}}\StringTok{"}\NormalTok{).readlines}
+            \OtherTok{@checkdata}\NormalTok{ = }\DataTypeTok{File}\NormalTok{.open(}\StringTok{"}\OtherTok{#\{@pracnq_dir\}}\StringTok{"}\NormalTok{).readlines}
+\NormalTok{            diffs = }\DataTypeTok{Diff}\NormalTok{::}\DataTypeTok{LCS}\NormalTok{.diff(}\StringTok{"}\OtherTok{#\{@inputdata\}}\StringTok{"}\NormalTok{, }\StringTok{"}\OtherTok{#\{@checkdata\}}\StringTok{"}\NormalTok{)}
+\NormalTok{            diffs.each }\KeywordTok{do}\NormalTok{ |diff|}
+\NormalTok{              p diff}
+            \KeywordTok{end}
+          \KeywordTok{end}
+        \KeywordTok{end}
+       \KeywordTok{else}
+\NormalTok{        p }\StringTok{"ruby_}\OtherTok{#\{}\NormalTok{n}\OtherTok{\}}\StringTok{/}\OtherTok{#\{}\NormalTok{m}\OtherTok{\}}\StringTok{.rb is finished!"}
+      \KeywordTok{end}
+    \KeywordTok{end}
+
+\NormalTok{    desc }\StringTok{'random_check'}\NormalTok{, }\StringTok{'ramdom check your typing and edit skill.'}
+    \KeywordTok{def}\NormalTok{ random_check(*argv)}
+\NormalTok{      random = rand(}\DecValTok{1}\NormalTok{..}\DecValTok{15}\NormalTok{)}
+\NormalTok{      p random}
+\NormalTok{      s = }\StringTok{"}\OtherTok{#\{}\NormalTok{random}\OtherTok{\}}\StringTok{.rb"}
+\NormalTok{      puts }\StringTok{"check starting ..."}
+\NormalTok{      puts }\StringTok{"type following commands on the terminal"}
+\NormalTok{      puts }\StringTok{"> emacs question.rb answer.rb"}
+
+\NormalTok{      src_dir = }\DataTypeTok{File}\NormalTok{.expand_path(}\StringTok{'../..'}\NormalTok{, }\DecValTok{__FILE__}\NormalTok{) }\CommentTok{# "Users/souki/editor_learner"}
+      \KeywordTok{if} \DataTypeTok{File}\NormalTok{.exist?(}\StringTok{"}\OtherTok{#\{@inject\}}\StringTok{/random_check_question/}\OtherTok{#\{}\NormalTok{s}\OtherTok{\}}\StringTok{"}\NormalTok{) == }\DecValTok{true} \KeywordTok{then}
+        \DataTypeTok{FileUtils}\NormalTok{.cp(}\StringTok{"}\OtherTok{#\{@inject\}}\StringTok{/random_check_question/}\OtherTok{#\{}\NormalTok{s}\OtherTok{\}}\StringTok{"}\NormalTok{, }\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/question.rb"}\NormalTok{)}
+      \KeywordTok{else}
+        \DataTypeTok{FileUtils}\NormalTok{.cp(}\DataTypeTok{File}\NormalTok{.join(src_dir, }\StringTok{"lib/random_check_question/}\OtherTok{#\{}\NormalTok{s}\OtherTok{\}}\StringTok{"}\NormalTok{),  }\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/question.rb"}\NormalTok{)}
+      \KeywordTok{end}
+\NormalTok{      open_terminal}
+      
+\NormalTok{      start_time = }\DataTypeTok{Time}\NormalTok{.now}
+\NormalTok{      loop }\KeywordTok{do}
+\NormalTok{        a = }\DataTypeTok{STDIN}\NormalTok{.gets.chomp}
+        \KeywordTok{if}\NormalTok{ a == }\StringTok{"check"}\NormalTok{ && }\DataTypeTok{FileUtils}\NormalTok{.compare_file(}\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/question.rb"}\NormalTok{, }\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/answer.rb"}\NormalTok{) == }\DecValTok{true} \KeywordTok{then}
+\NormalTok{          puts }\StringTok{"It have been finished!"}
+          \KeywordTok{break}
+        \KeywordTok{elsif} \DataTypeTok{FileUtils}\NormalTok{.compare_file(}\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/question.rb"}\NormalTok{, }\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/answer.rb"}\NormalTok{) != }\DecValTok{true} \KeywordTok{then}
+          \OtherTok{@inputdata}\NormalTok{ = }\DataTypeTok{File}\NormalTok{.open(}\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/answer.rb"}\NormalTok{).readlines}
+          \OtherTok{@checkdata}\NormalTok{ = }\DataTypeTok{File}\NormalTok{.open(}\StringTok{"}\OtherTok{#\{@prac_dir\}}\StringTok{/question.rb"}\NormalTok{).readlines}
+\NormalTok{          diffs = }\DataTypeTok{Diff}\NormalTok{::}\DataTypeTok{LCS}\NormalTok{.diff(}\StringTok{"}\OtherTok{#\{@inputdata\}}\StringTok{"}\NormalTok{, }\StringTok{"}\OtherTok{#\{@checkdata\}}\StringTok{"}\NormalTok{)}
+\NormalTok{          diffs.each }\KeywordTok{do}\NormalTok{ |diff|}
+\NormalTok{            p diff}
+          \KeywordTok{end}
+        \KeywordTok{end}
+      \KeywordTok{end}
+\NormalTok{      end_time = }\DataTypeTok{Time}\NormalTok{.now}
+\NormalTok{      time = end_time - start_time - }\DecValTok{1}
+      
+\NormalTok{      puts }\StringTok{"}\OtherTok{#\{}\NormalTok{time}\OtherTok{\}}\StringTok{ sec"}
+    \KeywordTok{end}
+    
+\NormalTok{    no_commands }\KeywordTok{do}
+      \KeywordTok{def}\NormalTok{ open_terminal}
+\NormalTok{        pwd = }\DataTypeTok{Dir}\NormalTok{.pwd}
+\NormalTok{        system }\StringTok{"osascript -e 'tell application \textbackslash{}"Terminal\textbackslash{}" to do script \textbackslash{}"cd }\OtherTok{#\{@prac_dir\}}\StringTok{ \textbackslash{}" '"}
+      \KeywordTok{end}
+    \KeywordTok{end}
+  \KeywordTok{end}
+\KeywordTok{end}
+\end{Highlighting}
+\end{Shaded}
+
+    \section{参考文献}\label{ux53c2ux8003ux6587ux732e}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

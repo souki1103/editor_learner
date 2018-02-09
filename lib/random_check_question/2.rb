@@ -1,3 +1,4 @@
+# coding: utf-8
 def greeting(country)
   if country == 'japan'
     'こんにちは'

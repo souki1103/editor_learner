@@ -116,7 +116,7 @@ class CLI < Thor
       src_dir = File.expand_path('../..', __FILE__) # "Users/souki/editor_learner"
       if File.exist?("#{@inject}/random_check_question/#{s}") == true then
         FileUtils.cp("#{@inject}/random_check_question/#{s}", "#{@prac_dir}/question.rb")
-      elsif
+      else
         FileUtils.cp(File.join(src_dir, "lib/random_check_question/#{s}"),  "#{@prac_dir}/question.rb")
       end
       open_terminal
