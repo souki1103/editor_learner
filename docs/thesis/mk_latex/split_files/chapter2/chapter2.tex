@@ -2,9 +2,12 @@
 
     \section{Emacs}\label{emacs}
 
-    本研究において使用するeditorはEmacsである．ツールはプログラマ自身の手の延長である．これは他のどのようなソフトウェアツールよりもEditorに対して当てはまる．テキストはプログラミングにおける最も基本的な生素材なので，できる限り簡単に操作できる必要があります．
+    本研究において使用するeditorはEmacsである．
+\begin{quotation}
+ツールはプログラマ自身の手の延長である．これは他のどのようなソフトウェアツールよりもEditorに対して当てはまる．テキストはプログラミングにおける最も基本的な生素材なので，できる限り簡単に操作できる必要があります． \cite{達人プログラマー} 
+\end{quotation}
 
-そこで西谷研究室で勧められているEmacsの機能については以下の通りである，
+と書かれている．そこで西谷研究室で勧められているEmacsの機能については以下の通りである，
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -32,37 +35,54 @@
 
     \section{Ruby}\label{ruby}
 
-Rubyの基本的な説明は以下の通り，Rubyはまつもとゆきひろにより開発されたオブジェクト指向スクリプト言語であり，スクリプト言語が用いられてきた領域でのオブジェクト指向プログラミングを実現する言語である．
+Rubyの基本的な説明は以下の通り，
+\begin{quotation}
+オープンソースの動的なプログラミング言語で，シンプルさと高い生産性を備えています．エレガントな文法を持ち，自然に読み書きができます. \cite{ruby} 
+\end{quotation}
 
-本研究はRuby言語を使用しています．大きな理由としては
-
-\begin{itemize}
-\tightlist
-\item
-  構文の自由度が高く，記述量が少なくて済む．
-\item
-  強力な標準ライブラリが備えられている．
-\end{itemize}
-
-Rubyは変数の型付けがないため，記述量を少なく済ませることができ，"gem"という形式で公開されているライブラリが豊富かつ強力なので本研究はRuby言語を使用しました．
+本研究はRuby言語を使用しています．大きな理由としては強力な標準ライブラリなどを持っており，構文も自由度が高く記述量も少ない．よって，縛りが少ないのでとっかかりやすくプログラミング言語の中で習熟しやすいと考えたからである．
 
     \section{RubyGems}\label{rubygems}
 
-Rubygemの基本的な説明は以下の通り，RubyGemsは，Ruby言語用のパッケージ管理システムであり，Rubyのプログラムと("gem"と呼ばれる)ライブラリの配布用標準フォーマットを提供している．gemを容易に管理でき，gemを配布するサーバの機能も持つ．
+Rubygemの基本的な説明は以下の通り，
+\begin{quotation}
+RubyGemsは，Ruby言語用のパッケージ管理システムであり，Rubyのプログラムと("gem"と呼ばれる)ライブラリの配布用標準フォーマットを提供している．gemを容易に管理でき，gemを配布するサーバの機能を持つ.  \cite{gems} 
+\end{quotation}
 
-本研究ではRubyGemsのgemを利用してファイル操作やパスの受け取りなどを行い，本研究で開発したソフトもgemに公開してある．
+
+要は，Ruby言語で書かれたプログラムをより便利にするためのツール(ライブラリ)が簡単に使えるように配布されている場所，機能です．本研究ではRubyGemsのgemを利用してファイル操作やパスの受け取りなどを行い，本研究で開発したソフトもgemに公開してある．これにより非常に簡単に本研究で開発したソフトをinstallできるようになっている．
 
     \section{Keybind}\label{keybind}
 
-Keybindの基本的な説明は以下の通り，押下するキー(単独キーまたは複数キーの組み合わせ)と，実行される機能との対応関係のことである．また，キーを押下したときに実行させる機能を割り当てる行為のことである．
+Keybindとは，
+\begin{quotation}
+押下するキー(単独キーまたは複数キーの組み合わせ)と，実行される機能との対応関係のことである．また，キーを押下したときに実行させる機能を割り当てる行為のことである． \cite{keybind}
+\end{quotation}
 
-以下controlを押しながらをc-と記述する．本研究におけるKeybindの習熟はCUI操作の習熟に酷似している．カーソル移動においてもGUIベースでマウスを使い行の先頭をクリックするより，CUIによりc-aを押すことで即座に行の先頭にカーソルを持っていくことができる．習熟するのであれば，どちらの方が早いかは一目瞭然である．本研究はKeybindの習熟によるCUI操作の適応で作業の効率化，高速化に重点を置いている．
+以下controlを押しながらをc-と記述する．本研究におけるKeybindの習熟はCUI操作の習熟に酷似している．カーソル移動においてもGUIベースでマウスを使い行の先頭をクリックするより，CUIによりc-aを押すことで即座に行の先頭にカーソルを持っていくことができる．習熟するのであれば，どちらの方が早いかは一目瞭然である．本研究はKeybindの習熟によるCUI操作の適応で作業の効率化，高速化に重点を置いている．よく使用されるキーバインドは以下の通り．
+\begin{figure}[H]
+\centering
+\begin{center}
+\includegraphics[width=150mm]{../../picture/keybind1.png}
+\end{center}
+\caption{カーソル移動系，\label{sample}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{center}
+\includegraphics[width=150mm]{../../picture/keybind2.png}
+\end{center}
+\caption{文字操作系，\label{sample}}
+\end{figure}
 
     \section{CUI(Character User
 Interface)}\label{cuicharacter-user-interface}
 
-CUIは，キーボード等からの文字列を入力とし，文字列が表示されるウィンドウや古くはラインプリンタで印字される文字などを出力とする，ユーザインタフェースの様式で，GUI(Graphical
-User Interface)の対義語として使われる．
+CUIは，
+\begin{quotation}
+コンピュータにおいて，キーボード入力と文字表示のみを用いた，ソフトウェアの操作体系．キーボードのコマンド名を入力して操作する方法など． \cite{cui}
+\end{quotation}
 
 CUIとGUIにはそれぞれ大きな違いがある．GUIの利点は以下の通り，
 
@@ -83,7 +103,7 @@ CUIの利点は以下の通り，
 \item
   コマンドを憶えていれば複雑な処理が簡単に行える．
 \item
-  キーボードから手を離すことなく作業の高速化が行える．
+  キーボードから手を離すことなく作業の高速化，効率化が行える．
 \end{itemize}
 
 今回GUIではなくCUI操作の習熟を目的にした理由は，
@@ -96,15 +116,13 @@ CUIの利点は以下の通り，
   editor操作の習熟も孕んでいるから．
 \end{itemize}
 
-カーソル移動においてもGUIではなくCUI操作により，ワンコマンドで動かした方が効率的である．上記の理由から，GUIではなくCUI操作の習熟を目的としている．
+カーソル移動においてもGUIではなくCUI操作により，ワンコマンドで動かした方が効率的である．プログラマにとってeditorを使わないことなどない．上記の理由から，GUIではなくCUI操作の習熟を目的としている．
 
     \section{使用したgemファイル}\label{ux4f7fux7528ux3057ux305fgemux30d5ux30a1ux30a4ux30eb}
 
     \subsection{diff-lcs}\label{diff-lcs}
 
-    diff-lcsは，二つのファイルの差分を求めて出力してくれる．テキストの差分を取得するメソッドは,Diff::LCS.sdiff
-と Diff::LCS.diff
-の２つがある.複数行の文字列を比較した場合の２つのメソッドの違いは以下のとおり.
+    diff-lcsは，二つのファイルの差分を求めて出力してくれる．テキストの差分を取得するメソッドは,Diff::LCS.sdiffと Diff::LCS.diffの２つがある.複数行の文字列を比較した場合の２つのメソッドの違いは以下のとおり.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -129,12 +147,15 @@ CUIの利点は以下の通り，
   \end{enumerate}
 \end{enumerate}
 
-今回使用したのは後者(Diff:LCS.diff)である．理由は間違った部分だけを表示した方が見やすいと考えたからである．
+今回使用したのは後者(Diff:LCS.diff)である．コード自体が長いので全ての比較結果を表示してしまうとものすごく長くなってしまう．よって，違いがあった行のみの表示となっている．
 
     \subsection{Thor}\label{thor}
 
-    Thorは，コマンドラインツールの作成を支援するライブラリです．gitやbundlerのようなサブコマンドツールを簡単に作成することができます．
-Thorの使用でサブコマンドを自然言語に近い形で覚えることができる．
+    Thorは，
+\begin{quotation}
+コマンドラインツールの作成を支援するライブラリです．gitやbundlerのようなサブコマンドツールを簡単に作成することができます． \cite{thor}
+\end{quotation}
+Thorの使用でサブコマンドを自然言語に近い形で設定できるので，非常にコマンドが覚えやすくなっている．
 
     \subsection{Minitest}\label{minitest}
 
@@ -155,16 +176,45 @@ Thorの使用でサブコマンドを自然言語に近い形で覚えること�
 
     \subsection{FileUtils}\label{fileutils}
 
-    再帰的な削除などの基本的なファイル操作を行うためのライブラリ
+    再帰的な削除などの基本的なファイル操作を行うためのライブラリ今回使用したファイル操作は以下の通り．
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+　File.join: ファイルのパスとパスを結合する
+\item
+　File.exist: ファイルが存在するかどうかの判定．ファイルが存在して入れば"true"存在していなければ"false"を返り値としている．
+\item
+　FileUtils.mkdir\_p: ディレクトリdirとその親ディレクトリを全て作成する．
+\item
+　FileUtils.touch: パスに設定されているファイルを作成する．
+\item
+　FileUtils.cp: ファイルのコピーを行う．
+\item
+　File.expand\_path: パスを絶対パスに展開した文字列を返す．
+\item
+　FileUtils.compare\_file: 二つのファイルの比較を行う．一致して入れば"true"一致していなければ"false"を返り値としている．
+
+\end{enumerate}
 
     \subsection{open3}\label{open3}
 
-    プログラムを実行し，そのプロセスの標準出力，標準入力，標準エラー出力にパイプをつなぐためのものである．
+　open3は，
+\begin{quotation}
+プログラムを実行し，そのプロセスの標準入力，標準出力，標準出力にパイプをつなぎます． \cite{open3}
+\end{quotation}
+
+今回はopen3を利用してgemでinstallした場合にeditor\_learnerが格納されているパスを取得する．
 
     \subsection{Bundler}\label{bundler}
 
-Bundlerはアプリケーション谷で依存するgemパッケージを管理するためのツールです．１つのシステム上で複数のアプリケーションを開発する場合や，デプロイ時にアプリケーションに紐付けてgemパッケージを管理したい場合に利用される．
+Bundlerは，
+\begin{quotation}
+gem同士の互換性を保ちながらパッケージの種類やバージョンを管理してくれる仕組みのことです．複数人，複数環境で開発を行う際に書く環境で扱うパッケージの種類やバージョンを合わせてくれる． \cite{bundler}
+\end{quotation}
+
 
     \subsection{Rubocop}\label{rubocop}
 
-RubocopはRubyのソースコード解析ツールである．Rubyスタイルガイドや他のスタイルガイドに準拠しているかどうかを自動チェックしてくれるソフトウェアです．自分が打ち込んだ問題文となるソースコードのチェックに使用しました．
+RubocopはRubyのソースコード解析ツールである．Rubyスタイルガイドや他のスタイルガイドに準拠しているかどうかを自動チェックしてくれるソフトウェアです．自分が打ち込んだ問題文となるソースコードのチェックに使用した．

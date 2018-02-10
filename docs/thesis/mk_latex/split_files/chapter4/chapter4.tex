@@ -15,7 +15,8 @@ def initialize(*args)
       @lib_location = Open3.capture3("gem environment gemdir")
       @versions = Open3.capture3("gem list editor_learner")
       p @latest_version = @versions[0].chomp.gsub(' (', '-').gsub(')','')
-      @inject = File.join(@lib_location[0].chomp, "/gems/#{@latest_version}/lib")
+      @inject = File.join(@lib_location[0].chomp, "/gems/#{@latest_version}
+      /lib")
       if File.exist?(@prac_dir) != true then
         FileUtils.mkdir_p(@prac_dir)
         FileUtils.touch("#{@prac_dir}/question.rb")
@@ -24,7 +25,8 @@ def initialize(*args)
         if File.exist?("#{@inject}/random_h.rb") == true then
           FileUtils.cp("#{@inject}/random_h.rb", "#{@prac_dir}/random_h.rb")
         elsif
-          FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/random_h.rb", "#{@prac_dir}/random_h.rb")
+          FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/random_h.rb", 
+          "#{@prac_dir}/random_h.rb")
         end
       end
       range = 1..6
@@ -35,9 +37,11 @@ def initialize(*args)
           FileUtils.touch("#{@prac_dir}/ruby_#{num}/q.rb")
           FileUtils.touch("#{@prac_dir}/ruby_#{num}/sequential_h.rb")
           if File.exist?("#{@inject}/sequential_h.rb") == true then
-            FileUtils.cp("#{@inject}/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
+            FileUtils.cp("#{@inject}/sequential_h.rb", "#{@prac_dir}
+            /ruby_#{num}/sequential_h.rb")
           else
-            FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
+            FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/sequential_h.rb",
+             "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
           end
           range_ruby.each do|n|
             FileUtils.touch("#{@prac_dir}/ruby_#{num}/#{n}.rb")
@@ -78,6 +82,8 @@ def initialize(*args)
 
 sequential\_checkで終了したchapterをもう一度したい場合に一度ファイルを削除しなければいけないので，deleteメソッドの大きな役割はsequential\_checkで終了したファイルの削除である．
 
+\begin{screen}
+{\small
 \begin{verbatim}
 desc 'delete [number~number]', 'delete the ruby_file choose number to delet\
 e file'
@@ -90,7 +96,8 @@ def delete(n, m)
   end
   }
 end
-\end{verbatim}
+\end{verbatim}}
+\end{screen}
 
 コード自体はいたってシンプルで引数を2つ受け取ることでその間の範囲のFileを削除するようなコードとなっている．systemの"rm
 -rf
@@ -100,6 +107,8 @@ end
 
 random\_checkのコードは以下の通り，
 
+\begin{screen}
+{\small
 \begin{verbatim}
 desc 'random_check', 'ramdom check your typing and edit skill.'
     def random_check(*argv)
@@ -110,21 +119,26 @@ desc 'random_check', 'ramdom check your typing and edit skill.'
       puts "type following commands on the terminal"
       puts "> emacs question.rb answer.rb"
 
-      src_dir = File.expand_path('../..', __FILE__) # "Users/souki/editor_learner"
+      src_dir = File.expand_path('../..', __FILE__) 
+      # "Users/souki/editor_learner"
       if File.exist?("#{@inject}/random_check_question/#{s}") == true then
-        FileUtils.cp("#{@inject}/random_check_question/#{s}", "#{@prac_dir}/question.rb")
+        FileUtils.cp("#{@inject}/random_check_question/#{s}", 
+        "#{@prac_dir}/question.rb")
       elsif
-        FileUtils.cp(File.join(src_dir, "lib/random_check_question/#{s}"),  "#{@prac_dir}/question.rb")
+        FileUtils.cp(File.join(src_dir, "lib/random_check_question/#{s}"),  
+        "#{@prac_dir}/question.rb")
       end
       open_terminal
       
       start_time = Time.now
       loop do
         a = STDIN.gets.chomp
-        if a == "check" && FileUtils.compare_file("#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") == true then
+        if a == "check" && FileUtils.compare_file("#{@prac_dir}/question.rb", 
+        "#{@prac_dir}/answer.rb") == true then
           puts "It have been finished!"
           break
-        elsif FileUtils.compare_file("#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") != true then
+        elsif FileUtils.compare_file("#{@prac_dir}/question.rb",
+         "#{@prac_dir}/answer.rb") != true then
           @inputdata = File.open("#{@prac_dir}/answer.rb").readlines
           @checkdata = File.open("#{@prac_dir}/question.rb").readlines
           diffs = Diff::LCS.diff("#{@inputdata}", "#{@checkdata}")
@@ -138,18 +152,22 @@ desc 'random_check', 'ramdom check your typing and edit skill.'
       
       puts "#{time} sec"
     end
-\end{verbatim}
+\end{verbatim}}
+\end{screen}
 
-random\_checkの概要を簡単に説明すると15個あるRubyのコードから1\textasciitilde{}15の乱数を取得し，選ばれた数字のファイルが問題としてコピーされて，それをanswer.rbに入力することで正解していたら新しいターミナルが開かれてから終了までの時間を評価する仕組みとなっている．
+random\_checkの概要を簡単に説明すると15個あるRubyのコードから15の乱数を取得し，選ばれた数字のファイルが問題としてコピーされて，それをanswer.rbに入力することで正解していたら新しいターミナルが開かれてから終了までの時間を評価する仕組みとなっている．
 
-上から解説を行うと，1\textsubscript{15のrandomな乱数を取得，起動と同時にどのファイルがコピーされたか表示される．そして，src\_dirでホームディレクトリ/editor\_learnerのパスが代入される．そして，gemでinstallした人とgithubからcloneした場合によるファイルコピーのパスの違いをifで条件分岐．そして，1}15の乱数のファイルがquestion.rbにコピーされる．コピーされた後に新しいターミナルが開かれ，時間計測が開始される．そして，checkを前の画面に入力できるようにgetsを使った．初めにgetsだけを使用した時改行が入ってしまいうまく入力できなかった．しかし，chompを入れることで改行をなくすことに成功．しかし，argvとgetsを両方入れることが不可能なことが判明した．そこでgetsの前にSTDINを入れることでargvとの併用が可能なことがわかり，STDIN.gets.chompと入力することでキーボードからの入力を受け取ることができた．そして，checkが入力されてかつFileUtils.compareでファイルの比較で正しければ時間計測を終了し，表示する．間違っていた場合はインスタンス定数であるinputとoutputにquestion.rbとanswer.rbの中身が格納されてDiff::LCSのdiffによって間違っている箇所だけを表示する．一連のコード解説は以上である．
+上から解説を行うと，15のrandomな乱数を取得，起動と同時にどのファイルがコピーされたか表示される．そして，src\_dirでホームディレクトリ/editor\_learnerのパスが代入される．そして，gemでinstallした人とgithubからcloneした場合によるファイルコピーのパスの違いをifで条件分岐．そして，15の乱数のファイルがquestion.rbにコピーされる．コピーされた後に新しいターミナルが開かれ，時間計測が開始される．そして，checkを前の画面に入力できるようにgetsを使った．初めにgetsだけを使用した時改行が入ってしまいうまく入力できなかった．しかし，chompを入れることで改行をなくすことに成功．しかし，argvとgetsを両方入れることが不可能なことが判明した．そこでgetsの前にSTDINを入れることでargvとの併用が可能なことがわかり，STDIN.gets.chompと入力することでキーボードからの入力を受け取ることができた．そして，checkが入力されてかつFileUtils.compareでファイルの比較で正しければ時間計測を終了し，表示する．間違っていた場合はインスタンス定数であるinputとoutputにquestion.rbとanswer.rbの中身が格納されてDiff::LCSのdiffによって間違っている箇所だけを表示する．一連のコード解説は以上である．
 
     \section{sequential\_check}\label{sequential_check}
 
 sequential\_checkの場合はリファクタリングにあたりたくさんのインスタンス定数を作った．コードは以下の通り，
 
+\begin{screen}
+{\small
 \begin{verbatim}
-desc 'sequential_check [lesson_number] [1~3number] ','sequential check your typing skill and edit skill choose number'
+desc 'sequential_check [lesson_number] [1~3number] ',
+'sequential check your typing skill and edit skill choose number'
     def sequential_check(*argv, n, m)
       l = m.to_i - 1
      
@@ -164,24 +182,36 @@ desc 'sequential_check [lesson_number] [1~3number] ','sequential check your typi
       puts "check starting ..."
       puts "type following commands on the terminal"
       src_dir = File.expand_path('../..', __FILE__)
-      if File.exist?("#{@inject}/sequential_check_question/ruby_#{n}/#{m}.rb") == true then
-        FileUtils.cp("#{@inject}/sequential_check_question/ruby_#{n}/#{m}.rb", "#{@pracnq_dir}")
+      if File.exist?("#{@inject}/sequential_check_question/ruby_#{n}/#{m}.rb")
+       == true then
+        FileUtils.cp("#{@inject}/sequential_check_question/ruby_#{n}/#{m}.rb"
+        , "#{@pracnq_dir}")
       elsif
         FileUtils.cp(File.join(src_dir, "#{@seqnm_dir}"),  "#{@pracnq_dir}")
       end
-      if l != 0 && FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") != true
-        FileUtils.compare_file("#{@pracnl_dir}", (File.join(src_dir, "#{@seqnl_dir}"))) == true
+      if l != 0 && FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}")
+       != true
+        FileUtils.compare_file("#{@pracnl_dir}", (File.join(src_dir,
+         "#{@seqnl_dir}"))) == true
         FileUtils.cp("#{@pracnl_dir}", "#{@pracnm_dir}")
       end
       
       if FileUtils.compare_file(@pracnm_dir, @pracnq_dir) != true then
-        system "osascript -e 'tell application \"Terminal\" to do script \"cd #{@prac_dir}/ruby_#{n} \" '"
+        system "osascript -e 'tell application \"Terminal\" to do script 
+        \"cd #{@prac_dir}/ruby_#{n} \" '"
         loop do
           a = STDIN.gets.chomp
-          if a == "check" && FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") == true then
+          if a == "check" && FileUtils.compare_file("#{@pracnm_dir}", 
+          "#{@pracnq_dir}") == true then
             puts "ruby_#{n}/#{m}.rb is done!"
             break
-          elsif FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") != true then
+\end{verbatim}}
+\end{screen}
+\begin{screen}
+{\small
+\begin{verbatim}            
+          elsif FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}")
+           != true then
             @inputdata = File.open("#{@pracnm_dir}").readlines
             @checkdata = File.open("#{@pracnq_dir}").readlines
             diffs = Diff::LCS.diff("#{@inputdata}", "#{@checkdata}")
@@ -194,7 +224,8 @@ desc 'sequential_check [lesson_number] [1~3number] ','sequential check your typi
         p "ruby_#{n}/#{m}.rb is finished!"
       end
     end
-\end{verbatim}
+\end{verbatim}}
+\end{screen}
 
 \subsection{インスタンス定数に格納されたパス}\label{ux30a4ux30f3ux30b9ux30bfux30f3ux30b9ux5b9aux6570ux306bux683cux7d0dux3055ux308cux305fux30d1ux30b9}
 
