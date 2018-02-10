@@ -1,0 +1,244 @@
+\chapter{実装コードの解説}\label{ux5b9fux88c5ux30b3ux30fcux30c9ux306eux89e3ux8aac}
+
+本章では，今回作成したプログラムをライブラリ化し継続的な発展が可能なようにそれぞれの処理の解説を記述する．
+
+    \section{起動時に毎回動作するプログラム}\label{ux8d77ux52d5ux6642ux306bux6bceux56deux52d5ux4f5cux3059ux308bux30d7ux30edux30b0ux30e9ux30e0}
+
+editor\_learnerを起動したときに自動に動く部分である．コードは以下の通りである．
+
+\begin{verbatim}
+def initialize(*args)
+      super
+      @prac_dir="#{ENV['HOME']}/editor_learner/workshop"
+      @lib_location = Open3.capture3("gem environment gemdir")
+      @versions = Open3.capture3("gem list editor_learner")
+      p @latest_version = @versions[0].chomp.gsub(' (', '-').gsub(')','')
+      @inject = File.join(@lib_location[0].chomp, "/gems/#{@latest_version}/lib")
+      if File.exist?(@prac_dir) != true then
+        FileUtils.mkdir_p(@prac_dir)
+        FileUtils.touch("#{@prac_dir}/question.rb")
+        FileUtils.touch("#{@prac_dir}/answer.rb")
+        FileUtils.touch("#{@prac_dir}/random_h.rb")
+        if File.exist?("#{@inject}/random_h.rb") == true then
+          FileUtils.cp("#{@inject}/random_h.rb", "#{@prac_dir}/random_h.rb")
+        elsif
+          FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/random_h.rb", "#{@prac_dir}/random_h.rb")
+        end
+      end
+      range = 1..6
+      range_ruby = 1..3
+      range.each do|num|
+        if File.exist?("#{@prac_dir}/ruby_#{num}") != true then
+          FileUtils.mkdir("#{@prac_dir}/ruby_#{num}")
+          FileUtils.touch("#{@prac_dir}/ruby_#{num}/q.rb")
+          FileUtils.touch("#{@prac_dir}/ruby_#{num}/sequential_h.rb")
+          if File.exist?("#{@inject}/sequential_h.rb") == true then
+            FileUtils.cp("#{@inject}/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
+          else
+            FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
+          end
+          range_ruby.each do|n|
+            FileUtils.touch("#{@prac_dir}/ruby_#{num}/#{n}.rb")
+          end
+        end
+      end
+    end
+\end{verbatim}
+
+この部分は基本的にディレクトリやファイルの作成が主である．上から順に説明すると，@prac\_dirはホームディレクトリ/editor\_learner/workshopを指しており，ファイルを作る際のパスとして作成されたインスタンス定数である．その後の3つのインスタンス定数(@lib\_location,@versions,@latest\_version)はgemでinstallされた場合ファイルの場所がホームディレクトリ/.rbenv/versions/2.4.0/lib/ruby/gems/2.4.0/gemsのeditor\_learnerに格納されているためgemでinstallした人とgithubでinstallした人とではパスが変わってしまうためこれらの3つのインスタンス定数を用意した．実際の振る舞いとしては，File.existによりprac\_dirがなければディレクトリを作成しさらにその中にquestion.rbとanswer.rbを作成する．gemにリリースしていることからgemでinstallした人とgithubでinstallした人のパスの違いをif文で条件分岐させている．これによりrandom\_h.rbを正常にコピーすることができた．
+
+\subsection{プログラム内のインスタンス変数の概要}\label{ux30d7ux30edux30b0ux30e9ux30e0ux5185ux306eux30a4ux30f3ux30b9ux30bfux30f3ux30b9ux5909ux6570ux306eux6982ux8981}
+
+インスタンス変数は，'@'で始まる変数はインスタンス変数であり，特定のオブジェクトに所属しています．インスタンス変数はそのクラスまたはサブクラスのメソッドから参照できます．初期化されない孫スタンス変数を参照した時の値はnillです．
+
+このメソッドで使用されているインスタンス変数は5つである．prac\_dirはホームディレクトリ/editor\_learner/workshopを指しており，必要なファイルをここに作るのでパスとして受け渡すインスタンス変数となっている．その後の4つのインスタンス変数はgemからinstallした場合における，editor\_learnerが格納されているパスを受け渡すためのインスタンス変数である．一つずつの説明は以下の通り，
+
+\begin{itemize}
+\tightlist
+\item
+  lib\_locationはターミナル上で"gem environment
+  gemdir"を入力した場合に出力されるパスを格納している．(自分のターミナル場で実行すると/Users/souki/.rbenv/versions/2.4.0/lib/ruby/gems/2.4.0)
+\item
+  versionsはgemでinstallされたeditor\_learnerのversionを受け取るためのパスを格納したインスタンス変数である．
+\item
+  latest\_versionははversionsで受け取ったeditor\_learnerのversionの最新部分のパスを格納したインスタンス変数である．
+\item
+  injectは実際にこれらのパスをつなぎ合わせてできるgemでinstallされたeditor\_learnerが格納されているパスが格納されているインスタン変数である．(自分の場合は/Users/souki/.rbenv/versions/2.4.0/lib/ruby/gems/2.4.0/gems/editor\_learner-1.1.2となる)
+\end{itemize}
+
+\subsection{Fileの作成}\label{fileux306eux4f5cux6210}
+
+全てのパスの準備が整ったら実際に作業する場所に必要なファイル(question.rbやanswer.rb)などの作成が行われる．本研究のコードではeditor\_learner/workshopがホームディレクトリになければ作成する．さらに，その中にrandom\_checkに必要なファイル(question.rb,answer.rb,random\_h.rb)が作成される．random\_h.rbはgemでinstallした場合はeditor\_learnerの格納されている部分からコピーを行なっている．
+次に，sequential\_checkに必要なファイルを作成する．editor\_learner/workshopにruby\_1\textsubscript{ruby6がなければ作成し，その中に1.rb}3.rbとq.rb(問題をコピーするためのファイル)とsequential\_h.rbが作成される．sequential\_h.rbはrandom\_h.rbと同じでgemからinstallした場合はeditor\_learnerの格納されている部分からコピーを行なっている．このメソッドの大きな役割はファイル作成である．
+
+    \section{ファイル削除処理delete}\label{ux30d5ux30a1ux30a4ux30ebux524aux9664ux51e6ux7406delete}
+
+sequential\_checkで終了したchapterをもう一度したい場合に一度ファイルを削除しなければいけないので，deleteメソッドの大きな役割はsequential\_checkで終了したファイルの削除である．
+
+\begin{verbatim}
+desc 'delete [number~number]', 'delete the ruby_file choose number to delet\
+e file'
+
+def delete(n, m)
+  range = n..m
+  range.each{|num|
+  if File.exist?("#{@prac_dir}/ruby_#{num}") == true then
+    system "rm -rf #{@prac_dir}/ruby_#{num}"
+  end
+  }
+end
+\end{verbatim}
+
+コード自体はいたってシンプルで引数を2つ受け取ることでその間の範囲のFileを削除するようなコードとなっている．systemの"rm
+-rf
+ファイル名"がファイルを削除するコマンドなのでそこで受け取った引数の範囲でファイルの削除を行っている．
+
+    \section{random\_check}\label{random_check}
+
+random\_checkのコードは以下の通り，
+
+\begin{verbatim}
+desc 'random_check', 'ramdom check your typing and edit skill.'
+    def random_check(*argv)
+      random = rand(1..15)
+      p random
+      s = "#{random}.rb"
+      puts "check starting ..."
+      puts "type following commands on the terminal"
+      puts "> emacs question.rb answer.rb"
+
+      src_dir = File.expand_path('../..', __FILE__) # "Users/souki/editor_learner"
+      if File.exist?("#{@inject}/random_check_question/#{s}") == true then
+        FileUtils.cp("#{@inject}/random_check_question/#{s}", "#{@prac_dir}/question.rb")
+      elsif
+        FileUtils.cp(File.join(src_dir, "lib/random_check_question/#{s}"),  "#{@prac_dir}/question.rb")
+      end
+      open_terminal
+      
+      start_time = Time.now
+      loop do
+        a = STDIN.gets.chomp
+        if a == "check" && FileUtils.compare_file("#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") == true then
+          puts "It have been finished!"
+          break
+        elsif FileUtils.compare_file("#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") != true then
+          @inputdata = File.open("#{@prac_dir}/answer.rb").readlines
+          @checkdata = File.open("#{@prac_dir}/question.rb").readlines
+          diffs = Diff::LCS.diff("#{@inputdata}", "#{@checkdata}")
+          diffs.each do |diff|
+            p diff
+          end
+        end
+      end
+      end_time = Time.now
+      time = end_time - start_time - 1
+      
+      puts "#{time} sec"
+    end
+\end{verbatim}
+
+random\_checkの概要を簡単に説明すると15個あるRubyのコードから1\textasciitilde{}15の乱数を取得し，選ばれた数字のファイルが問題としてコピーされて，それをanswer.rbに入力することで正解していたら新しいターミナルが開かれてから終了までの時間を評価する仕組みとなっている．
+
+上から解説を行うと，1から15のrandomな乱数を取得，起動と同時にどのファイルがコピーされたか表示される．そして，src\_dirでホームディレクトリ/editor\_learnerのパスが代入される．そして，gemでinstallした人とgithubからcloneした場合によるファイルコピーのパスの違いをifで条件分岐．そして，1から15の乱数のファイルがquestion.rbにコピーされる．コピーされた後に新しいターミナルが開かれ，時間計測が開始される．そして，checkを前の画面に入力できるようにgetsを使った．初めにgetsだけを使用した時改行が入ってしまいうまく入力できなかった．しかし，chompを入れることで改行をなくすことに成功．しかし，argvとgetsを両方入れることが不可能なことが判明した．そこでgetsの前にSTDINを入れることでargvとの併用が可能なことがわかり，STDIN.gets.chompと入力することでキーボードからの入力を受け取ることができた．そして，checkが入力されてかつFileUtils.compareでファイルの比較で正しければ時間計測を終了し，表示する．間違っていた場合はインスタンス定数であるinputとoutputにquestion.rbとanswer.rbの中身が格納されてDiff::LCSのdiffによって間違っている箇所だけを表示する．一連のコード解説は以上である．
+
+    \section{sequential\_check}\label{sequential_check}
+
+sequential\_checkの場合はリファクタリングにあたりたくさんのインスタンス定数を作った．コードは以下の通り，
+
+\begin{verbatim}
+desc 'sequential_check [lesson_number] [1~3number] ','sequential check your typing skill and edit skill choose number'
+    def sequential_check(*argv, n, m)
+      l = m.to_i - 1
+     
+      @seq_dir = "lib/sequential_check_question"
+      q_rb = "ruby_#{n}/#{m}.rb"
+      @seqnm_dir = File.join(@seq_dir,q_rb)
+      @pracnm_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/#{m}.rb"
+      @seqnq_dir = "lib/sequential_check_question/ruby_#{n}/q.rb"
+      @pracnq_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/q.rb"      
+      @seqnl_dir = "lib/sequential_check_question/ruby_#{n}/#{l}.rb"
+      @pracnl_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/#{l}.rb"      
+      puts "check starting ..."
+      puts "type following commands on the terminal"
+      src_dir = File.expand_path('../..', __FILE__)
+      if File.exist?("#{@inject}/sequential_check_question/ruby_#{n}/#{m}.rb") == true then
+        FileUtils.cp("#{@inject}/sequential_check_question/ruby_#{n}/#{m}.rb", "#{@pracnq_dir}")
+      elsif
+        FileUtils.cp(File.join(src_dir, "#{@seqnm_dir}"),  "#{@pracnq_dir}")
+      end
+      if l != 0 && FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") != true
+        FileUtils.compare_file("#{@pracnl_dir}", (File.join(src_dir, "#{@seqnl_dir}"))) == true
+        FileUtils.cp("#{@pracnl_dir}", "#{@pracnm_dir}")
+      end
+      
+      if FileUtils.compare_file(@pracnm_dir, @pracnq_dir) != true then
+        system "osascript -e 'tell application \"Terminal\" to do script \"cd #{@prac_dir}/ruby_#{n} \" '"
+        loop do
+          a = STDIN.gets.chomp
+          if a == "check" && FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") == true then
+            puts "ruby_#{n}/#{m}.rb is done!"
+            break
+          elsif FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") != true then
+            @inputdata = File.open("#{@pracnm_dir}").readlines
+            @checkdata = File.open("#{@pracnq_dir}").readlines
+            diffs = Diff::LCS.diff("#{@inputdata}", "#{@checkdata}")
+            diffs.each do |diff|
+              p diff
+            end
+          end
+        end
+       else
+        p "ruby_#{n}/#{m}.rb is finished!"
+      end
+    end
+\end{verbatim}
+
+\subsection{インスタンス定数に格納されたパス}\label{ux30a4ux30f3ux30b9ux30bfux30f3ux30b9ux5b9aux6570ux306bux683cux7d0dux3055ux308cux305fux30d1ux30b9}
+
+インスタンス定数に格納されているパスについての説明は上から順に以下の通り，
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  seq\_dirはgithubでcloneした人が問題をコピーするときに使うパスである．
+\item
+  seqnm\_dirはその名の通りseq\_dirに引数であるnとmを代入したパスである．例として引数に1と1が代入された時は以下の通り，
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    editor\_learner/sequential\_check\_question/ruby\_1/1.rbとなる．
+  \end{enumerate}
+\item
+  pracnm\_dirはprac\_dirに二つの引数nとmを代入したものである．実際に作業するところのパスとして使用する．例として引数として1と1が代入された時は以下の通り，
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    ホームディレクトリ/editor\_learner/workshop/ruby\_1/1.rbが格納される．
+  \end{enumerate}
+\item
+  同様にseqとpracの後についている文字はその後のruby\_(数字)/(数字).rbの数字に入る文字を後につけている．
+\end{enumerate}
+
+\subsection{動作部分}\label{ux52d5ux4f5cux90e8ux5206}
+
+まずgemでinstallした場合とgithubでinstallした場合による違いを条件分岐によりパスを変えている．さらに1.rbが終了していた場合2.rbに1.rbをコピーした状態から始まるように処理が行われている．その後は"check"が入力された時かつFileUtils.compareで正解していれば終了．間違っていればDiff::LCSで間違っている箇所を表示．もう一度修正し，"check"を入力，正解していれば終了．以上が一連のコードの解説である．
+
+    \section{新しいターミナルを開くopen\_terminal}\label{ux65b0ux3057ux3044ux30bfux30fcux30dfux30caux30ebux3092ux958bux304fopen_terminal}
+
+新しいターミナルを開くメソッドである．コードは以下の通りである．
+
+\begin{verbatim}
+def open_terminal
+        pwd = Dir.pwd
+        system "osascript -e 'tell application \"Terminal\" to do script \"cd #{@prac_dir} \" '"
+      end
+\end{verbatim}
+
+新しく開かれたターミナルはprac\_dir(editor\_learner/workshop)のディレクトリからスタートするように設定されている．random\_checkではeditor\_learner/workshopでターミナルが開かれ，sequential\_checkではeditor\_learner/workshop/第１引数で入力されたファイルの場所が開かれるようになっている．
+
+    
