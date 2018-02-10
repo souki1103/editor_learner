@@ -279,6 +279,7 @@ errorが出た場合は以下の方法を試してください
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   コマンドライン上にてeditor\_learnerを入力する．
 
@@ -290,12 +291,21 @@ errorが出た場合は以下の方法を試してください
     editor\_learnerを起動することでホームディレクトリにeditor\_learner/workshopと呼ばれるファイルが作成される．workshopは作業場という意味である．
   \item
     workshopの中にquestion.rbとanswer.rb，random\_h.rbとruby\_1\textsubscript{ruby\_6が作成され，ruby\_1}ruby\_6の中に1.rb\textasciitilde{}3.rbが作成されていることを確認する．
+  \end{enumerate}
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
 \begin{center}
 \includegraphics[width=150mm]{../../picture/mkdir.png}
 \end{center}
-  \end{enumerate}
+\caption{File作られる画像．\label{sample}}
 
 \label{fig:This}
+\end{figure}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
 \item
   起動すると以下のようなサブコマンドの書かれた画面が表示されることを確認する．
 
@@ -306,8 +316,6 @@ errorが出た場合は以下の方法を試してください
 \item
   editor\_learnerの後にサブコマンドと必要に応じた引数を入力すると動作する．それぞれのサブコマンドの更に詳しい説明は以下の通りである．
 \end{enumerate}
-
-{[}File作られる画像{]}. \label{sample}(docs/picture/mkdir.png)
 
     \section{delete}\label{delete}
 
@@ -330,12 +338,18 @@ finished!と表示されてしまうので，削除するコマンドを作成�
 
 random\_h.rbとsequential\_h.rbが初期設定で作成され，editor\_learnerを起動することで自動的に作成され，random\_checkとsequential\_checkを行う際に最初に開くファイルとなる．random\_check用とsequential\_check用に二つのファイルがある．random\_check用のファイルは以下の通りである．
 
-\begin{center}
-\includegraphics[width=150mm]{../../picture/random_h.rb.png}
-\end{center}
+random\_h.rb
 
+\begin{figure}[H]
+\centering
+\begin{center}
+\includegraphics[width=150mm]{../../picture/random_h.png}
+\end{center}
+\caption{emacs の操作説明．\label{random_h}}
 
 \label{fig:}
+\end{figure}
+
 上から順に説明すると， 1. question.rbを開くためにc-x
 2で画面を2分割にする． 1. c-x c-fでquestion.rbを探して開く． 1.
 次にanswer.rbを開くために画面を3分割する 1. 同様にc-x
@@ -350,7 +364,7 @@ question.rbに書かれているコードをanswer.rbに写す．
 \begin{center}
 \includegraphics[width=150mm]{../../picture/split.png}
 \end{center}
-\caption{picture/split.png}
+\caption{emacs の分割画面．\label{split}}
 
 \label{fig:}
 \end{figure}
@@ -362,9 +376,9 @@ question.rbに書かれているコードをanswer.rbに写す．
 \begin{figure}[H]
 \centering
 \begin{center}
-\includegraphics[width=150mm]{../../picture/sequential_h.rb.png}
+\includegraphics[width=150mm]{../../picture/sequential_h.png}
 \end{center}
-\caption{picture/sequential\_h.rb.png}
+\caption{シーケンシャル．\label{sqquential}}
 
 \label{fig:}
 \end{figure}
@@ -679,7 +693,7 @@ def open_terminal
 \begin{center}
 \includegraphics[width=150mm]{../../picture/compare.jpeg}
 \end{center}
-\caption{picture/compare.jpeg}
+\caption{他のソフトとの比較．\label{compare}}
 
 \label{fig:}
 \end{figure}
