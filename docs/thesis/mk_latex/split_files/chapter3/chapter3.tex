@@ -127,7 +127,7 @@ errorが出た場合は以下の方法を試してください
   \item
     editor\_learnerを起動することでホームディレクトリにeditor\_learner/workshopと呼ばれるファイルが作成される．workshopは作業場という意味である．
   \item
-    workshopの中にquestion.rbとanswer.rb，random\_h.rbとruby\_1\textsubscript{ruby\_6が作成され，ruby\_1}ruby\_6の中に1.rb\textasciitilde{}3.rbが作成されていることを確認する．
+    workshopの中にquestion.rbとanswer.rb，random\_h.rbとruby\_1~ruby\_6が作成され，ruby\_1ruby\_6の中に1.rb~3.rbが作成されていることを確認する．
   \end{enumerate}
 \end{enumerate}
 
@@ -190,13 +190,23 @@ random\_h.rb
 \label{fig:}
 \end{figure}
 
-上から順に説明すると， 1. question.rbを開くためにc-x
-2で画面を2分割にする． 1. c-x c-fでquestion.rbを探して開く． 1.
-次にanswer.rbを開くために画面を3分割する 1. 同様にc-x
-c-fでanswer.rbを探して開く． 1. c-x
-oでanswer.rbを編集するためにポインタを移動させる． 1.
+上から順に説明すると，
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+question.rbを開くためにc-x2で画面を2分割にする．
+\item
+c-x c-fでquestion.rbのパスを入力して開く． 
+\item
+次にanswer.rbを開くために画面を3分割する 
+\item
+同様にc-x c-fでanswer.rbのパスを入力して開く． 
+\item
+c-x oでanswer.rbを編集するためにポインタを移動させる． 
+\item
 question.rbに書かれているコードをanswer.rbに写す．
-
+\end{enumerate}
 これらの手順がrandom\_h.rbに記述されている．全ての手順を終えたターミナルの状態は以下の通り，
 
 \begin{figure}[H]

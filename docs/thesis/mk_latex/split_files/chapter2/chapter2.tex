@@ -4,10 +4,10 @@
 
     本研究において使用するeditorはEmacsである．
 \begin{quotation}
-ツールはプログラマ自身の手の延長である．これは他のどのようなソフトウェアツールよりもEditorに対して当てはまる．テキストはプログラミングにおける最も基本的な生素材なので，できる限り簡単に操作できる必要があります． \cite{達人プログラマー} 
+ツールはプログラマ自身の手の延長である．これは他のどのようなソフトウェアツールよりもEditorに対して当てはまる．テキストはプログラミングにおける最も基本的な生素材なので，できる限り簡単に操作できる必要がある． \cite{達人プログラマー} 
 \end{quotation}
 
-と書かれている．そこで西谷研究室で勧められているEmacsの機能については以下の通りである，
+と書かれている．西谷研究室で勧められているEmacsの機能については以下の通りである，
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -40,11 +40,10 @@ Rubyの基本的な説明は以下の通り，
 オープンソースの動的なプログラミング言語で，シンプルさと高い生産性を備えています．エレガントな文法を持ち，自然に読み書きができます. \cite{ruby} 
 \end{quotation}
 
-本研究はRuby言語を使用しています．大きな理由としては強力な標準ライブラリなどを持っており，構文も自由度が高く記述量も少ない．よって，縛りが少ないのでとっかかりやすくプログラミング言語の中で習熟しやすいと考えたからである．
+本研究はRuby言語を使用している．大きな理由としては強力な標準ライブラリなどを持っており，構文も自由度が高く記述量も少ない．よって，縛りが少ないのでとっかかりやすくプログラミング言語の中で習熟しやすいと考えたからである．
 
     \section{RubyGems}\label{rubygems}
-
-Rubygemの基本的な説明は以下の通り，
+，
 \begin{quotation}
 RubyGemsは，Ruby言語用のパッケージ管理システムであり，Rubyのプログラムと("gem"と呼ばれる)ライブラリの配布用標準フォーマットを提供している．gemを容易に管理でき，gemを配布するサーバの機能を持つ.  \cite{gems} 
 \end{quotation}
@@ -65,7 +64,7 @@ Keybindとは，
 \begin{center}
 \includegraphics[width=150mm]{../../picture/keybind1.png}
 \end{center}
-\caption{カーソル移動系，\label{sample}}
+\caption{カーソル移動，\label{sample}}
 \end{figure}
 
 \begin{figure}[H]
@@ -73,7 +72,7 @@ Keybindとは，
 \begin{center}
 \includegraphics[width=150mm]{../../picture/keybind2.png}
 \end{center}
-\caption{文字操作系，\label{sample}}
+\caption{文字操作，\label{sample}}
 \end{figure}
 
     \section{CUI(Character User
@@ -128,23 +127,14 @@ CUIの利点は以下の通り，
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Diff::LCS.sdiff
+  Diff::LCS.sdiff: 比較結果を一文字ずつ表示する．
 
-  \begin{enumerate}
-  \def\labelenumii{\arabic{enumii}.}
-  \tightlist
-  \item
-    比較結果を１文字ずつ表示する
   \end{enumerate}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
-  Diff::LCS.diff
-
-  \begin{enumerate}
-  \def\labelenumii{\arabic{enumii}.}
-  \tightlist
-  \item
-    比較した結果，違いがあった行について，違いがあった箇所のみ表示する．
-  \end{enumerate}
+  Diff::LCS.diff: 比較した結果，違いがあった表について，違いがあった箇所にのみ表示する．
 \end{enumerate}
 
 今回使用したのは後者(Diff:LCS.diff)である．コード自体が長いので全ての比較結果を表示してしまうとものすごく長くなってしまう．よって，違いがあった行のみの表示となっている．
@@ -159,7 +149,11 @@ Thorの使用でサブコマンドを自然言語に近い形で設定できる�
 
     \subsection{Minitest}\label{minitest}
 
-    Minitestはテストを自動化するためのテスト用のフレームワークである．Rubyにはいくつかのテスティングフレームワークがありますが，Minitestというフレームワークを利用した理由は以下の通りです．
+    Minitestは
+\begin{quotation} 
+テストを自動化するためのテスト用のフレームワークである．\cite{rails}
+\end{quotation}
+Rubyにはいくつかのテスティングフレームワークがありますが，Minitestというフレームワークを利用した理由は以下の通りです．
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}

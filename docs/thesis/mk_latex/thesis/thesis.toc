@@ -30,7 +30,7 @@
 \contentsline {section}{\numberline {3.7}random\_checkの動作}{19}{section.3.7}
 \contentsline {section}{\numberline {3.8}sequential\_checkの動作}{19}{section.3.8}
 \contentsline {chapter}{\numberline {第4章}実装コードの解説}{21}{chapter.4}
-\contentsline {section}{\numberline {4.1}起動時に毎回動作するプログラム}{21}{section.4.1}
+\contentsline {section}{\numberline {4.1}起動時に動作するプログラム}{21}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}プログラム内のインスタンス変数の概要}{23}{subsection.4.1.1}
 \contentsline {subsection}{\numberline {4.1.2}Fileの作成}{24}{subsection.4.1.2}
 \contentsline {section}{\numberline {4.2}ファイル削除処理delete}{24}{section.4.2}
@@ -40,9 +40,6 @@
 \contentsline {subsection}{\numberline {4.4.2}動作部分}{30}{subsection.4.4.2}
 \contentsline {section}{\numberline {4.5}新しいターミナルを開くopen\_terminal}{30}{section.4.5}
 \contentsline {chapter}{\numberline {第5章}他のソフトとの比較}{31}{chapter.5}
-\contentsline {section}{\numberline {5.1}PTYPING}{32}{section.5.1}
-\contentsline {section}{\numberline {5.2}e-typing}{32}{section.5.2}
-\contentsline {section}{\numberline {5.3}寿司打}{32}{section.5.3}
-\contentsline {section}{\numberline {5.4}考察}{32}{section.5.4}
+\contentsline {section}{\numberline {5.1}考察}{32}{section.5.1}
 \contentsline {chapter}{\numberline {第6章}総括}{33}{chapter.6}
 \contentsline {chapter}{\numberline {第7章}謝辞}{34}{chapter.7}

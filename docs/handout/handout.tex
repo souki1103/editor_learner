@@ -1,0 +1,89 @@
+%\documentclass[a4j,twocolumn,uplatex]{jsarticle}
+\documentclass[a4j,twocolumn]{jsarticle}
+
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{url}
+\usepackage{amsmath}
+\def\tightlist{\itemsep1pt\parskip0pt\parsep0pt}
+\setlength{\textheight}{275mm}
+\headheight 5mm
+\topmargin -30mm
+\textwidth 185mm
+\oddsidemargin -15mm
+\evensidemargin -15mm
+\pagestyle{empty}
+
+
+\begin{document}
+
+\title{command lineによるeditor操作の習熟プログラム}
+\author{情報科学科 \hspace{5mm} 27014533 \hspace{5mm} 和田創煕}
+\date{}
+\maketitle
+
+\section{研究の目的}
+本研究で開発したソフトの目的は以下の通り，
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+Emacsによるeditor操作の習熟．
+\item
+Ruby言語の学習．
+\item
+CUI操作の習熟
+\item
+タイピング速度，正確性の向上
+\end{enumerate}
+これらプログラマにとって作業を効率化，高速化する要素の習熟を目的とする．
+
+
+\section{shunkuntypeについて}
+shunkuntypeは西谷が独自で開発したtouch typingを習得するためのものである．
+shunkuntypeの使用法はコマンドラインに
+\begin{quotation}
+shunkuntype [options]
+\end{quotation}
+と入力することで動作を開始する．optionsでは，
+-cでスピードチェックを，-dで練習を行う．またoptionとして-sでsubmitすることで研究室内の練習，スピードのデータを集計してグラフにプロットできるため，他の学生との'煽り'が効いてモチベーションを維持することができる．
+
+\section{改良する点}
+\begin{description}
+\item[optparseをthorに変更] 
+従来のshunkuntypeはoptparseで実装されている．すべてのコマンドラインのoptionの第一引数は-cや-vのように設定されている．しかし，このコマンドは直感的ではないために学生が形で覚えてしまうためより直感的に理解しやすいようにOptparseからThorへの書き換えを行う．そうすることでコマンドを形ではなく意味を理解しやすいからである．
+
+\item[日本語とプログラミング言語の追加]
+従来のshunkuntypeではprogrammingに特化しているため，
+英語による単語練習だけが用意されている．しかし，
+ローマ字の方が英語より打つキー数が多く，かつ馴染みがあるのでキー配置を覚えるためには，ローマ字の練習は必須だと考えた．
+さらにプログラマー，またはシステムエンジニアを想定してプログラミング言語でよく使われる数字やかっこの練習もできるようにする．
+
+\end{description}
+
+\section{展望}
+モチベーションを保持するために単語，短文，長文からなるテスト形式で段位認定方式の追加を今後検討する．段位の基準はタイピング検定のポイント計算式を用いて，
+\begin{gather*}
+\begin{split}
+ポイント=\frac{(入力文字数-間違い回数) \times 60}{入力時間} \\
+ \times 正確率の2乗
+\end{split} \\
+正確率 = \frac{入力文字数-間違い文字数}{入力文字数}
+\end{gather*}
+で単語，短文，長文のそれぞれが基準ポイントに到達していれば合格とする\cite{e-typing}．
+
+
+実際に改良した後に研究室の学生にshunkuntypeを使ってもらい，実際にどれぐらい上達するのか，使用感についての比較検討を行う．
+
+\vspace{0.3\baselineskip}
+
+%{\small\setlength\baselineskip{10pt}	% 参考文献は小さめの文字で行間を詰めてある
+\begin{thebibliography}{9}
+\bibitem{Nikkei}「エクセル使えない新入社員——スマホ影響、実はパソコン苦手?(就活のリアル)」, 日本経済新聞夕刊, 2017/05/01．
+\bibitem{shunkuntype} \url{https://rubygems.org/gems/shunkuntype/versions/1.0.13}, 2017/9/13 アクセス．
+\bibitem{e-typing} \url{https://web.e-typing.ne.jp/detail/#subject}
+%単純なgets, putsによるcliではなしに，command lineの編集を可能にするには，Readlineというlibraryを使うことができる．\bibitem{Shell_ReadLine} \url{https://www.blackbytes.info/2016/07/writing-a-shell-in-ruby/}, 2017/9/13 アクセス．
+%カラー化や間違っていた場合に修正を促す機構がこれでは組み込めなし．それが提供されているのが，typer_tortoise． https://github.com/tjgrathwell/typer_tortoise
+
+\end{thebibliography}
+%}
+\end{document}
