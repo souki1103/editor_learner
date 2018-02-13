@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.8.22)  13 FEB 2018 14:59
+This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.8.22)  13 FEB 2018 16:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -492,29 +492,7 @@ Package: booktabs 2016/04/27 v1.618033 publication quality tables
 LaTeX Warning: Unused global option(s):
     [a4].
 
-(./thesis.aux
-
-LaTeX Warning: Label `sample' multiply defined.
-
-
-LaTeX Warning: Label `sample' multiply defined.
-
-
-LaTeX Warning: Label `fig:' multiply defined.
-
-
-LaTeX Warning: Label `fig:' multiply defined.
-
-
-LaTeX Warning: Label `sample' multiply defined.
-
-
-LaTeX Warning: Label `sample' multiply defined.
-
-
-LaTeX Warning: Label `fig:' multiply defined.
-
-)
+(./thesis.aux)
 \openout1 = `thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
@@ -539,7 +517,8 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: longtable package is loaded.
- (/usr/local/texlive/2017/texmf-dist/tex/latex/caption/ltcaption.sty
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/caption/ltcaption.sty
 Package: ltcaption 2013/06/09 v1.4-94 longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
@@ -557,8 +536,11 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 4.
 LaTeX Info: Redefining \pageref on input line 4.
 LaTeX Info: Redefining \nameref on input line 4.
-LaTeX Font Info:    Try loading font information for U+msa on input line 6.
 
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
+
+LaTeX Font Info:    Try loading font information for U+msa on input line 6.
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
@@ -574,23 +556,22 @@ LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <24.88> not available
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <24.88> not available
 (Font)              Font shape `JY1/gt/m/n' tried instead on input line 14.
 
-(./thesis.toc
-LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <12> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 1.
-LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <12> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 1.
- [1
 
-])
+Package hyperref Warning: old toc file detected, not used; run LaTeX again.
+
 \tf@toc=\write4
 \openout4 = `thesis.toc'.
 
- [2] (./thesis.lof)
+[1
+
+]
+
+Package hyperref Warning: old lof file detected, not used; run LaTeX again.
+
 \tf@lof=\write5
 \openout5 = `thesis.lof'.
 
- (./.splits_location.tex
-(../split_files/chapter1/chapter1.tex [3
+(./.splits_location.tex (../split_files/chapter1/chapter1.tex [2
 
 ]
 第 1 章
@@ -598,33 +579,60 @@ LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <17.28> not available
 (Font)              Font shape `JT1/gt/m/n' tried instead on input line 3.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <17.28> not available
 (Font)              Font shape `JY1/gt/m/n' tried instead on input line 3.
-) (../split_files/chapter2/chapter2.tex [4
+) (../split_files/chapter2/chapter2.tex [3
 
 ]
 第 2 章
-[5
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <12> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 7.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <12> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 7.
 
-] [6]
+LaTeX Warning: Citation `達人プログラマー' on page 4 undefined on input line 7.
+
+
+[4
+
+]
+
+LaTeX Warning: Citation `ruby' on page 5 undefined on input line 30.
+
+
+LaTeX Warning: Citation `gems' on page 5 undefined on input line 37.
+
+[5]
+
+LaTeX Warning: Citation `keybind' on page 6 undefined on input line 45.
+
 File: ../../picture/keybind1.png Graphic file (type bmp)
- <../../picture/keybind1.png>
+<../../picture/keybind1.png>
 File: ../../picture/keybind2.png Graphic file (type bmp)
- <../../picture/keybind2.png> [7]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 75.
+ <../../picture/keybind2.png> [6]
 
+LaTeX Warning: Citation `cui' on page 7 undefined on input line 69.
+
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 75.
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 75.
- [8]
+ [7]
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <14.4> not available
 (Font)              Font shape `JT1/gt/m/n' tried instead on input line 103.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <14.4> not available
 (Font)              Font shape `JY1/gt/m/n' tried instead on input line 103.
- [9])
-(../split_files/chapter3/chapter3.tex [10]
+
+
+LaTeX Warning: Citation `thor' on page 8 undefined on input line 119.
+
+[8]
+
+LaTeX Warning: Citation `rubocop' on page 9 undefined on input line 154.
+
+) (../split_files/chapter3/chapter3.tex [9]
 第 3 章
-[11
+[10
 
 ]
 Overfull \hbox (6.28319pt too wide) in paragraph at lines 74--75
@@ -632,22 +640,22 @@ Overfull \hbox (6.28319pt too wide) in paragraph at lines 74--75
 /ruby/gems/2.4.0/gems \JY1/mc/m/n/12 に \OT1/cmr/m/n/12 ed-i-tor[]learner
  []
 
-[12]
+[11]
 File: ../../picture/mkdir.png Graphic file (type bmp)
- <../../picture/mkdir.png> [13] [14]
+ <../../picture/mkdir.png> [12] [13]
 File: ../../picture/random_h.png Graphic file (type bmp)
- <../../picture/random_h.png> [15]
+ <../../picture/random_h.png> [14]
 File: ../../picture/split.png Graphic file (type bmp)
 
-<../../picture/split.png> [16]
+<../../picture/split.png> [15]
 File: ../../picture/sequential_h.png Graphic file (type bmp)
- <../../picture/sequential_h.png> [17]
+ <../../picture/sequential_h.png> [16]
 File: ../../picture/diffp.png Graphic file (type bmp)
 
 <../../picture/diffp.png>
 File: ../../picture/diff.png Graphic file (type bmp)
- <../../picture/diff.png> [18])
-(../split_files/chapter4/chapter4.tex [19] [20]
+ <../../picture/diff.png> [17])
+(../split_files/chapter4/chapter4.tex [18] [19]
 第 4 章
 
 Overfull \hbox (1.65617pt too wide) in paragraph at lines 47--47
@@ -661,25 +669,25 @@ Overfull \hbox (7.40486pt too wide) in paragraph at lines 47--47
 ib/sequential_h.rb",[] 
  []
 
-[21
+[20
 
 ]
 Overfull \vbox (3.6643pt too high) has occurred while \output is active []
 
 
-[22]
+[21]
 Overfull \hbox (17.71059pt too wide) in paragraph at lines 72--74
 \JY1/mc/m/n/12 を格納している ． \OT1/cmr/m/n/12 (\JY1/mc/m/n/12 自分のタ ーミ
 ナル場で実行すると\OT1/cmr/m/n/12 /Users/souki/.rbenv/versions/2.4.0/
  []
 
-[23]
+[22]
 Overfull \hbox (2.13531pt too wide) in paragraph at lines 79--81
 \OT1/cmr/m/n/12 /Users/souki/.rbenv /ver-sions/2.4.0/lib/ruby/gems/2.4.0/gems/e
 ditor[]learner-1.1.2
  []
 
-[24]
+[23]
 Overfull \hbox (1.65617pt too wide) in paragraph at lines 106--106
 []\OT1/cmtt/m/n/10.95 desc 'delete [number~number]', 'delete the ruby_file choo
 se number to delet\[] 
@@ -691,11 +699,15 @@ Overfull \hbox (7.40486pt too wide) in paragraph at lines 155--155
 c_dir}/question.rb",[] 
  []
 
-[25]
+[24]
 Overfull \vbox (38.39832pt too high) has occurred while \output is active []
 
 
-[26] [27]
+[25]
+
+LaTeX Warning: Citation `expand' on page 26 undefined on input line 172.
+
+[26]
 Overfull \hbox (13.15355pt too wide) in paragraph at lines 222--222
 []      \OT1/cmtt/m/n/10.95 @pracnm_dir = "#{ENV['HOME']}/editor_learner/worksh
 op/ruby_#{n}/#{m}.rb"[] 
@@ -731,23 +743,23 @@ Overfull \hbox (7.40486pt too wide) in paragraph at lines 222--222
 ", "#{@pracnq_dir}")[] 
  []
 
-[28]
+[27]
 Overfull \vbox (77.39064pt too high) has occurred while \output is active []
 
 
-[29] [30]) (../split_files/chapter5/chapter5.tex [31]
+[28] [29]) (../split_files/chapter5/chapter5.tex [30]
 第 5 章
 File: ../../picture/compare.jpeg Graphic file (type bmp)
-<../../picture/compare.jpeg> [32
+<../../picture/compare.jpeg> [31
 
 ]) (../split_files/chapter6/chapter6.tex
-[33]
+[32]
 第 6 章
-) (../split_files/chapter7/chapter7.tex [34
+) (../split_files/chapter7/chapter7.tex [33
 
 ]
 第 7 章
-) (../split_files/chapter8/chapter8.tex [35
+) (../split_files/chapter8/chapter8.tex [34
 
 ]
 Overfull \hbox (54.67007pt too wide) in paragraph at lines 4--5
@@ -774,7 +786,7 @@ Overfull \hbox (21.35431pt too wide) in paragraph at lines 9--10
 
 ) (../split_files/chapter9/chapter9.tex))
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 30.
- [36
+ [35
 
 ]
 Package atveryend Info: Executing hook `AfterLastShipout' on input line 30.
@@ -786,17 +798,20 @@ Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 30.
 Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 30.
 
 
-LaTeX Warning: There were multiply-defined labels.
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 30.
  ) 
 Here is how much of TeX's memory you used:
- 8717 strings out of 493653
- 132569 string characters out of 6148874
- 235458 words of memory out of 5000000
+ 8713 strings out of 493653
+ 132525 string characters out of 6148874
+ 236391 words of memory out of 5000000
  12089 multiletter control sequences out of 15000+600000
  21638 words of font info for 88 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
- 44i,6n,40p,1573b,482s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 44i,6n,40p,1541b,482s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on thesis.dvi (37 pages, 128028 bytes).
+Output written on thesis.dvi (36 pages, 102592 bytes).
