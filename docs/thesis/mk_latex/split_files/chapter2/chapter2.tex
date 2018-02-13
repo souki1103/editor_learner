@@ -123,23 +123,7 @@ Thorの使用でサブコマンドを自然言語に近い形で設定できる�
 
     \subsection{Minitest}\label{minitest}
 
-    本研究でソースコードとして利用した本ではMinitestが使われている．assert\_equalにより出力結果が正しいか判定してくれるものでMinitestについての基本的な説明は以下の通り，
-\begin{quotation} 
-テストを自動化するためのテスト用のフレームワークである．\cite{rails}
-\end{quotation}
-Rubyにはいくつかのテスティングフレームワークがありますが，Minitestというフレームワークを利用した理由は以下の通りです．
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Rubyをインストールすると一緒にインストールされるため，特別なセットアップが不要．
-\item
-  学習コストが比較的低い．
-\item
-  Railsのデフォルトのテスティングフレームワークなので，Railsを開発するときにも知識を活かしやすい．
-\end{enumerate}
-上記の理由から，sequential\_checkではMinitestを採用しております．
+    本研究でソースコードとして利用した本ではMinitestが使われている．assert\_equalにより出力結果が正しいか判定してくれる．Rubyにはいくつかのテスティングフレームワークがありますが，Minitestは特別なセットアップが不要，学習コストが比較的低い，Rails開発に知識を活かしやすい．これらの理由によりMinitestを使用している．
 
     \subsection{FileUtils}\label{fileutils}
 
@@ -163,16 +147,6 @@ Rubyにはいくつかのテスティングフレームワークがあります�
 \item
 　FileUtils.compare\_file: 二つのファイルの比較を行う．一致して入れば"true"一致していなければ"false"を返り値としている．
 \end{enumerate}
-
-
-    \subsection{open3}\label{open3}
-
-　open3を使うことによってgemでinstallした場合によるeditor\_learnerの格納先のパスを取得している．open3の基本的説明は以下の通り，
-\begin{quotation}
-プログラムを実行し，そのプロセスの標準入力，標準出力，標準出力にパイプをつなぎます． \cite{open3}
-\end{quotation}
-open3を使わないとgemからinstallした人は動かなくなってしまう．
-
 
     \subsection{Rubocop}\label{rubocop}
 

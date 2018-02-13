@@ -42,16 +42,10 @@ CUI操作の習熟
 初めはタッチタイピングを習得した経験を活かして，西谷によって開発されたshunkuntype(ターミナル上で実行するタイピングソフト)の再開発をテーマにしていたが，これ以上タイピングに特化したソフトを開発しても同じようなものがWeb上に大量に転がっており，そのようなものをいくつも開発しても意味がなく，それ以外の付加価値を付けたソフトを開発しようと考えた．西谷研究室ではタイピング，Ruby言語，Emacsによるeditor操作，CUI操作の習熟が作業効率に非常に大きな影響を与えるので習熟を勧めている．そこでこれらの習熟を目的としたソフトを開発しようと考えた．
 
 \section{install方法}
-gemによるinstall方法は以下の通り，
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  コマンドラインにてgem install editor\_learnerと入力，実行
-\item
-  ファイルがホームディレクトの.rbenv/versions/2.4.0/lib/ruby/gems/2.4.0/gemsにeditor\_learnerが収納される
-\end{enumerate}
-githubによるinstall方法は以下の通り，
+gemによるinstall方法はgem install editor\_learnerをコマンドラインで入力することでinstallされる．
+
+githubによるインストール方法は以下の通りである．
+
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
@@ -62,42 +56,21 @@ githubによるinstall方法は以下の通り，
 \item
   コマンドラインにてgit clone(コピーしたURL)を行う
 \end{enumerate}
+上記の手順で開発したファイルがそのまま自分のディレクトリにインストールされる．
 
 
 \section{editor\_learnerの概要}
 \begin{description}
 \item[initialize]
-initializeメソッドはeditor_learnreを動作させた時自動的に動く部分である．
+editor\_learnreを動作させた時自動的に動く部分である．基本的に作業を行うためのファイルの作成，gemでinstallしたeditor\_learnerのパスを格納したインスタンス変数の作成がメインである．
 \item[random\_check] 
-15個あるRubyのソースコードから1つ選ばれ，question.rbにコピーされる．その後新しいターミナルが開かれる．そこでquestion.rbの内容をanswer.rbに写経する．写経し終えると前のターミナルに戻り"check"とコマンドラインで入力する．正しければ終了，正しくなければ間違った箇所のみが表示され，再度確認，入力を行い正誤判定の繰り返しをする．これが一連の流れである．random\_checkの目的は写経によるRuby言語の学習．ファイルの開閉や保存をキーバインドで行いCUI操作に適応する．これらの習熟が目的である．
+15個あるRubyのソースコードから1つ選ばれ，question.rbにコピーされる．その後新しいターミナルが開かれる．そこでquestion.rbの内容をanswer.rbに写経する．写経し終えると前のターミナルに戻り"check"とコマンドラインで入力する．正しければ終了，正しくなければ間違った箇所のみが表示され，再度確認，入力を行い正誤判定の繰り返しをする．これが一連の流れである．random\_checkの主な目的はタイピング速度の向上，Ruby言語の学習，editor操作および，CUI操作によるキーバインドの習熟である．
 \item[sequential\_check]
-6つの章から構成され，1つの章に3つの問題が入っている．1が最も基本となるコードで2，3になるにつれコードがリファクタリングや様々なメソッドが追加されていく．その様子をタイピングするような仕様となっている．第1引数が章の数字で第2引数がその章の中の1〜3の数字となっている．
+6つの章から構成され，1つの章に3つの問題が入っている．1が最も基本となるコードで2，3になるにつれコードがリファクタリング，メソッドの追加がされていく．コードの見やすい書き方などをリファクタリングから学んでいく仕様となっている．第1引数が章の数字で第2引数がその章の中の1〜3の数字となっている．6章あり，その中に3つの問題があるので計18個のソースコードを入力することとなる．sequential\_checkの主な目的はタイピング正確性の向上，Ruby言語のリファクタリングによる学習，editor操作，CUI操作によるキーバインドの習熟である．
 \end{description}
 
-\section{展望}
-モチベーションを保持するために単語，短文，長文からなるテスト形式で段位認定方式の追加を今後検討する．段位の基準はタイピング検定のポイント計算式を用いて，
-\begin{gather*}
-\begin{split}
-ポイント=\frac{(入力文字数-間違い回数) \times 60}{入力時間} \\
- \times 正確率の2乗
-\end{split} \\
-正確率 = \frac{入力文字数-間違い文字数}{入力文字数}
-\end{gather*}
-で単語，短文，長文のそれぞれが基準ポイントに到達していれば合格とする\cite{e-typing}．
+\section{総括}
+タイピングを習熟するためにたくさんのソフトを使ってきたが，editor\_learnerはプログラムの実行やターミナル上でのeditor操作などのプラグラマにとって基本的な機能を孕んでおり，自分が使ってきた，または人気のソフトにこれらの機能を有したソフトはなかった．プログラムコードをタイピングするようなソフトはたくさんあり， PHPやC言語などの豊富なコードを入力できるようなものはあったが，プログラムを実行した結果が表示されるものはなかった．プログラマにとってコードを書いて実行しないのはテストを受けて結果を見ないのと同義である．さらに，editor\_learnerで学習した自分と学習していない学生との間でrandom\_checkを行い時間比較を行った．その結果，学習していない学生は平均200秒かかっていたが，自分は60秒程度であった．時間に差が出た要因はプログラムコードのタイピングにより，\{\}や()などの記号入力の速さやキーバインドによるカーソル移動，ファイルの開閉，保存などの速さ，Ruby言語の理解が起因していた．よってeditor\_learnerがいかにプログラマ向けのソフトであり，ソフトの目的に沿った技術の向上が期待される．
 
 
-実際に改良した後に研究室の学生にshunkuntypeを使ってもらい，実際にどれぐらい上達するのか，使用感についての比較検討を行う．
-
-\vspace{0.3\baselineskip}
-
-%{\small\setlength\baselineskip{10pt}	% 参考文献は小さめの文字で行間を詰めてある
-\begin{thebibliography}{9}
-\bibitem{Nikkei}「エクセル使えない新入社員——スマホ影響、実はパソコン苦手?(就活のリアル)」, 日本経済新聞夕刊, 2017/05/01．
-\bibitem{shunkuntype} \url{https://rubygems.org/gems/shunkuntype/versions/1.0.13}, 2017/9/13 アクセス．
-\bibitem{e-typing} \url{https://web.e-typing.ne.jp/detail/#subject}
-%単純なgets, putsによるcliではなしに，command lineの編集を可能にするには，Readlineというlibraryを使うことができる．\bibitem{Shell_ReadLine} \url{https://www.blackbytes.info/2016/07/writing-a-shell-in-ruby/}, 2017/9/13 アクセス．
-%カラー化や間違っていた場合に修正を促す機構がこれでは組み込めなし．それが提供されているのが，typer_tortoise． https://github.com/tjgrathwell/typer_tortoise
-
-\end{thebibliography}
-%}
 \end{document}

@@ -109,17 +109,11 @@ errorが出た場合は以下の方法を試してください
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  コマンドライン上にてeditor\_learnerを入力する．
-
-  \begin{enumerate}
-  \def\labelenumii{\arabic{enumii}.}
-  \setcounter{enumii}{1}
-  \tightlist
-  \item
-    editor\_learnerを起動することでホームディレクトリにeditor\_learner/workshopと呼ばれるファイルが作成される．workshopは作業場という意味である．
-  \item
-    workshopの中にquestion.rbとanswer.rb，random\_h.rbとruby\_1~ruby\_6が作成され，ruby\_1ruby\_6の中に1.rb~3.rbが作成されていることを確認する．
-  \end{enumerate}
+コマンドライン上にてeditor\_learnerを入力する．
+\item
+editor\_learnerを起動することでホームディレクトリにeditor\_learner/workshopと呼ばれるファイルが作成される．workshopは作業場という意味である．
+\item
+workshopの中にquestion.rbとanswer.rb，random\_h.rbとruby\_1~ruby\_6が作成され，ruby\_1ruby\_6の中に1.rb~3.rbが作成されていることを確認する．
 \end{enumerate}
 
 \begin{figure}[H]
@@ -151,16 +145,9 @@ editor_leraner sequential_check [lesson_number] [1~3numbers]
     \section{delete}\label{delete}
 
     editor\_learnerを起動することで初期設定で述べたようにホームディレクトリにeditor\_learner/workshopが作成される．deleteはworkshopに作成されたruby\_1〜ruby\_6を削除するために作成されたものである．sequential\_checkで１度プログラムを作成してしまうと再度実行するとIthave been finished!と表示されてしまうので，削除するコマンドを作成しました．コマンド例は以下の通りである．
-
-コマンド例
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  editor\_learner delete 1 3
-\end{enumerate}
-
+\begin{description}
+\item[editor\_learner delete 1 3]
+\end{description}
 上記のように入力することで１〜３までのファイルが削除される．サブコマンドの後の引数は２つの数字(char型)であり，削除するファイルの範囲を入力する．
 
     \section{random\_h.rbとsequential\_h.rb}\label{random_h.rbux3068sequential_h.rb}
