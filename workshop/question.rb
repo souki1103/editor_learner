@@ -1,6 +1,7 @@
-numbers = [1, 2, 3, 4]
-sum = 0
-numbers.each do |n|
-  sum += n
+def foo(time = Time.now, message = bar)
+  puts "time: #{time}, message: #{message}"
 end
-sum
+
+def bar
+  'BAR'
+end

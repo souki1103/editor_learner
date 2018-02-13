@@ -44,6 +44,11 @@ def initialize(*args)
              "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
           end
           range_ruby.each do|n|
+\end{verbatim}}
+\end{screen}
+\begin{screen}
+{\small
+\begin{verbatim}
             FileUtils.touch("#{@prac_dir}/ruby_#{num}/#{n}.rb")
           end
         end
@@ -52,35 +57,37 @@ def initialize(*args)
 \end{verbatim}}
 \end{screen}
 
-この部分は基本的にディレクトリやファイルの作成が主である．上から順に説明すると，@prac\_dirはホームディレクトリ/editor\_learner/workshopを指しており，ファイルを作る際のパスとして作成されたインスタンス定数である．その後の3つのインスタンス定数(@lib\_location,@versions,@latest\_version)はgemでinstallされた場合ファイルの場所がホームディレクトリ/.rbenv/versions/2.4.0/lib/ruby/gems/2.4.0/gemsのeditor\_learnerに格納されているためgemでinstallした人とgithubでinstallした人とではパスが変わってしまうためこれらの3つのインスタンス定数を用意した．実際の振る舞いとしては，File.existによりprac\_dirがなければディレクトリを作成しさらにその中にquestion.rbとanswer.rbを作成する．gemにリリースしていることからgemでinstallした人とgithubでinstallした人のパスの違いをif文で条件分岐させている．これによりrandom\_h.rbを正常にコピーすることができた．
+この部分は基本的にディレクトリやファイルの作成が主である．上から順に説明すると，@prac\_dirはホームディレクトリ/editor\_learner/workshopを指しており，ファイルを作る際のパスとして作成されたインスタンス定数である．その後の3つのインスタンス定数(@lib\_location,@versions,@latest\_version)はgemでinstallされた場合ファイルの場所がホームディレクトリ/.rbenv/versions/2.4.0/lib/ruby/gems/2.4.0/gemsのeditor\_learnerに格納されているためgemでinstallした人とgithubでinstallした人とではパスが変わってしまうためこれらの3つのインスタンス定数を利用し@injectを用意した．これにより，gemからinstallした場合でも正しく動作するようになった．実際の振る舞いとしては，File.existによりprac\_dirがなければディレクトリを作成しさらにその中にquestion.rbとanswer.rbを作成する．gemにリリースしていることからgemでinstallした人とgithubでinstallした人のパスの違いをif文で条件分岐させている．これによりrandom\_h.rbやsequential\_h.rbを正常にコピーすることができた．
 
 \subsection{プログラム内のインスタンス変数の概要}\label{ux30d7ux30edux30b0ux30e9ux30e0ux5185ux306eux30a4ux30f3ux30b9ux30bfux30f3ux30b9ux5909ux6570ux306eux6982ux8981}
 
-インスタンス変数は，'@'で始まる変数はインスタンス変数であり，特定のオブジェクトに所属している．インスタンス変数はそのクラスまたはサブクラスのメソッドから参照できる．初期化されない孫スタンス変数を参照した時の値はnillである．
+'@'で始まる変数はインスタンス変数であり，特定のオブジェクトに所属している．インスタンス変数はそのクラスまたはサブクラスのメソッドから参照できる．初期化されない孫スタンス変数を参照した時の値はnillである．
 
-このメソッドで使用されているインスタンス変数は5つである．prac\_dirはホームディレクトリ/editor\_learner/workshopを指しており，必要なファイルをここに作るのでパスとして受け渡すインスタンス変数となっている．その後の4つのインスタンス変数はgemからinstallした場合における，editor\_learnerが格納されているパスを受け渡すためのインスタンス変数である．一つずつの説明は以下の通り，
+このメソッドで使用されているインスタンス変数は5つである．prac\_dirはホームディレクトリ/editor\_learner/workshopを指しており，必要なファイルをここに作るのでもっとも基本的なパスとして受け渡すインスタンス変数となっている．その後の4つのインスタンス変数はgemからinstallした場合における，editor\_learnerが格納されているパスを受け渡すためのインスタンス変数である．一つずつの説明は以下の通り，
 
-\begin{itemize}
+\begin{description}
+\def\labelenumi{\arabic{enumi}.}
 \tightlist
-\item
-  lib\_locationはターミナル上で"gem environment
-  gemdir"を入力した場合に出力されるパスを格納している．(自分のターミナル場で実行すると/Users/souki/.rbenv/versions/2.4.0/lib/ruby/gems/2.4.0)
-\item
-  versionsはgemでinstallされたeditor\_learnerのversionを受け取るためのパスを格納したインスタンス変数である．
-\item
-  latest\_versionははversionsで受け取ったeditor\_learnerのversionの最新部分のパスを格納したインスタンス変数である．
-\item
-  injectは実際にこれらのパスをつなぎ合わせてできるgemでinstallされたeditor\_learnerが格納されているパスが格納されているインスタン変数である．(自分の場合は/Users/souki/.rbenv/versions/2.4.0/lib/ruby/gems/2.4.0/gems/editor\_learner-1.1.2となる)
-\end{itemize}
+\item[lib\_location]
+ターミナル上で"gem environment gemdir"を入力した場合に出力されるパスを格納している．(自分のターミナル場で実行すると/Users/souki/.rbenv/versions/2.4.0/
+  lib/ruby/gems/2.4.0)最初はsystem"gem environment gemdir"に代入していたがsystemの返す値は文字列ではなく'true"と'false"である．なので，ここでopen3が必要となった．
+\item[versions]
+ gemでinstallされたeditor\_learnerのversionを受け取るためのパスを格納したインスタンス変数である．Rubyのversionが2.4.0以上であるならば，正しく最新版のパスを入手できるが，それ以下だと正しくパスを入手できないのでRubyのversionが2.4.0以上必要となる．versionをあげたくない人にはeditor\_learnerのgemを最新版のみinstallしていれば正しくパスを受け取ることができる．
+\item[latest\_versions]
+ versionsで受け取ったeditor\_learnerのversionの最新部分のパスを格納したインスタンス変数である．
+\item[inject]
+実際にこれらのパスをつなぎ合わせてできるgemでinstallされたeditor\_learnerが格納されているパスが格納されているインスタンス変数である．(自分の場合は/Users/souki/.rbenv
+  /versions/2.4.0/lib/ruby/gems/2.4.0/gems/editor\_learner-1.1.2となる)
+\end{description}
+injectはいろんなメソッドで使われるため，普通の変数では他のメソッドで呼び出せないためインスタンス変数で書かれている．
 
 \subsection{Fileの作成}\label{fileux306eux4f5cux6210}
 
-全てのパスの準備が整ったら実際に作業する場所に必要なファイル(question.rbやanswer.rb)などの作成が行われる．本研究のコードではeditor\_learner/workshopがホームディレクトリになければ作成する．さらに，その中にrandom\_checkに必要なファイル(question.rb,answer.rb,random\_h.rb)が作成される．random\_h.rbはgemでinstallした場合はeditor\_learnerの格納されている部分からコピーを行なっている．
-次に，sequential\_checkに必要なファイルを作成する．editor\_learner/workshopにruby\_1\textsubscript{ruby6がなければ作成し，その中に1.rb}3.rbとq.rb(問題をコピーするためのファイル)とsequential\_h.rbが作成される．sequential\_h.rbはrandom\_h.rbと同じでgemからinstallした場合はeditor\_learnerの格納されている部分からコピーを行なっている．このメソッドの大きな役割はファイル作成である．
+全てのパスの準備が整ったら実際に作業する場所に必要なファイル(question.rbやanswer.rbなど)の作成が行われる．本研究のinitializeメソッドではeditor\_learner/workshopがホームディレクトリになければ作成する．さらに，その中にrandom\_checkに必要なファイル(question.rb,answer.rb,random\_h.rb)が作成される．random\_h.rbはgemでinstallした場合はeditor\_learnerの格納されている部分からコピーを行なっている．次に，sequential\_checkに必要なファイルを作成する．editor\_learner/workshopにruby\_1〜ruby\_6がなければ作成し，その中に1.rb〜3.rbとq.rb(問題をコピーするためのファイル)とsequential\_h.rbが作成される．sequential\_h.rbはrandom\_h.rbと同じでgemからinstallした場合はeditor\_learnerの格納されている部分からコピーを行なっている．このメソッドの大きな役割はファイル作成であり，この部分がなければ全てのプログラムが動作しない．
 
     \section{ファイル削除処理delete}\label{ux30d5ux30a1ux30a4ux30ebux524aux9664ux51e6ux7406delete}
 
-sequential\_checkで終了したchapterをもう一度したい場合に一度ファイルを削除しなければいけないので，deleteメソッドの大きな役割はsequential\_checkで終了したファイルの削除である．
+sequential\_checkで終了したchapterとその中の問題(1.rb〜3.rb)をもう一度行いたい場合に一度書き込んでいるので「(例)ruby\_1/1.rb is done!」と表示されてしまう．なので終わった問題を再度やりたい場合には一度ファイルを削除しなければいけないので，deleteメソッドを作成した．deleteメソッドの大きな役割はsequential\_checkで打ち込みが完了したファイルの削除である．ソースコードは以下の通り，
 
 \begin{screen}
 {\small
@@ -99,9 +106,7 @@ end
 \end{verbatim}}
 \end{screen}
 
-コード自体はいたってシンプルで引数を2つ受け取ることでその間の範囲のFileを削除するようなコードとなっている．systemの"rm
--rf
-ファイル名"がファイルを削除するコマンドなのでそこで受け取った引数の範囲でファイルの削除を行っている．
+コード自体はいたってシンプルで引数を2つ受け取ることでその間の範囲のFileを削除するようなコードとなっている．systemの"rm -rf ファイル名"がファイルを削除するコマンドとなっている．まず，そのファイルが存在しているかどうかの判定をFile.existで行う．そして，存在しているなら引数として受け取ったnとmが範囲となっておりその範囲でfor文の働きをするeachメソッドを使用することで削除を再帰的に行なっている．
 
     \section{random\_check}\label{random_check}
 
@@ -147,6 +152,11 @@ desc 'random_check', 'ramdom check your typing and edit skill.'
           end
         end
       end
+\end{verbatim}}
+\end{screen}
+\begin{screen}
+{\small
+\begin{verbatim}
       end_time = Time.now
       time = end_time - start_time - 1
       
@@ -157,7 +167,11 @@ desc 'random_check', 'ramdom check your typing and edit skill.'
 
 random\_checkの概要を簡単に説明すると15個あるRubyのコードから15の乱数を取得し，選ばれた数字のファイルが問題としてコピーされて，それをanswer.rbに入力することで正解していたら新しいターミナルが開かれてから終了までの時間を評価する仕組みとなっている．
 
-上から解説を行うと，15のrandomな乱数を取得，起動と同時にどのファイルがコピーされたか表示される．そして，src\_dirでホームディレクトリ/editor\_learnerのパスが代入される．そして，gemでinstallした人とgithubからcloneした場合によるファイルコピーのパスの違いをifで条件分岐．そして，15の乱数のファイルがquestion.rbにコピーされる．コピーされた後に新しいターミナルが開かれ，時間計測が開始される．そして，checkを前の画面に入力できるようにgetsを使った．初めにgetsだけを使用した時改行が入ってしまいうまく入力できなかった．しかし，chompを入れることで改行をなくすことに成功．しかし，argvとgetsを両方入れることが不可能なことが判明した．そこでgetsの前にSTDINを入れることでargvとの併用が可能なことがわかり，STDIN.gets.chompと入力することでキーボードからの入力を受け取ることができた．そして，checkが入力されてかつFileUtils.compareでファイルの比較で正しければ時間計測を終了し，表示する．間違っていた場合はインスタンス定数であるinputとoutputにquestion.rbとanswer.rbの中身が格納されてDiff::LCSのdiffによって間違っている箇所だけを表示する．一連のコード解説は以上である．
+上から解説を行うと，1〜15のrandomな乱数を取得，起動と同時に選ばれた数字のファイルを表示する．そして，src\_dirでホームディレクトリ/editor\_learnerのパスが代入される．File.expand\_path()は，
+\begin{quotation}
+第2引数のパスを起点に，第1引数のパスを，フルパスに展開するメソッドである.\_\_FILE\_\_にはそのファイルのパスが入っているが，これは絶対パスとは限らない，そこで，File.expand\_path()の第2引数にこれを指定し，第1引数にそのファイルからの相対パスを書くことで，目的のファイルの絶対パスが得られる\cite{expand}.
+\end{quotation}
+ここで相対パスを得ることでFile.joinで必要なパスと結合させる．そして，gemでinstallした人とgithubからcloneした場合によるファイルのパスの違いをifで条件分岐．そして，15個あるソースコードから乱数によって選ばれたファイルがquestion.rbにコピーされる．コピーされた後に新しいターミナルが開かれ，時間計測が開始する．そして，answer.rbにquestion.rbと同じ内容を書き込む．FileUtils.compare\_fileを使うことで　tabなどによる空白などもきちんと判定する．そうしなければ，改行などをめちゃくちゃにしても正しいと判断されてしまうからである．見にくいプログラムを書くと，他の人が見たとき理解しずらいので改行などもきちんと判定している．全てうち終えることで，前のターミナルに戻り"check"と入力する．checkを前のターミナルに入力できるようにgetsを使った．初めにgetsだけを使用した時改行が入ってしまいうまく入力できなかった．しかし，chompを入れることで改行をなくすことに成功．しかし，argvとgetsを併用することが不可能なことが判明した．そこでgetsの前にSTDINを入れることでargvとの併用が可能なことがわかり，STDIN.gets.chompと入力することでargvとの併用が可能となり，キーボードからの入力を受け取ることができた．そして，checkが入力されてかつFileUtils.compare\_fileで比較の結果が正しければ時間計測を終了し"it have been finished!"を表示する．間違っていた場合はfile.openによりquestion.rbとanswer.rbをinputとoutputに格納されてDiff::LCSのdiffによって間違っている箇所だけを表示する．間違った部分を見て，再度コードを打ち直し正しいと判定されるとbreakで終了する．一連の流れは異常である．
 
     \section{sequential\_check}\label{sequential_check}
 
@@ -260,18 +274,21 @@ desc 'sequential_check [lesson_number] [1~3number] ',
 
 \subsection{動作部分}\label{ux52d5ux4f5cux90e8ux5206}
 
-まずgemでinstallした場合とgithubでinstallした場合による違いを条件分岐によりパスを変えている．さらに1.rbが終了していた場合2.rbに1.rbをコピーした状態から始まるように処理が行われている．その後は"check"が入力された時かつFileUtils.compareで正解していれば終了．間違っていればDiff::LCSで間違っている箇所を表示．もう一度修正し，"check"を入力，正解していれば終了．以上が一連のコードの解説である．
+まずgemでinstallした場合とgithubでinstallした場合による違いを条件分岐によりパスを変えている．さらに1.rbが終了していた場合2.rbに1.rbをコピーした状態から始まるように処理が行われている．理由は前のコードがどのように変わったか，リファクタリングされたかがわかりやすいように前のコードをコピーしている．その後は"check"が入力された時かつFileUtils.compare\_fileで正しければ終了．間違っていればDiff::LCSで間違っている箇所を表示．もう一度修正し，"check"を入力，正解していれば終了．"check"による正誤判定などはrandom\_checkと同様の書き方をしている．以上が一連のコードの解説である．
 
     \section{新しいターミナルを開くopen\_terminal}\label{ux65b0ux3057ux3044ux30bfux30fcux30dfux30caux30ebux3092ux958bux304fopen_terminal}
 
 新しいターミナルを開くメソッドである．コードは以下の通りである．
-
+\begin{screen}
+{\small
 \begin{verbatim}
 def open_terminal
         pwd = Dir.pwd
-        system "osascript -e 'tell application \"Terminal\" to do script \"cd #{@prac_dir} \" '"
+        system "osascript -e 'tell application \"Terminal\" to do script 
+        \"cd #{@prac_dir} \" '"
       end
-\end{verbatim}
+\end{verbatim}}
+\end{screen}
 
 新しく開かれたターミナルはprac\_dir(editor\_learner/workshop)のディレクトリからスタートするように設定されている．random\_checkではeditor\_learner/workshopでターミナルが開かれ，sequential\_checkではeditor\_learner/workshop/第１引数で入力されたファイルの場所が開かれるようになっている．
 

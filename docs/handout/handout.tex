@@ -41,17 +41,37 @@ CUI操作の習熟
 \section{研究の動機}
 初めはタッチタイピングを習得した経験を活かして，西谷によって開発されたshunkuntype(ターミナル上で実行するタイピングソフト)の再開発をテーマにしていたが，これ以上タイピングに特化したソフトを開発しても同じようなものがWeb上に大量に転がっており，そのようなものをいくつも開発しても意味がなく，それ以外の付加価値を付けたソフトを開発しようと考えた．西谷研究室ではタイピング，Ruby言語，Emacsによるeditor操作，CUI操作の習熟が作業効率に非常に大きな影響を与えるので習熟を勧めている．そこでこれらの習熟を目的としたソフトを開発しようと考えた．
 
+\section{install方法}
+gemによるinstall方法は以下の通り，
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  コマンドラインにてgem install editor\_learnerと入力，実行
+\item
+  ファイルがホームディレクトの.rbenv/versions/2.4.0/lib/ruby/gems/2.4.0/gemsにeditor\_learnerが収納される
+\end{enumerate}
+githubによるinstall方法は以下の通り，
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  "https://github.com/souki1103/editor\_learner" へアクセス
+\item
+  Clone or downloadを押下，SSHのURLをコピー
+\item
+  コマンドラインにてgit clone(コピーしたURL)を行う
+\end{enumerate}
+
+
 \section{editor\_learnerの概要}
 \begin{description}
-\item[optparseをthorに変更] 
-従来のshunkuntypeはoptparseで実装されている．すべてのコマンドラインのoptionの第一引数は-cや-vのように設定されている．しかし，このコマンドは直感的ではないために学生が形で覚えてしまうためより直感的に理解しやすいようにOptparseからThorへの書き換えを行う．そうすることでコマンドを形ではなく意味を理解しやすいからである．
-
-\item[日本語とプログラミング言語の追加]
-従来のshunkuntypeではprogrammingに特化しているため，
-英語による単語練習だけが用意されている．しかし，
-ローマ字の方が英語より打つキー数が多く，かつ馴染みがあるのでキー配置を覚えるためには，ローマ字の練習は必須だと考えた．
-さらにプログラマー，またはシステムエンジニアを想定してプログラミング言語でよく使われる数字やかっこの練習もできるようにする．
-
+\item[initialize]
+initializeメソッドはeditor_learnreを動作させた時自動的に動く部分である．
+\item[random\_check] 
+15個あるRubyのソースコードから1つ選ばれ，question.rbにコピーされる．その後新しいターミナルが開かれる．そこでquestion.rbの内容をanswer.rbに写経する．写経し終えると前のターミナルに戻り"check"とコマンドラインで入力する．正しければ終了，正しくなければ間違った箇所のみが表示され，再度確認，入力を行い正誤判定の繰り返しをする．これが一連の流れである．random\_checkの目的は写経によるRuby言語の学習．ファイルの開閉や保存をキーバインドで行いCUI操作に適応する．これらの習熟が目的である．
+\item[sequential\_check]
+6つの章から構成され，1つの章に3つの問題が入っている．1が最も基本となるコードで2，3になるにつれコードがリファクタリングや様々なメソッドが追加されていく．その様子をタイピングするような仕様となっている．第1引数が章の数字で第2引数がその章の中の1〜3の数字となっている．
 \end{description}
 
 \section{展望}

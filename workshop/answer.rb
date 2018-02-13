@@ -1,12 +1,7 @@
-# coding: utf-8
-country = 'italy'
+def foo(time = Time.now, message = bar)
+  puts "time: #{time}, message: #{message}"
+end
 
-if country == 'japan'
-  'こんにちは'
-elsif country == 'us'
-  'Hello'
-elsif country == 'italy'
-  'ciao'
-else
-  '???'
+def bar
+  'BAR'
 end

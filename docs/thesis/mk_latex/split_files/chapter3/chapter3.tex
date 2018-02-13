@@ -16,7 +16,6 @@ githubによるインストール方法は以下の通りである．
 \item
   コマンドラインにてgit clone(コピーしたURL)を行う
 \end{enumerate}
-
 上記の手順で開発したファイルがそのまま自分のディレクトリにインストールされる．
 
 \subsection{gemによるinstall}\label{gemux306bux3088ux308binstall}
@@ -31,7 +30,6 @@ gemによるインストール方法は以下の通りである．
 \item
   ファイルがホームディレクトの.rbenv/versions/2.4.0/lib/ruby/gems/2.4.0/gemsにeditor\_learnerが収納される
 \end{enumerate}
-
 これでeditor\_learnerとコマンドラインで入力することで実行可能となる．
 
     \section{uninstall}\label{uninstall}
@@ -54,9 +52,7 @@ gituhubからinstallした場合のuninstall方法は以下の通りである．
   \end{enumerate}
 \item
   ホームディレクトリからeditor\_learnerが削除されていることを確認する．
-\end{enumerate}
-
-以上がuninstall方法である．
+\end{enumerate}以上がuninstall方法である．
 
 \subsection{gemからinstallした場合のuninstall方法}\label{gemux304bux3089installux3057ux305fux5834ux5408ux306euninstallux65b9ux6cd5}
 
@@ -76,13 +72,11 @@ gemからinstallした場合のuninstall方法は以下の通りである．
   \end{enumerate}
 \item
   ホームディレクトの.rbenv/versions/2.4.0/lib/ruby/gems/2.4.0/gemsにeditor\_learnerが削除されていることを確認する．
-\end{enumerate}
-
-以上がuninstall方法である．
+\end{enumerate}以上がuninstall方法である．
 
     \section{動作環境}\label{ux52d5ux4f5cux74b0ux5883}
 
-    Rubyのversionが2.4.0以上でなければ動かない．理由としては，gemに格納されているパスを正しいく受け渡しできないからである．2.4.0以下で動作させるためにはeditor\_learnerの最新versionのみを入れることによって動作することが確認できている．
+    Rubyのversionが2.4.0以上でなければ動かない．理由としては，gemに格納されているパスを正しいく受け渡しできないからである．2.4.0以下で動作させるためにはeditor\_learnerの最新versionのみを入れることによって動作することが確認できている．さらに，open\_terminalがMacOSXでのみ動作するのでMacOSXを使用すること．
 
 \subsection{error時の対処法}\label{errorux6642ux306eux5bfeux51e6ux6cd5}
 
@@ -93,9 +87,7 @@ errorが出た場合は以下の方法を試してください
 \tightlist
 \item
   rm -rf editor\_learnerをコマンドラインで入力
-\end{enumerate}
-
-これによりファイル生成によるバグを解消できる．もう一つの方法は
+\end{enumerate}これによりファイル生成によるバグを解消できる．もう一つの方法は
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -107,7 +99,6 @@ errorが出た場合は以下の方法を試してください
 \item
   再度gem install editor\_learnerで最新versionのみをinstallする．
 \end{enumerate}
-
 上記の手順によりRubyのversionによるバグが解消されることが確認できている．現在起こるであろうと予想されるバグの解消法は上記の2つである．Rubyのversionが2.4.0以上であればなんの不具合もなく動作することが確認できている．
 
     \section{初期設定}\label{ux521dux671fux8a2dux5b9a}
@@ -159,9 +150,7 @@ editor_leraner sequential_check [lesson_number] [1~3numbers]
 
     \section{delete}\label{delete}
 
-    editor\_learnerを起動することで初期設定で述べたようにホームディレクトリにeditor\_learner/workshopが作成される．deleteはworkshopに作成されたruby\_1\textasciitilde{}ruby\_6を削除するために作成されたものである．sequential\_checkで１度プログラムを作成してしまうと再度実行するとIt
-have been
-finished!と表示されてしまうので，削除するコマンドを作成しました．コマンド例は以下の通りである．
+    editor\_learnerを起動することで初期設定で述べたようにホームディレクトリにeditor\_learner/workshopが作成される．deleteはworkshopに作成されたruby\_1〜ruby\_6を削除するために作成されたものである．sequential\_checkで１度プログラムを作成してしまうと再度実行するとIthave been finished!と表示されてしまうので，削除するコマンドを作成しました．コマンド例は以下の通りである．
 
 コマンド例
 
@@ -256,9 +245,23 @@ random\_checkの動作開始から終了は以下の通りである．
   正しければ新しいターミナルが開かれてから終了までの時間とIt have been
   finished!が表示され終了となる．
 \end{enumerate}
-
-更に次回random\_check起動時には前に書いたコードがanswer.rbに格納されたままなので全て削除するのではなく，前のコードの必要な部分は残すことができる．
-
+間違っていた場合の表示例は以下の通り，
+\begin{figure}[H]
+\centering
+\begin{center}
+\includegraphics[width=150mm]{../../picture/diffp.png}
+\end{center}
+\caption{間違っている図，\label{sample}}
+\end{figure}
+\begin{figure}[H]
+\centering
+\begin{center}
+\includegraphics[width=150mm]{../../picture/diff.png}
+\end{center}
+\caption{間違っている箇所の表示，\label{sample}}
+\end{figure}
+上記の図ではquestino.rbの'BAR'の部分がanswer.rbでは’BA'になっている．よって133文字目にquestion.rbにはRがあるが，answer.rbには無いと表示されている．
+更に次回random\_check起動時には前に書いたコードがanswer.rbに格納されたままなので全て削除するのではなく，前のコードの必要な部分は残すことができる.
 random\_checkの大きな目的はtyping速度，正確性の向上，editor操作やRuby言語の習熟に重点を置いている．いかに早く終わらせるかのポイントがtyping速度，正確性とeditor操作である．
 
     \section{sequential\_checkの動作}\label{sequential_checkux306eux52d5ux4f5c}
@@ -283,7 +286,4 @@ random\_checkの大きな目的はtyping速度，正確性の向上，editor操�
 \item
   正しければruby\_1/1.rb is done!のように表示される．
 \end{enumerate}
-
-sequential\_checkは1\textasciitilde{}3の順に1.rbがリファクタリングや追加され2.rbになり，完成形が3.rbになるといった形式である．連続的なプログラムの完成までを写経するのでsequential\_checkと名付けられた．
-
-sequential\_checkの大きな目的はリファクタリングによるRuby言語の学習とCUI操作によるキーバインドの習熟，タイピング速度，正確性の向上に重点を置いている．コードがリファクタリングされる様を写経することで自分自身でRubyのコードを書くときに他の人が見やすくなるようなコードが書けるようになる．
+sequential\_checkは1〜3の順に1.rbがリファクタリングや追加され2.rbになり，完成形が3.rbになるといった形式である．連続的なプログラムの完成までを写経するのでsequential\_checkと名付けられた．sequential\_checkの大きな目的はリファクタリングによるRuby言語の学習とCUI操作によるキーバインドの習熟，タイピング速度，正確性の向上に重点を置いている．コードがリファクタリングされる様を写経することで自分自身でRubyのコードを書くときに他の人が見やすくなるようなコードが書けるようになる．
