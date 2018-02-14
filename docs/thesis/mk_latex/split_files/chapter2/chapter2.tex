@@ -5,7 +5,8 @@
     本研究において使用しているeditorはEmacsである．Emacsは西谷研究室で使用を勧めているeditorであり，非常に強力なeditorとなっている．
 \begin{quotation}
 ツールはプログラマ自身の手の延長である．これは他のどのようなソフトウェアツールよりもEditorに対して当てはまる．テキストはプログラミングにおける最も基本的な生素材なので，できる限り簡単に操作できる必要がある \cite{達人プログラマー}． 
-\end{quotation}と書かれている．よって一つの強力なeditorを習熟することが勧められている．西谷研究室で勧められているEmacsの機能については以下の通りである，
+\end{quotation}
+と書かれている．よって一つの強力なeditorを習熟することが勧められている．西谷研究室で勧められているEmacsの機能については以下の通りである，
 
 \begin{description}
 \def\labelenumi{\arabic{enumi}.}
@@ -50,7 +51,7 @@ Ruby言語で書かれたプログラムをより便利にするためのツー�
 \begin{center}
 \includegraphics[width=150mm]{../../picture/keybind1.png}
 \end{center}
-\caption{カーソル移動，\label{sample}}
+\caption{カーソル移動に関するキーバインド．\label{sample}}
 \end{figure}
 
 \begin{figure}[H]
@@ -58,7 +59,7 @@ Ruby言語で書かれたプログラムをより便利にするためのツー�
 \begin{center}
 \includegraphics[width=150mm]{../../picture/keybind2.png}
 \end{center}
-\caption{文字操作，\label{sample}}
+\caption{文字操作に関するキーバインド．\label{sample}}
 \end{figure}
 
     \section{CUI(Character User
@@ -105,10 +106,10 @@ CUIの利点は以下の通り，
 diff-lcsは，二つのファイルの差分を求めて出力してくれる．これによりrandom\_checkやsequential\_checkなどの正誤判定で誤っていた場合に間違った箇所を表示してくれる．テキストの差分を取得するメソッドは,Diff::LCS.sdiffと Diff::LCS.diffの２つがある.複数行の文字列を比較した場合の２つのメソッドの違いは以下のとおり.
 
 \begin{description}
-\item[Diff::LCS.diff]
+\item[Diff::LCS.sdiff]
 比較結果を一文字ずつ表示する．
 \item[Diff::LCS.diff]
-比較した結果，違いがあった表について，違いがあった箇所にのみ表示する．
+比較した結果，違いがあった行について，違いがあった箇所にのみ表示する．
 \end{description}
 今回使用したのは後者(Diff:LCS.diff)である．コード自体が長いので全ての比較結果を表示してしまうとものすごく長くなってしまう．よって，違いがあった行のみの表示となっている．
 
@@ -122,7 +123,11 @@ Thorの使用でサブコマンドを自然言語に近い形で設定できる�
 
     \subsection{Minitest}\label{minitest}
 
-    本研究でソースコードとして利用した本ではMinitestが使われている．assert\_equalにより出力結果が正しいか判定してくれる．Rubyにはいくつかのテスティングフレームワークがありますが，Minitestは特別なセットアップが不要，学習コストが比較的低い，Rails開発に知識を活かしやすい．これらの理由によりMinitestを使用している．
+    本研究でRuby言語のソースコードとして利用した教科書ではMinitestが使われている．assert\_equalにより出力結果が正しいか判定してくれる．
+\begin{quotation}    
+    Rubyにはいくつかのテスティングフレームワークがありますが，Minitestは特別なセットアップが不要，学習コストが比較的低い，Rails開発に知識を活かしやすい\cite{book}．
+\end{quotation}    
+上記の理由によりMinitestを使用している．
 
     \subsection{FileUtils}\label{fileutils}
 

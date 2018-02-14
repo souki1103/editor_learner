@@ -213,17 +213,17 @@ desc 'sequential_check [lesson_number] [1~3number] ',
       if FileUtils.compare_file(@pracnm_dir, @pracnq_dir) != true then
         system "osascript -e 'tell application \"Terminal\" to do script 
         \"cd #{@prac_dir}/ruby_#{n} \" '"
+\end{verbatim}}
+\end{screen}
+\begin{screen}
+{\small
+\begin{verbatim}            
         loop do
           a = STDIN.gets.chomp
           if a == "check" && FileUtils.compare_file("#{@pracnm_dir}", 
           "#{@pracnq_dir}") == true then
             puts "ruby_#{n}/#{m}.rb is done!"
             break
-\end{verbatim}}
-\end{screen}
-\begin{screen}
-{\small
-\begin{verbatim}            
           elsif FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}")
            != true then
             @inputdata = File.open("#{@pracnm_dir}").readlines
