@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.8.22)  14 FEB 2018 19:15
+This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.8.22)  15 FEB 2018 11:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -747,9 +747,8 @@ File: ../../picture/compare.jpeg Graphic file (type bmp)
 第 6 章
 ) (../split_files/chapter7/chapter7.tex [35
 
-]
-第 7 章
-) (../split_files/chapter8/chapter8.tex [36
+])
+(../split_files/chapter8/chapter8.tex [36
 
 ]
 Overfull \hbox (54.67007pt too wide) in paragraph at lines 4--5
@@ -793,12 +792,12 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 30.
  ) 
 Here is how much of TeX's memory you used:
- 8721 strings out of 493653
- 132601 string characters out of 6148874
- 236466 words of memory out of 5000000
- 12090 multiletter control sequences out of 15000+600000
+ 8720 strings out of 493653
+ 132595 string characters out of 6148874
+ 235466 words of memory out of 5000000
+ 12089 multiletter control sequences out of 15000+600000
  21638 words of font info for 88 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  44i,6n,40p,1573b,486s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on thesis.dvi (38 pages, 128828 bytes).
+Output written on thesis.dvi (38 pages, 128584 bytes).
