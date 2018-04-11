@@ -9,7 +9,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ruby_novice'
+gem 'rubynovice'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install ruby_novice
+    $ gem install rubynovice
 
 ## Usage
 
@@ -45,33 +45,36 @@ Everyone interacting in the RubyNovice project’s codebases, issue trackers, ch
 まずはforkしてcloneして自分のフォルダに入れてください．
 
 ## 動かし方
-libの中にruby_novice.rbがあるので
+terminal上でediter_leanerコマンドでオプションを表示できます.
 
 ```ruby
-ruby ruby_novice
+    $ editer_leaner
 ```
-で実行可能．
+
+好みに合わせてオプションは選択してください.
 
 ## 実行してから
-実行すると1〜4のランダムな数字が出力されます．これはどのファイルの問題が出されたかの数字なので特に気にする必要はありません．
-実行したら
-
-```ruby
-    $ Command + n
-```
-    
-で新しいターミナルを開いて，ruby_noviceのあるフォルダで
+実行するとランダムな数字が出力されます．これはどのファイルの問題が出されたかの数字なので特に気にする必要はありません．
+実行したら, 新たにterminalが開きますので以下のコマンドを打ち込みます. (以下emacs使用時)
 
 ```ruby
     $ emacs question.rb answer.rb
 ```
 
-と打つと上下分割されたものがでてくるので上のquestin.rbに書かれた内容をanswer.rbにtypingする
+emacsが上下分割された状態で開きますので下のquestion.rbに書かれた内容をanswer.rbにtypingし保存します.
 
 ```ruby
     $ C-x C-c   (Control + x Control + c)
 ```
-で保存するとそれまでにかかった時間が表示される．
+
+その後, editer_leanerコマンドを打ち込んだ方のterminalに戻り, enterを押します.
+すると, question.rbとanswer.rbの違う箇所が表示されます.
+この間違いを繰り返し修正していき, 最後は何も表示されなくなるので, 実行を終了します.
+
+```ruby
+    $ C-z   (Control + z)
+```
+
 これが実行から終了までの一連の流れになります．
 
 
