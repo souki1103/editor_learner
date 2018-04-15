@@ -130,6 +130,8 @@ class CLI < Thor
         elsif FileUtils.compare_file("#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") != true then
           @inputdata = File.open("#{@prac_dir}/answer.rb").readlines
           @checkdata = File.open("#{@prac_dir}/question.rb").readlines
+          #puts "@inputdata #{@inputdata}"
+          #puts "@checkdata #{@checkdata}"
           diffs = Diff::LCS.diff("#{@inputdata}", "#{@checkdata}")
           puts "There are some differences"
           diffs.each do |diff|
@@ -139,7 +141,6 @@ class CLI < Thor
       end
       end_time = Time.now
       time = end_time - start_time - 1
-      
       puts "#{time} sec"
     end
     

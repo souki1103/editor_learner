@@ -1,6 +1,6 @@
 # RubyNovice
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ruby_novice`. To experiment with that code, run `bin/console` for an interactive prompt.
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rubynovice`. To experiment with that code, run `bin/console` for an interactive prompt.
 
 TODO: Delete this and the text above, and describe your gem
 
@@ -48,10 +48,10 @@ Everyone interacting in the RubyNovice project’s codebases, issue trackers, ch
   -bundlerとrspecはgem installしてください.
   
 ## 動かし方
-terminal上でediter_leanerコマンドでオプションを表示できます.
+terminal上でeditor_learnerコマンドでオプションを表示できます.
 
 ```ruby
-    $ editer_leaner
+    $ editor_learner
 ```
 
 好みに合わせてオプションは選択してください.
@@ -70,7 +70,7 @@ emacsが上下分割された状態で開きますので下のquestion.rbに書�
     $ C-x C-c   (Control + x Control + c)
 ```
 
-その後, editer_leanerコマンドを打ち込んだ方のterminalに戻り, enterを押します.
+その後, editor_learnerコマンドを打ち込んだ方のterminalに戻り, enterを押します.
 すると, question.rbとanswer.rbの違う箇所が表示されます.
 この間違いを繰り返し修正していき, 最後は何も間違いが表示されなくなり, 修正までにかかった時間が表示されます.
 これが実行から終了までの一連の流れになります．
