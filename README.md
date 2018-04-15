@@ -41,8 +41,10 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the RubyNovice project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/ruby_novice/blob/master/CODE_OF_CONDUCT.md).
+
 ## editer_learner
-まずはforkしてcloneして自分のフォルダに入れてください．
+1. souki1103/editor_learner.gitをfork, cloneして自分のフォルダに入れてください．
+2. rake install:local (sudoがいるかも)してsystemにinstallしてください.
 
 ## 動かし方
 terminal上でediter_leanerコマンドでオプションを表示できます.
@@ -69,14 +71,7 @@ emacsが上下分割された状態で開きますので下のquestion.rbに書�
 
 その後, editer_leanerコマンドを打ち込んだ方のterminalに戻り, enterを押します.
 すると, question.rbとanswer.rbの違う箇所が表示されます.
-この間違いを繰り返し修正していき, 最後は何も表示されなくなるので, 実行を終了します.
-
-```ruby
-    $ C-z   (Control + z)
-```
-
+この間違いを繰り返し修正していき, 最後は何も間違いが表示されなくなり, 修正までにかかった時間が表示されます.
 これが実行から終了までの一連の流れになります．
-
-
 
 
