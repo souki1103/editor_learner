@@ -24,7 +24,7 @@ class CLI < Thor
         FileUtils.touch("#{@prac_dir}/random_h.rb")
         if File.exist?("#{@inject}/random_h.rb") == true then
           FileUtils.cp("#{@inject}/random_h.rb", "#{@prac_dir}/random_h.rb")
-        elsif  
+        elsif
           FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/random_h.rb", "#{@prac_dir}/random_h.rb")
         end
       end
@@ -108,7 +108,7 @@ class CLI < Thor
     def random_check(*argv)
       random = rand(1..15)
       p random
-      s = "#{random}.rb"
+      s = "#{random}\.rb"
       puts "check starting ..."
       puts "type following commands on the terminal"
       puts "> emacs question.rb answer.rb"
@@ -120,17 +120,18 @@ class CLI < Thor
         FileUtils.cp(File.join(src_dir, "lib/random_check_question/#{s}"),  "#{@prac_dir}/question.rb")
       end
       open_terminal
-      
       start_time = Time.now
       loop do
-        a = STDIN.gets.chomp
-        if a == "check" && FileUtils.compare_file("#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") == true then
+        puts "If you complete typing, press return-key"
+        input = STDIN.gets
+        if  input == "\n" && FileUtils.compare_file("#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") == true then
           puts "It have been finished!"
           break
         elsif FileUtils.compare_file("#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") != true then
           @inputdata = File.open("#{@prac_dir}/answer.rb").readlines
           @checkdata = File.open("#{@prac_dir}/question.rb").readlines
           diffs = Diff::LCS.diff("#{@inputdata}", "#{@checkdata}")
+          puts "There are some differences"
           diffs.each do |diff|
             p diff
           end
