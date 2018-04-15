@@ -108,7 +108,7 @@ class CLI < Thor
     def random_check(*argv)
       random = rand(1..15)
       p random
-      s = "#{random}\.rb"
+      s = "#{random}.rb"
       puts "check starting ..."
       puts "type following commands on the terminal"
       puts "> emacs question.rb answer.rb"

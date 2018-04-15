@@ -45,7 +45,8 @@ Everyone interacting in the RubyNovice project’s codebases, issue trackers, ch
 ## editer_learner
 1. souki1103/editor_learner.gitをfork, cloneして自分のフォルダに入れてください．
 2. rake install:local (sudoがいるかも)してsystemにinstallしてください.
-
+  -bundlerとrspecはgem installしてください.
+  
 ## 動かし方
 terminal上でediter_leanerコマンドでオプションを表示できます.
 
