@@ -116,6 +116,7 @@ class CLI < Thor
       src_dir = File.expand_path('../..', __FILE__) # "Users/souki/editor_learner"
       if File.exist?("#{@inject}/random_check_question/#{s}") == true then
         FileUtils.cp("#{@inject}/random_check_question/#{s}", "#{@prac_dir}/question.rb")
+        FileUtils.cp("/dev/null", "#{@prac_dir}/answer.rb")
       else
         FileUtils.cp(File.join(src_dir, "lib/random_check_question/#{s}"),  "#{@prac_dir}/question.rb")
       end
@@ -127,15 +128,12 @@ class CLI < Thor
         if  input == "\n" && FileUtils.compare_file("#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") == true then
           puts "It have been finished!"
           break
-        elsif FileUtils.compare_file("#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") != true then
-          @inputdata = File.open("#{@prac_dir}/answer.rb").readlines
-          @checkdata = File.open("#{@prac_dir}/question.rb").readlines
-          #puts "@inputdata #{@inputdata}"
-          #puts "@checkdata #{@checkdata}"
-          diffs = Diff::LCS.diff("#{@inputdata}", "#{@checkdata}")
+        elsif FileUtils.compare_file(
+                                     "#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") != true then
           puts "There are some differences"
-          diffs.each do |diff|
-            p diff
+          status, stdout, stderr = Open3.popen3("diff -c #{@prac_dir}/answer.rb #{@prac_dir}/question.rb")
+          stdout.each do |diff|
+            p diff.chomp
           end
         end
       end
