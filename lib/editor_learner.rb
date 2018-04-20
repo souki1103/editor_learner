@@ -5,7 +5,7 @@ require 'thor'
 require "editor_learner/version"
 require 'diff-lcs'
 require "open3"
-require  './lib/editor_learner_method.rb'
+require  'editor_learner_method.rb'
 
 module EditorLearner
   class CLI < Thor
