@@ -1,6 +1,6 @@
 # RubyNovice
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ruby_novice`. To experiment with that code, run `bin/console` for an interactive prompt.
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rubynovice`. To experiment with that code, run `bin/console` for an interactive prompt.
 
 TODO: Delete this and the text above, and describe your gem
 
@@ -9,7 +9,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ruby_novice'
+gem 'rubynovice'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install ruby_novice
+    $ gem install rubynovice
 
 ## Usage
 
@@ -41,39 +41,38 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the RubyNovice project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/ruby_novice/blob/master/CODE_OF_CONDUCT.md).
-## editer_learner
-まずはforkしてcloneして自分のフォルダに入れてください．
 
+## editer_learner
+1. souki1103/editor_learner.gitをfork, cloneして自分のフォルダに入れてください．
+2. rake install:local (sudoがいるかも)してsystemにinstallしてください.
+  -bundlerとrspecはgem installしてください.
+  
 ## 動かし方
-libの中にruby_novice.rbがあるので
+terminal上でeditor_learnerコマンドでオプションを表示できます.
 
 ```ruby
-ruby ruby_novice
+    $ editor_learner
 ```
-で実行可能．
+
+好みに合わせてオプションは選択してください.
 
 ## 実行してから
-実行すると1〜4のランダムな数字が出力されます．これはどのファイルの問題が出されたかの数字なので特に気にする必要はありません．
-実行したら
-
-```ruby
-    $ Command + n
-```
-    
-で新しいターミナルを開いて，ruby_noviceのあるフォルダで
+実行するとランダムな数字が出力されます．これはどのファイルの問題が出されたかの数字なので特に気にする必要はありません．
+実行したら, 新たにterminalが開きますので以下のコマンドを打ち込みます. (以下emacs使用時)
 
 ```ruby
     $ emacs question.rb answer.rb
 ```
 
-と打つと上下分割されたものがでてくるので上のquestin.rbに書かれた内容をanswer.rbにtypingする
+emacsが上下分割された状態で開きますので下のquestion.rbに書かれた内容をanswer.rbにtypingし保存します.
 
 ```ruby
     $ C-x C-c   (Control + x Control + c)
 ```
-で保存するとそれまでにかかった時間が表示される．
+
+その後, editor_learnerコマンドを打ち込んだ方のterminalに戻り, enterを押します.
+すると, question.rbとanswer.rbの違う箇所が表示されます.
+この間違いを繰り返し修正していき, 最後は何も間違いが表示されなくなり, 修正までにかかった時間が表示されます.
 これが実行から終了までの一連の流れになります．
-
-
 
 
