@@ -44,3 +44,17 @@ def instruct_print
   puts "type following commands on the terminal"
   puts "> emacs question.rb answer.rb"
 end
+
+def init_exist_files(inject_dir: String, prac_dir: String, command_type: String)
+  if File.exist?(prac_dir) != true then
+    FileUtils.mkdir_p(prac_dir)
+    FileUtils.touch("#{prac_dir}/question.rb")
+    FileUtils.touch("#{prac_dir}/answer.rb")
+    FileUtils.touch("#{prac_dir}/#{command_type}_h.rb")
+    if File.exist?("#{inject_dir}/#{command_type}_h.rb") == true then
+      FileUtils.cp("#{inject_dir}/#{command_type}_h.rb", "#{prac_dir}/#{command_type}_h.rb")
+    elsif
+      FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/#{command_type}_h.rb", "#{prac_dir}/#{command_type}_h.rb")
+    end
+  end
+end

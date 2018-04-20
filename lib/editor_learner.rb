@@ -66,23 +66,6 @@ module EditorLearner
       typing_discriminant(file_path_answer: "#{@prac_dir}/answer.rb", file_path_question: "#{@prac_dir}/question.rb")
       time_check(start_time: start_time)
     end
-
-    no_commands do
-      def init_exist_files(inject_dir: String, prac_dir: String, command_type: String)
-        if File.exist?(prac_dir) != true then
-          FileUtils.mkdir_p(prac_dir)
-          FileUtils.touch("#{prac_dir}/question.rb")
-          FileUtils.touch("#{prac_dir}/answer.rb")
-          FileUtils.touch("#{prac_dir}/#{command_type}_h.rb")
-          if File.exist?("#{inject_dir}/#{command_type}_h.rb") == true then
-            FileUtils.cp("#{inject_dir}/#{command_type}_h.rb", "#{prac_dir}/#{command_type}_h.rb")
-          elsif
-            FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/#{command_type}_h.rb", "#{prac_dir}/#{command_type}_h.rb")
-          end
-        end
-      end
-
-    end
-
+    
   end
 end
