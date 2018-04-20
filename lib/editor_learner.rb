@@ -17,48 +17,30 @@ module EditorLearner
       @versions = Open3.capture3("gem list editor_learner")
       p @latest_version = @versions[0].chomp.gsub(' (', '-').gsub(')','')
       @inject = File.join(@lib_location[0].chomp, "/gems/#{@latest_version}/lib")
-      if File.exist?(@prac_dir) != true then
-        FileUtils.mkdir_p(@prac_dir)
-        FileUtils.touch("#{@prac_dir}/question.rb")
-        FileUtils.touch("#{@prac_dir}/answer.rb")
-        FileUtils.touch("#{@prac_dir}/random_h.rb")
-        if File.exist?("#{@inject}/random_h.rb") == true then
-          FileUtils.cp("#{@inject}/random_h.rb", "#{@prac_dir}/random_h.rb")
-        elsif
-          FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/random_h.rb", "#{@prac_dir}/random_h.rb")
-        end
-      end
-      range = 1..6
-      range_ruby = 1..3
-      range.each do|num|
-        if File.exist?("#{@prac_dir}/ruby_#{num}") != true then
-          FileUtils.mkdir("#{@prac_dir}/ruby_#{num}")
-          FileUtils.touch("#{@prac_dir}/ruby_#{num}/question.rb")
-          FileUtils.touch("#{@prac_dir}/ruby_#{num}/answer.rb")
-          FileUtils.touch("#{@prac_dir}/ruby_#{num}/sequential_h.rb")
-          if File.exist?("#{@inject}/sequential_h.rb") == true then
-            FileUtils.cp("#{@inject}/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
-          else
-            FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
-          end
-          range_ruby.each do|n|
-            FileUtils.touch("#{@prac_dir}/ruby_#{num}/#{n}.rb")
+      init_exist_files(inject_dir: "#{@inject}", prac_dir: "#{@prac_dir}", command_type: "random")
+      range_ruby_dir = 1..6
+      range_ruby_file = 1..3
+      range_ruby_dir.each do |dir_num|
+        init_exist_files(inject_dir: "#{@inject}", prac_dir: "#{@prac_dir}/ruby_#{dir_num}", command_type: "sequential")
+        if Dir.empty?("#{@prac_dir}/ruby_#{dir_num}") == true then
+          range_ruby_file.each do |file_num|
+            FileUtils.touch("#{@prac_dir}/ruby_#{dir_num}/#{file_num}.rb")
           end
         end
       end
     end
-
+    
     desc 'delete [number~number]', 'delete the ruby_file choose number to delete file'
     def delete(n, m)
       range = n..m
-      range.each{|num|
+      range.each do |num|
         if File.exist?("#{@prac_dir}/ruby_#{num}") == true then
           system "rm -rf #{@prac_dir}/ruby_#{num}"
         end
-      }
+      end
     end
 
-    desc 'sequential_check [lesson_number] [1~3number] ','sequential check your typing skill and edit skill choose number'
+    desc 'sequential_check [lesson_number1~6] [number1~3] ','sequential check your typing skill and edit skill choose number'
     def sequential_check(*argv, dir_num, file_num)
       inject_dir_seq = "#{@inject}/sequential_check_question/ruby_#{dir_num}"
       prac_dir_seq = "#{@prac_dir}/ruby_#{dir_num}"
@@ -83,6 +65,23 @@ module EditorLearner
       start_time = Time.now
       typing_discriminant(file_path_answer: "#{@prac_dir}/answer.rb", file_path_question: "#{@prac_dir}/question.rb")
       time_check(start_time: start_time)
+    end
+
+    no_commands do
+      def init_exist_files(inject_dir: String, prac_dir: String, command_type: String)
+        if File.exist?(prac_dir) != true then
+          FileUtils.mkdir_p(prac_dir)
+          FileUtils.touch("#{prac_dir}/question.rb")
+          FileUtils.touch("#{prac_dir}/answer.rb")
+          FileUtils.touch("#{prac_dir}/#{command_type}_h.rb")
+          if File.exist?("#{inject_dir}/#{command_type}_h.rb") == true then
+            FileUtils.cp("#{inject_dir}/#{command_type}_h.rb", "#{prac_dir}/#{command_type}_h.rb")
+          elsif
+            FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/#{command_type}_h.rb", "#{prac_dir}/#{command_type}_h.rb")
+          end
+        end
+      end
+
     end
 
   end
