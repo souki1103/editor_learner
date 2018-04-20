@@ -12,7 +12,6 @@ module EditorLearner
 
     def initialize(*args)
       super
-      p 'initialize'
       @prac_dir="#{ENV['HOME']}/editor_learner/workshop"
       @lib_location = Open3.capture3("gem environment gemdir")
       @versions = Open3.capture3("gem list editor_learner")
@@ -60,10 +59,11 @@ module EditorLearner
 
     desc 'sequential_check [lesson_number] [1~3number] ','sequential check your typing skill and edit skill choose number'
     def sequential_check(*argv, n, m)
+      p 'sequential_check'
       l = m.to_i - 1
       @seq_dir = "lib/sequential_check_question"
       q_rb = "ruby_#{n}/#{m}.rb"
-      @seqnm_dir = File.join(@seq_dir,q_rb)
+      p @seqnm_dir = File.join(@seq_dir,q_rb)
       @pracnm_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/#{m}.rb"
       @seqnq_dir = "lib/sequential_check_question/ruby_#{n}/q.rb"
       @pracnq_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/q.rb"
@@ -105,47 +105,56 @@ module EditorLearner
     desc 'random_check', 'ramdom check your typing and edit skill.'
     def random_check(*argv)
       random = rand(1..15)
-      p random
-      s = "#{random}.rb"
+      prac_file = "#{random}.rb"
       puts "check starting ..."
       puts "type following commands on the terminal"
       puts "> emacs question.rb answer.rb"
-
-      src_dir = File.expand_path('../..', __FILE__) # "Users/souki/editor_learner"
-      if File.exist?("#{@inject}/random_check_question/#{s}") == true then
-        FileUtils.cp("#{@inject}/random_check_question/#{s}", "#{@prac_dir}/question.rb")
-        FileUtils.cp("/dev/null", "#{@prac_dir}/answer.rb")
-      else
-        FileUtils.cp(File.join(src_dir, "lib/random_check_question/#{s}"),  "#{@prac_dir}/question.rb")
-      end
+      check_and_cp_file(inject_dir: @inject, prac_dir: @prac_dir, prac_file: prac_file)
       open_terminal
       start_time = Time.now
-      loop do
-        puts "If you complete typing, press return-key"
-        input = STDIN.gets
-        if  input == "\n" && FileUtils.compare_file("#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") == true then
-          puts "It have been finished!"
-          break
-        elsif FileUtils.compare_file(
-                                     "#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") != true then
-          puts "There are some differences"
-          stdin, stdout, stderr = Open3.popen3("diff -c #{@prac_dir}/answer.rb #{@prac_dir}/question.rb")
-          stdout.each do |diff|
-            p diff.chomp
+      typing_discriminant(prac_dir: @prac_dir)
+      time_check(start_time: start_time)
+    end
+
+    no_commands do
+      def open_terminal
+        pwd = Dir.pwd
+        system "osascript -e 'tell application \"Terminal\" to do script \"cd #{@prac_dir} \" '"
+      end
+      def spell_diff_check(file_path1: String, file_path2: String)
+        stdin, stdout, stderr = Open3.popen3("diff -c #{file_path1} #{file_path2}")
+        stdout.each do |diff|
+          p diff.chomp
+        end
+      end
+      def time_check(start_time: Time)
+        end_time = Time.now
+        elapsed_time = end_time - start_time - 1
+        puts "#{elapsed_time} sec"
+      end
+      def typing_discriminant(prac_dir: String)
+        loop do
+          puts "If you complete typing, press return-key"
+          input = STDIN.gets
+          if FileUtils.compare_file("#{prac_dir}/question.rb", "#{prac_dir}/answer.rb") == true then
+            puts "It have been finished!"
+            break
+          else
+            puts "There are some differences"
+            spell_diff_check(file_path1: "#{prac_dir}/answer.rb", file_path2: "#{prac_dir}/question.rb")
           end
         end
       end
-      end_time = Time.now
-      time = end_time - start_time - 1
-      puts "#{time} sec"
+      def check_and_cp_file(inject_dir: String, prac_dir: String, prac_file: String)
+        src_dir = File.expand_path('../..', __FILE__) # dir is where you make clone
+        if File.exist?("#{inject_dir}/random_check_question/#{prac_file}") == true then
+          FileUtils.cp("#{inject_dir}/random_check_question/#{prac_file}", "#{prac_dir}/question.rb")
+          FileUtils.cp("/dev/null", "#{prac_dir}/answer.rb")
+        else
+          FileUtils.cp(File.join(src_dir, "lib/random_check_question/#{prac_file}"),  "#{prac_dir}/question.rb")
+        end
+      end
     end
-    def open_terminal
-      p 'open_terminal'
-      pwd = Dir.pwd
-      system "osascript -e 'tell application \"Terminal\" to do script \"cd #{@prac_dir} \" '"
-    end
-    no_commands do
-      p 'no_command'
-    end
+
   end
 end
