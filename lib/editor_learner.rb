@@ -60,30 +60,30 @@ module EditorLearner
 
     desc 'sequential_check [lesson_number] [1~3number] ','sequential check your typing skill and edit skill choose number'
     def sequential_check(*argv, n, m)
-      puts "check starting ..."
-      puts "type following commands on the terminal"
-      puts "> emacs question.rb answer.rb"
-      check_and_cp_file(inject_dir: "#{@inject}/sequential_check_question/ruby_#{n}", prac_dir: "#{@prac_dir}/ruby_#{n}", prac_file: "#{m}.rb", command_type: "sequential")
-      open_terminal(present_dir: "#{@prac_dir}/ruby_#{n}")
+      inject_dir_seq = "#{@inject}/sequential_check_question/ruby_#{n}"
+      prec_dir_seq = "#{@prac_dir}/ruby_#{n}"
+      instruct_print
+      check_and_cp_file(inject_dir: inject_dir_seq, prac_dir: prac_dir_seq, prac_file: "#{m}.rb", command_type: "sequential")
+      open_terminal(present_dir: prec_dir_seq)
       start_time = Time.now
-      typing_discriminant(file_path_answer: "#{@prac_dir}/ruby_#{n}/answer.rb", file_path_question: "#{@prac_dir}/ruby_#{n}/question.rb")
+      typing_discriminant(file_path_answer: "#{prec_dir_seq}/answer.rb", file_path_question: "#{prac_dir_seq}/question.rb")
       time_check(start_time: start_time)
       p "ruby_#{n}/#{m}.rb is finished!"
     end
 
     desc 'random_check', 'ramdom check your typing and edit skill.'
     def random_check(*argv)
+      inject_dir_rand = "#{@inject}/random_check_question"
       random = rand(1..15)
       prac_file = "#{random}.rb"
-      puts "check starting ..."
-      puts "type following commands on the terminal"
-      puts "> emacs question.rb answer.rb"
-      check_and_cp_file(inject_dir: "#{@inject}/random_check_question", prac_dir: "#{@prac_dir}", prac_file: prac_file, command_type: "random")
+      instruct_print
+      check_and_cp_file(inject_dir: inject_dir_rand, prac_dir: "#{@prac_dir}", prac_file: prac_file, command_type: "random")
       FileUtils.cp("/dev/null", "#{@prac_dir}/answer.rb")
       open_terminal(present_dir: "#{@prac_dir}")
       start_time = Time.now
       typing_discriminant(file_path_answer: "#{@prac_dir}/answer.rb", file_path_question: "#{@prac_dir}/question.rb")
       time_check(start_time: start_time)
     end
+
   end
 end

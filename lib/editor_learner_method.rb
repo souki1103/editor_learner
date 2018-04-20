@@ -38,3 +38,9 @@ def check_and_cp_file(inject_dir: String, prac_dir: String, prac_file: String, c
     FileUtils.cp(File.join(src_dir, "lib/#{command_type}_check_question/#{prac_file}"),  "#{prac_dir}/question.rb")
   end
 end
+
+def instruct_print
+  puts "check starting ..."
+  puts "type following commands on the terminal"
+  puts "> emacs question.rb answer.rb"
+end
