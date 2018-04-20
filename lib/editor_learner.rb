@@ -59,16 +59,16 @@ module EditorLearner
     end
 
     desc 'sequential_check [lesson_number] [1~3number] ','sequential check your typing skill and edit skill choose number'
-    def sequential_check(*argv, n, m)
-      inject_dir_seq = "#{@inject}/sequential_check_question/ruby_#{n}"
-      prec_dir_seq = "#{@prac_dir}/ruby_#{n}"
+    def sequential_check(*argv, dir_num, file_num)
+      inject_dir_seq = "#{@inject}/sequential_check_question/ruby_#{dir_num}"
+      prac_dir_seq = "#{@prac_dir}/ruby_#{dir_num}"
       instruct_print
-      check_and_cp_file(inject_dir: inject_dir_seq, prac_dir: prac_dir_seq, prac_file: "#{m}.rb", command_type: "sequential")
-      open_terminal(present_dir: prec_dir_seq)
+      check_and_cp_file(inject_dir: inject_dir_seq, prac_dir: prac_dir_seq, prac_file: "#{file_num}.rb", command_type: "sequential")
+      open_terminal(present_dir: prac_dir_seq)
       start_time = Time.now
-      typing_discriminant(file_path_answer: "#{prec_dir_seq}/answer.rb", file_path_question: "#{prac_dir_seq}/question.rb")
+      typing_discriminant(file_path_answer: "#{prac_dir_seq}/answer.rb", file_path_question: "#{prac_dir_seq}/question.rb")
       time_check(start_time: start_time)
-      p "ruby_#{n}/#{m}.rb is finished!"
+      p "ruby_#{dir_num}/#{file_num}.rb is finished!"
     end
 
     desc 'random_check', 'ramdom check your typing and edit skill.'
