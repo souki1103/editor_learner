@@ -33,7 +33,8 @@ module EditorLearner
       range.each do|num|
         if File.exist?("#{@prac_dir}/ruby_#{num}") != true then
           FileUtils.mkdir("#{@prac_dir}/ruby_#{num}")
-          FileUtils.touch("#{@prac_dir}/ruby_#{num}/q.rb")
+          FileUtils.touch("#{@prac_dir}/ruby_#{num}/question.rb")
+          FileUtils.touch("#{@prac_dir}/ruby_#{num}/answer.rb")
           FileUtils.touch("#{@prac_dir}/ruby_#{num}/sequential_h.rb")
           if File.exist?("#{@inject}/sequential_h.rb") == true then
             FileUtils.cp("#{@inject}/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
@@ -59,47 +60,39 @@ module EditorLearner
 
     desc 'sequential_check [lesson_number] [1~3number] ','sequential check your typing skill and edit skill choose number'
     def sequential_check(*argv, n, m)
-      p 'sequential_check'
-      l = m.to_i - 1
       @seq_dir = "lib/sequential_check_question"
-      q_rb = "ruby_#{n}/#{m}.rb"
-      p @seqnm_dir = File.join(@seq_dir,q_rb)
-      @pracnm_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/#{m}.rb"
-      @seqnq_dir = "lib/sequential_check_question/ruby_#{n}/q.rb"
-      @pracnq_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/q.rb"
-      @seqnl_dir = "lib/sequential_check_question/ruby_#{n}/#{l}.rb"
-      @pracnl_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/#{l}.rb"
+      @seqnm_dir = "#{@seq_dir}/ruby_#{n}/#{m}rb"
+      @pracnm_dir = "#{@prac_dir}/ruby_#{n}/#{m}.rb"
       puts "check starting ..."
       puts "type following commands on the terminal"
-      src_dir = File.expand_path('../..', __FILE__)
-      if File.exist?("#{@inject}/sequential_check_question/ruby_#{n}/#{m}.rb") == true then
-        FileUtils.cp("#{@inject}/sequential_check_question/ruby_#{n}/#{m}.rb", "#{@pracnq_dir}")
-      elsif
-        FileUtils.cp(File.join(src_dir, "#{@seqnm_dir}"),  "#{@pracnq_dir}")
-      end
-      if l != 0 && FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") != true
-        FileUtils.compare_file("#{@pracnl_dir}", (File.join(src_dir, "#{@seqnl_dir}"))) == true
-        FileUtils.cp("#{@pracnl_dir}", "#{@pracnm_dir}")
-      end
-      if FileUtils.compare_file(@pracnm_dir, @pracnq_dir) != true then
-        system "osascript -e 'tell application \"Terminal\" to do script \"cd #{@prac_dir}/ruby_#{n} \" '"
-        loop do
-          a = STDIN.gets.chomp
-          if a == "check" && FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") == true then
-            puts "ruby_#{n}/#{m}.rb is done!"
-            break
-          elsif FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") != true then
-            @inputdata = File.open("#{@pracnm_dir}").readlines
-            @checkdata = File.open("#{@pracnq_dir}").readlines
-            diffs = Diff::LCS.diff("#{@inputdata}", "#{@checkdata}")
-            diffs.each do |diff|
-              p diff
-            end
-          end
-        end
-      else
+      puts "> emacs question.rb answer.rb"
+      # src_dir = File.expand_path('../..', __FILE__)
+      # if File.exist?("#{@inject}/sequential_check_question/ruby_#{n}/#{m}.rb") == true then
+      #   FileUtils.cp("#{@inject}/sequential_check_question/ruby_#{n}/#{m}.rb", "#{@pracnq_dir}")
+      # elsif
+      #   FileUtils.cp(File.join(src_dir, "#{@seqnm_dir}"),  "#{@pracnq_dir}")
+      # end
+      check_and_cp_file(inject_dir: "#{@inject}/sequential_check_question/ruby_#{n}", prac_dir: "#{@prac_dir}/ruby_#{n}", prac_file: "#{m}.rb", command_type: "sequential")
+      #if l != 0 && FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") != true
+      #  FileUtils.compare_file("#{@pracnl_dir}", (File.join(src_dir, "#{@seqnl_dir}"))) == true
+      #  FileUtils.cp("#{@pracnl_dir}", "#{@pracnm_dir}")
+      #end
+      open_terminal(present_dir: "#{@prac_dir}/ruby_#{n}")
+      #if FileUtils.compare_file(@pracnm_dir, @pracnq_dir) != true then
+        #system "osascript -e 'tell application \"Terminal\" to do script \"cd #{@prac_dir}/ruby_#{n} \" '"
+        #loop do
+         # a = STDIN.gets.chomp
+         # if a == "check" && FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") == true then
+           # puts "ruby_#{n}/#{m}.rb is done!"
+           # break
+          #elsif FileUtils.compare_file("#{@pracnm_dir}", "#{@pracnq_dir}") != true then
+          #  spell_diff_check(file_path_answer: "#{@pracnm_dir}", file_path_question: "#{@pracnq_dir}")
+         # end
+        #end
+      #else
+      typing_discriminant(file_path_answer: "#{@prac_dir}/ruby_#{n}/answer.rb", file_path_question: "#{@prac_dir}/ruby_#{n}/question.rb")
         p "ruby_#{n}/#{m}.rb is finished!"
-      end
+      #end
     end
 
     desc 'random_check', 'ramdom check your typing and edit skill.'
@@ -109,20 +102,20 @@ module EditorLearner
       puts "check starting ..."
       puts "type following commands on the terminal"
       puts "> emacs question.rb answer.rb"
-      check_and_cp_file(inject_dir: @inject, prac_dir: @prac_dir, prac_file: prac_file)
-      open_terminal
+      check_and_cp_file(inject_dir: "#{@inject}/random_check_question", prac_dir: "#{@prac_dir}", prac_file: prac_file, command_type: "random")
+      open_terminal(present_dir: "#{@prac_dir}")
       start_time = Time.now
-      typing_discriminant(prac_dir: @prac_dir)
+      typing_discriminant(file_path_answer: "#{@prac_dir}/answer.rb", file_path_question: "#{@prac_dir}/question.rb")
       time_check(start_time: start_time)
     end
 
     no_commands do
-      def open_terminal
+      def open_terminal(present_dir: String)
         pwd = Dir.pwd
-        system "osascript -e 'tell application \"Terminal\" to do script \"cd #{@prac_dir} \" '"
+        system "osascript -e 'tell application \"Terminal\" to do script \"cd #{present_dir} \" '"
       end
-      def spell_diff_check(file_path1: String, file_path2: String)
-        stdin, stdout, stderr = Open3.popen3("diff -c #{file_path1} #{file_path2}")
+      def spell_diff_check(file_path_answer: String, file_path_question: String)
+        stdin, stdout, stderr = Open3.popen3("diff -c #{file_path_answer} #{file_path_question}")
         stdout.each do |diff|
           p diff.chomp
         end
@@ -132,26 +125,26 @@ module EditorLearner
         elapsed_time = end_time - start_time - 1
         puts "#{elapsed_time} sec"
       end
-      def typing_discriminant(prac_dir: String)
+      def typing_discriminant(file_path_answer: String, file_path_question: String)
         loop do
           puts "If you complete typing, press return-key"
           input = STDIN.gets
-          if FileUtils.compare_file("#{prac_dir}/question.rb", "#{prac_dir}/answer.rb") == true then
+          if FileUtils.compare_file("#{file_path_answer}", "#{file_path_question}") == true then
             puts "It have been finished!"
             break
           else
             puts "There are some differences"
-            spell_diff_check(file_path1: "#{prac_dir}/answer.rb", file_path2: "#{prac_dir}/question.rb")
+            spell_diff_check(file_path_answer: "#{file_path_answer}", file_path_question: "#{file_path_question}")
           end
         end
       end
-      def check_and_cp_file(inject_dir: String, prac_dir: String, prac_file: String)
+      def check_and_cp_file(inject_dir: String, prac_dir: String, prac_file: String, command_type: String)
         src_dir = File.expand_path('../..', __FILE__) # dir is where you make clone
-        if File.exist?("#{inject_dir}/random_check_question/#{prac_file}") == true then
-          FileUtils.cp("#{inject_dir}/random_check_question/#{prac_file}", "#{prac_dir}/question.rb")
+        if File.exist?("#{inject_dir}/#{prac_file}") == true then
+          FileUtils.cp("#{inject_dir}/#{prac_file}", "#{prac_dir}/question.rb")
           FileUtils.cp("/dev/null", "#{prac_dir}/answer.rb")
         else
-          FileUtils.cp(File.join(src_dir, "lib/random_check_question/#{prac_file}"),  "#{prac_dir}/question.rb")
+          FileUtils.cp(File.join(src_dir, "lib/#{command_type}_check_question/#{prac_file}"),  "#{prac_dir}/question.rb")
         end
       end
     end
