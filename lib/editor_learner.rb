@@ -8,10 +8,11 @@ require "open3"
 
 
 module EditorLearner
-class CLI < Thor
+  class CLI < Thor
 
     def initialize(*args)
       super
+      p 'initialize'
       @prac_dir="#{ENV['HOME']}/editor_learner/workshop"
       @lib_location = Open3.capture3("gem environment gemdir")
       @versions = Open3.capture3("gem list editor_learner")
@@ -46,30 +47,28 @@ class CLI < Thor
         end
       end
     end
-    
+
     desc 'delete [number~number]', 'delete the ruby_file choose number to delete file'
-    
     def delete(n, m)
       range = n..m
       range.each{|num|
-      if File.exist?("#{@prac_dir}/ruby_#{num}") == true then
-        system "rm -rf #{@prac_dir}/ruby_#{num}"
-      end
+        if File.exist?("#{@prac_dir}/ruby_#{num}") == true then
+          system "rm -rf #{@prac_dir}/ruby_#{num}"
+        end
       }
     end
 
     desc 'sequential_check [lesson_number] [1~3number] ','sequential check your typing skill and edit skill choose number'
     def sequential_check(*argv, n, m)
       l = m.to_i - 1
-     
       @seq_dir = "lib/sequential_check_question"
       q_rb = "ruby_#{n}/#{m}.rb"
       @seqnm_dir = File.join(@seq_dir,q_rb)
       @pracnm_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/#{m}.rb"
       @seqnq_dir = "lib/sequential_check_question/ruby_#{n}/q.rb"
-      @pracnq_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/q.rb"      
+      @pracnq_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/q.rb"
       @seqnl_dir = "lib/sequential_check_question/ruby_#{n}/#{l}.rb"
-      @pracnl_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/#{l}.rb"      
+      @pracnl_dir = "#{ENV['HOME']}/editor_learner/workshop/ruby_#{n}/#{l}.rb"
       puts "check starting ..."
       puts "type following commands on the terminal"
       src_dir = File.expand_path('../..', __FILE__)
@@ -82,7 +81,6 @@ class CLI < Thor
         FileUtils.compare_file("#{@pracnl_dir}", (File.join(src_dir, "#{@seqnl_dir}"))) == true
         FileUtils.cp("#{@pracnl_dir}", "#{@pracnm_dir}")
       end
-      
       if FileUtils.compare_file(@pracnm_dir, @pracnq_dir) != true then
         system "osascript -e 'tell application \"Terminal\" to do script \"cd #{@prac_dir}/ruby_#{n} \" '"
         loop do
@@ -99,7 +97,7 @@ class CLI < Thor
             end
           end
         end
-       else
+      else
         p "ruby_#{n}/#{m}.rb is finished!"
       end
     end
@@ -131,7 +129,7 @@ class CLI < Thor
         elsif FileUtils.compare_file(
                                      "#{@prac_dir}/question.rb", "#{@prac_dir}/answer.rb") != true then
           puts "There are some differences"
-          status, stdout, stderr = Open3.popen3("diff -c #{@prac_dir}/answer.rb #{@prac_dir}/question.rb")
+          stdin, stdout, stderr = Open3.popen3("diff -c #{@prac_dir}/answer.rb #{@prac_dir}/question.rb")
           stdout.each do |diff|
             p diff.chomp
           end
@@ -141,12 +139,13 @@ class CLI < Thor
       time = end_time - start_time - 1
       puts "#{time} sec"
     end
-    
+    def open_terminal
+      p 'open_terminal'
+      pwd = Dir.pwd
+      system "osascript -e 'tell application \"Terminal\" to do script \"cd #{@prac_dir} \" '"
+    end
     no_commands do
-      def open_terminal
-        pwd = Dir.pwd
-        system "osascript -e 'tell application \"Terminal\" to do script \"cd #{@prac_dir} \" '"
-      end
+      p 'no_command'
     end
   end
 end
