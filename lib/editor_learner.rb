@@ -4,7 +4,8 @@ require 'thor'
 require 'editor_learner/version'
 require 'diff-lcs'
 require 'open3'
-require 'editor_learner_method.rb'
+require 'el_methods.rb'
+require 'el_sub_class.rb'
 
 module EditorLearner
   # editor_learner CLI main class
@@ -34,12 +35,8 @@ module EditorLearner
     def sequential_check(*_argv, dir_num, file_num)
       origin_seq_dir = "#{@el_origin_dir}/lib/sequential_check_question"
       origin_file_path = "#{origin_seq_dir}/ruby_#{dir_num}/#{file_num}.rb"
-      instruct_print
-      cp_file(origin_file: origin_file_path, clone_file: "#{@el_prac_dir}/question.rb")
-      open_terminal(init_dir: @el_prac_dir)
-      start_time = Time.now
-      typing_discriminant(answer_path: "#{@el_prac_dir}/answer.rb", question_path: "#{@el_prac_dir}/question.rb")
-      time_check(start_time: start_time)
+      typing_prac_class = TypingPractice.new(prac_dir: @el_prac_dir, origin_dir: @el_origin_dir)
+      typing_prac_class.prac_sequence(origin_file: origin_file_path)
     end
 
     desc 'random_check', 'typing and editing practice.'
@@ -47,13 +44,15 @@ module EditorLearner
       origin_rand_dir = "#{@el_origin_dir}/lib/random_check_question"
       rand_num = rand(1..15)
       origin_rand_file = "#{origin_rand_dir}/#{rand_num}.rb"
-      instruct_print
-      cp_file(origin_file: origin_rand_file, clone_file: "#{@el_prac_dir}/question.rb")
       FileUtils.cp('/dev/null', "#{@el_prac_dir}/answer.rb")
-      open_terminal(init_dir: @el_prac_dir)
-      start_time = Time.now
-      typing_discriminant(answer_path: "#{@el_prac_dir}/answer.rb", question_path: "#{@el_prac_dir}/question.rb")
-      time_check(start_time: start_time)
+      typing_prac_class = TypingPractice.new(prac_dir: @el_prac_dir, origin_dir: @el_origin_dir)
+      typing_prac_class.prac_sequence(origin_file: origin_rand_file)
+      # instruct_print
+      # cp_file(origin_file: origin_rand_file, clone_file: "#{@el_prac_dir}/question.rb")
+      # open_terminal(init_dir: @el_prac_dir)
+      # start_time = Time.now
+      # typing_discriminant(answer_path: "#{@el_prac_dir}/answer.rb", question_path: "#{@el_prac_dir}/question.rb")
+      # time_check(start_time: start_time)
     end
 
     # no_commands do
