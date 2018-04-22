@@ -13,6 +13,8 @@ class TypingPractice
     open_terminal(init_dir: @prac_dir)
     start_time = Time.now
     typing_discriminant(answer_path: "#{@prac_dir}/answer.rb", question_path: "#{@prac_dir}/question.rb")
-    time_check(start_time: start_time)
+    elapsed_time = time_check(start_time: start_time)
+    p "#{elapsed_time} sec"
+    mk_training_data(elapsed_time: elapsed_time, prac_dir: @prac_dir)
   end
 end

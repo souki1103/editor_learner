@@ -47,17 +47,11 @@ module EditorLearner
       FileUtils.cp('/dev/null', "#{@el_prac_dir}/answer.rb")
       typing_prac_class = TypingPractice.new(prac_dir: @el_prac_dir, origin_dir: @el_origin_dir)
       typing_prac_class.prac_sequence(origin_file: origin_rand_file)
-      # instruct_print
-      # cp_file(origin_file: origin_rand_file, clone_file: "#{@el_prac_dir}/question.rb")
-      # open_terminal(init_dir: @el_prac_dir)
-      # start_time = Time.now
-      # typing_discriminant(answer_path: "#{@el_prac_dir}/answer.rb", question_path: "#{@el_prac_dir}/question.rb")
-      # time_check(start_time: start_time)
     end
 
-    # no_commands do
-    #   def output_training_data
-    #   end
-    # end
+    no_commands do
+      def output_training_data
+      end
+    end
   end
 end
