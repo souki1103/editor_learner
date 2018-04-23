@@ -1,89 +1,52 @@
-# coding: utf-8
 require 'fileutils'
 require 'colorize'
 require 'thor'
-require "editor_learner/version"
+require 'editor_learner/version'
 require 'diff-lcs'
-require "open3"
-require  './lib/editor_learner_method.rb'
+require 'open3'
+require 'el_methods.rb'
+require 'el_sub_class.rb'
 
 module EditorLearner
+  # editor_learner CLI main class
   class CLI < Thor
-
     def initialize(*args)
       super
-      @prac_dir="#{ENV['HOME']}/editor_learner/workshop"
-      @lib_location = Open3.capture3("gem environment gemdir")
-      @versions = Open3.capture3("gem list editor_learner")
-      p @latest_version = @versions[0].chomp.gsub(' (', '-').gsub(')','')
-      @inject = File.join(@lib_location[0].chomp, "/gems/#{@latest_version}/lib")
-      if File.exist?(@prac_dir) != true then
-        FileUtils.mkdir_p(@prac_dir)
-        FileUtils.touch("#{@prac_dir}/question.rb")
-        FileUtils.touch("#{@prac_dir}/answer.rb")
-        FileUtils.touch("#{@prac_dir}/random_h.rb")
-        if File.exist?("#{@inject}/random_h.rb") == true then
-          FileUtils.cp("#{@inject}/random_h.rb", "#{@prac_dir}/random_h.rb")
-        elsif
-          FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/random_h.rb", "#{@prac_dir}/random_h.rb")
-        end
-      end
-      range = 1..6
-      range_ruby = 1..3
-      range.each do|num|
-        if File.exist?("#{@prac_dir}/ruby_#{num}") != true then
-          FileUtils.mkdir("#{@prac_dir}/ruby_#{num}")
-          FileUtils.touch("#{@prac_dir}/ruby_#{num}/question.rb")
-          FileUtils.touch("#{@prac_dir}/ruby_#{num}/answer.rb")
-          FileUtils.touch("#{@prac_dir}/ruby_#{num}/sequential_h.rb")
-          if File.exist?("#{@inject}/sequential_h.rb") == true then
-            FileUtils.cp("#{@inject}/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
-          else
-            FileUtils.cp("#{ENV['HOME']}/editor_learner/lib/sequential_h.rb", "#{@prac_dir}/ruby_#{num}/sequential_h.rb")
-          end
-          range_ruby.each do|n|
-            FileUtils.touch("#{@prac_dir}/ruby_#{num}/#{n}.rb")
-          end
+      # el is editor_learner
+      @el_prac_dir = "#{ENV['HOME']}/editor_learner/workshop"
+      @gem_locations = Open3.capture3('gem environment gemdir')
+      app_vers = Open3.capture3('gem list editor_learner')
+      @el_ver = app_vers[0].chomp.tr(' ', '-').delete('()')
+      @el_origin_dir = File.join(@gem_locations[0].chomp, "/gems/#{@el_ver}")
+      init_mk_files(origin_dir: @el_origin_dir, prac_dir: @el_prac_dir)
+    end
+
+    desc 'delete [number~number]', 'choose number to delete ruby_files'
+    def delete(head_num, end_num)
+      range = head_num..end_num
+      range.each do |num|
+        if File.exist?("#{@el_prac_dir}/ruby_#{num}") == true
+          system "rm -rf #{@el_prac_dir}/ruby_#{num}"
         end
       end
     end
 
-    desc 'delete [number~number]', 'delete the ruby_file choose number to delete file'
-    def delete(n, m)
-      range = n..m
-      range.each{|num|
-        if File.exist?("#{@prac_dir}/ruby_#{num}") == true then
-          system "rm -rf #{@prac_dir}/ruby_#{num}"
-        end
-      }
+    desc 'sequential_check [dir_num:1~6] [file_num:1~3] ', 'typing and editing practice.'
+    def sequential_check(*_argv, dir_num, file_num)
+      origin_seq_dir = "#{@el_origin_dir}/lib/sequential_check_question"
+      origin_file_path = "#{origin_seq_dir}/ruby_#{dir_num}/#{file_num}.rb"
+      typing_prac_class = TypingPractice.new(prac_dir: @el_prac_dir, origin_dir: @el_origin_dir)
+      typing_prac_class.prac_sequence(origin_file: origin_file_path)
     end
 
-    desc 'sequential_check [lesson_number] [1~3number] ','sequential check your typing skill and edit skill choose number'
-    def sequential_check(*argv, dir_num, file_num)
-      inject_dir_seq = "#{@inject}/sequential_check_question/ruby_#{dir_num}"
-      prac_dir_seq = "#{@prac_dir}/ruby_#{dir_num}"
-      instruct_print
-      check_and_cp_file(inject_dir: inject_dir_seq, prac_dir: prac_dir_seq, prac_file: "#{file_num}.rb", command_type: "sequential")
-      open_terminal(present_dir: prac_dir_seq)
-      start_time = Time.now
-      typing_discriminant(file_path_answer: "#{prac_dir_seq}/answer.rb", file_path_question: "#{prac_dir_seq}/question.rb")
-      time_check(start_time: start_time)
-      p "ruby_#{dir_num}/#{file_num}.rb is finished!"
+    desc 'random_check', 'typing and editing practice.'
+    def random_check(*_argv)
+      origin_rand_dir = "#{@el_origin_dir}/lib/random_check_question"
+      rand_num = rand(1..15)
+      origin_rand_file = "#{origin_rand_dir}/#{rand_num}.rb"
+      FileUtils.cp('/dev/null', "#{@el_prac_dir}/answer.rb")
+      typing_prac_class = TypingPractice.new(prac_dir: @el_prac_dir, origin_dir: @el_origin_dir)
+      typing_prac_class.prac_sequence(origin_file: origin_rand_file)
     end
-
-    desc 'random_check', 'ramdom check your typing and edit skill.'
-    def random_check(*argv)
-      inject_dir_rand = "#{@inject}/random_check_question"
-      random = rand(1..15)
-      prac_file = "#{random}.rb"
-      instruct_print
-      check_and_cp_file(inject_dir: inject_dir_rand, prac_dir: "#{@prac_dir}", prac_file: prac_file, command_type: "random")
-      FileUtils.cp("/dev/null", "#{@prac_dir}/answer.rb")
-      open_terminal(present_dir: "#{@prac_dir}")
-      start_time = Time.now
-      typing_discriminant(file_path_answer: "#{@prac_dir}/answer.rb", file_path_question: "#{@prac_dir}/question.rb")
-      time_check(start_time: start_time)
-    end
-
   end
 end
