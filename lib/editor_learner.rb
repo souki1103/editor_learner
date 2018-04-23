@@ -48,10 +48,5 @@ module EditorLearner
       typing_prac_class = TypingPractice.new(prac_dir: @el_prac_dir, origin_dir: @el_origin_dir)
       typing_prac_class.prac_sequence(origin_file: origin_rand_file)
     end
-
-    no_commands do
-      def output_training_data
-      end
-    end
   end
 end
